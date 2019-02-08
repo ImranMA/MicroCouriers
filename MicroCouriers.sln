@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HealthChecks", "HealthCheck
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Booking", "Booking", "{6C03A784-9997-48A4-A4C1-035E4E413F29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.API", "src\Services\Booking\Booking.API\Booking.API.csproj", "{8AD96E49-09F3-44F0-801F-146FC2974FE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.API", "src\Services\Booking\Booking.API\Booking.API.csproj", "{8AD96E49-09F3-44F0-801F-146FC2974FE7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus", "src\BuildingBlocks\EventBus\EventBus\EventBus.csproj", "{4A47E712-D6D0-4EF2-AB1F-42E402519A7E}"
 EndProject
@@ -29,7 +29,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationEventLogEF", "sr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tracking", "Tracking", "{CDD19F22-3AA3-4ED0-8C90-A52D50A4D8EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracking.API", "src\Services\Tracking\Tracking.API\Tracking.API.csproj", "{98FA57AE-4571-4EA0-952E-39EEC1A952DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tracking.API", "src\Services\Tracking\Tracking.API\Tracking.API.csproj", "{98FA57AE-4571-4EA0-952E-39EEC1A952DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.Infrastructure", "src\Services\Booking\Booking.Infrastructure\Booking.Infrastructure.csproj", "{5496DA94-34C3-43A8-8861-2E8D8C430132}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.Application", "src\Services\Booking\Booking.Application\Booking.Application.csproj", "{C39125FD-2179-4904-A7C3-DF91063B8A66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.Domain", "src\Services\Booking\Booking.Domain\Booking.Domain.csproj", "{429FDA36-472E-49F4-BD88-77885A4A5446}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.Persistence", "src\Services\Booking\Booking.Persistence\Booking.Persistence.csproj", "{221D8DD8-AA1A-45DF-A997-B3E06DC4B5A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.Common", "src\Services\Booking\Booking.Common\Booking.Common.csproj", "{D3786C56-BCAD-49A3-858A-E3501BC33095}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +67,26 @@ Global
 		{98FA57AE-4571-4EA0-952E-39EEC1A952DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98FA57AE-4571-4EA0-952E-39EEC1A952DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98FA57AE-4571-4EA0-952E-39EEC1A952DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5496DA94-34C3-43A8-8861-2E8D8C430132}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5496DA94-34C3-43A8-8861-2E8D8C430132}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5496DA94-34C3-43A8-8861-2E8D8C430132}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5496DA94-34C3-43A8-8861-2E8D8C430132}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C39125FD-2179-4904-A7C3-DF91063B8A66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C39125FD-2179-4904-A7C3-DF91063B8A66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C39125FD-2179-4904-A7C3-DF91063B8A66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C39125FD-2179-4904-A7C3-DF91063B8A66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{429FDA36-472E-49F4-BD88-77885A4A5446}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{429FDA36-472E-49F4-BD88-77885A4A5446}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{429FDA36-472E-49F4-BD88-77885A4A5446}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{429FDA36-472E-49F4-BD88-77885A4A5446}.Release|Any CPU.Build.0 = Release|Any CPU
+		{221D8DD8-AA1A-45DF-A997-B3E06DC4B5A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{221D8DD8-AA1A-45DF-A997-B3E06DC4B5A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{221D8DD8-AA1A-45DF-A997-B3E06DC4B5A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{221D8DD8-AA1A-45DF-A997-B3E06DC4B5A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3786C56-BCAD-49A3-858A-E3501BC33095}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3786C56-BCAD-49A3-858A-E3501BC33095}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3786C56-BCAD-49A3-858A-E3501BC33095}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3786C56-BCAD-49A3-858A-E3501BC33095}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +104,11 @@ Global
 		{7B847E22-F2BC-466B-A128-B6E2E5CA128C} = {EC022089-EDBC-4584-8585-0ED70DCE8180}
 		{CDD19F22-3AA3-4ED0-8C90-A52D50A4D8EC} = {79411553-3052-439E-A4C3-09D3734EC560}
 		{98FA57AE-4571-4EA0-952E-39EEC1A952DC} = {CDD19F22-3AA3-4ED0-8C90-A52D50A4D8EC}
+		{5496DA94-34C3-43A8-8861-2E8D8C430132} = {6C03A784-9997-48A4-A4C1-035E4E413F29}
+		{C39125FD-2179-4904-A7C3-DF91063B8A66} = {6C03A784-9997-48A4-A4C1-035E4E413F29}
+		{429FDA36-472E-49F4-BD88-77885A4A5446} = {6C03A784-9997-48A4-A4C1-035E4E413F29}
+		{221D8DD8-AA1A-45DF-A997-B3E06DC4B5A2} = {6C03A784-9997-48A4-A4C1-035E4E413F29}
+		{D3786C56-BCAD-49A3-858A-E3501BC33095} = {6C03A784-9997-48A4-A4C1-035E4E413F29}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E13E4D21-76D2-45C9-B2EC-29A70284CD9E}
