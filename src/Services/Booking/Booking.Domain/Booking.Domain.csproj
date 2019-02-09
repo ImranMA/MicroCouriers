@@ -7,6 +7,7 @@
   <ItemGroup>
     <Folder Include="Exceptions\" />
     <Folder Include="Infrastructure\" />
+    <Folder Include="Services\" />
     <Folder Include="ValueObjects\" />
   </ItemGroup>
 

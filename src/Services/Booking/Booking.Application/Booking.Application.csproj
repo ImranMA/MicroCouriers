@@ -9,4 +9,13 @@
     <ProjectReference Include="..\Booking.Persistence\Booking.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Booking\Commands\UpdateBooking\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="MediatR" Version="6.0.0" />
+  </ItemGroup>
+
 </Project>
