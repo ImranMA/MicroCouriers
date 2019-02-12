@@ -13,12 +13,12 @@ namespace Booking.Persistence.Repositories
             _context = dbContext;
         }
 
-        public async Task<BookingOrder> AddAsync(BookingOrder bookingOrder)
+        public async Task<string> AddAsync(BookingOrder bookingOrder)
         {
             _context.Set<BookingOrder>().Add(bookingOrder);
             await _context.SaveChangesAsync();
 
-            return bookingOrder;
+            return bookingOrder.BookingOrderId;
         }
 
         public async Task<BookingOrder> UpdateAsync(BookingOrder bookingOrder)

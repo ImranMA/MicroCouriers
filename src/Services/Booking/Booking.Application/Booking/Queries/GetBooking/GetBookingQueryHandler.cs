@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Booking.Application.Booking.Queries.DTO;
+using Booking.Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Booking.Application.Booking.Queries.GetBooking
 {
-    public class GetBookingQueryHandler : IRequestHandler<GetBookingQuery, string>
+    public class GetBookingQueryHandler : IRequestHandler<GetBookingQuery, BookingOrderDTO>
     {
         private readonly IBookingRespository _context;
 
@@ -16,9 +18,34 @@ namespace Booking.Application.Booking.Queries.GetBooking
             _context = context;
         }
 
-        public async Task<string> Handle(GetBookingQuery request, CancellationToken cancellationToken)
+        public async Task<BookingOrderDTO> Handle(GetBookingQuery request, CancellationToken cancellationToken)
         {
-            return string.Empty;
+            BookingOrder bookingObj = await _context.FindByIdAsync(request.BookingId);
+            
+
+            var bookingDTO = new BookingOrderDTO
+            {
+                BookingOrderId = bookingObj.BookingOrderId,
+                CustomerId = bookingObj.CustomerId               
+            };
+
+            ICollection<BookingOrderDetailDTO> listBoookingDetails = new List<BookingOrderDetailDTO>();
+            foreach (BookingOrderDetail bookdetails in bookingObj.BookingDetails)
+            {
+                var bookingDetailsObj= new BookingOrderDetailDTO
+                {
+                    Price = bookdetails.Price,
+                    Origin = bookdetails.Origin,
+                    Destination = bookdetails.Destination,
+                    PackageType = bookdetails.PackageType
+                };
+
+                listBoookingDetails.Add(bookingDetailsObj);
+            }
+
+            bookingDTO.BookingDetails = listBoookingDetails;
+
+            return bookingDTO;
         }
     }
 }

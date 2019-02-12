@@ -8,7 +8,7 @@ namespace Booking.Application.Booking
 {
     public interface IBookingRespository
     {
-        Task<BookingOrder> AddAsync(BookingOrder bookingOrder);
+        Task<string> AddAsync(BookingOrder bookingOrder);
         Task<BookingOrder> UpdateAsync(BookingOrder bookingOrder);     
         Task<BookingOrder> FindByIdAsync(string bookingOrderId);
     }
