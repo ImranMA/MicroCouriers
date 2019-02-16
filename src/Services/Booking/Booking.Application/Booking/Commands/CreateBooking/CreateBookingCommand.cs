@@ -7,15 +7,13 @@ namespace Booking.Application.Booking.Commands.CreateBooking
 {
     public class CreateBookingCommand : IRequest<string>
     {
-        private readonly ICollection<BookingOrderDetails> BookingDetails;
+        public readonly ICollection<BookingOrderDetails> BookingDetails;
 
         public CreateBookingCommand(string bookingOrderId,string customerId)
-        {
-            BookingOrderId = bookingOrderId;
+        {           
             CustomerId = customerId;
             BookingDetails = new List<BookingOrderDetails>();
         }
-        public string BookingOrderId { get; set; }
 
         public string CustomerId { get; set; }
         

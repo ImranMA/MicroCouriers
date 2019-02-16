@@ -5,6 +5,10 @@ namespace Booking.Domain.AggregatesModel.BookingAggregate
 
     public class BookingOrderDetail
     {
+        public BookingOrderDetail()
+        {
+
+        }
 
         public string BookingOrderDetailId { get; set; }
         public string BookingOrderId { get; set; }

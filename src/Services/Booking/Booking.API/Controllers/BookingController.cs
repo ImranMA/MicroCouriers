@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Booking.Application.Booking.Commands.CreateBooking;
+using Booking.Application.Booking.Commands.UpdateBooking;
 using Booking.Application.Booking.Queries.GetBooking;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -17,9 +18,17 @@ namespace Booking.API.Controllers
           
         // GET: api/Booking
         [HttpGet]
-        public async Task<ActionResult<string>> Get(string bookingId)
+        public async Task<ActionResult<string>> Get(GetBookingQuery booking)
         {
-            return Ok(await Mediator.Send(new GetBookingQuery { BookingId = bookingId }));           
+            try
+            {
+                return Ok(await Mediator.Send(booking));
+            }
+            catch(Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+                       
         }
 
         // GET: api/Booking/5
@@ -39,8 +48,9 @@ namespace Booking.API.Controllers
 
         // PUT: api/Booking/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task Put(string bookingOrderId, [FromBody] UpdateBooking command)
         {
+            await Mediator.Send(command);
         }
 
         // DELETE: api/ApiWithActions/5

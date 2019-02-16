@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Booking.Domain.AggregatesModel.BookingAggregate;
+using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -6,39 +7,24 @@ namespace Booking.Application.Booking.Commands.CreateBooking
 {
     public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand, string>
     {
-        private readonly IBookingRespository _context;
+        private readonly IBookingRespository _bookingContext;
 
         public CreateBookingCommandHandler(IBookingRespository context)
         {
-            _context = context;
+            _bookingContext = context;
         }
 
         public async Task<string> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
         {
-         /*  var entity = new BookingOrder(Guid.NewGuid().ToString(), new BookingOrderDetails())
-            {
-                BookingOrderId = Guid.NewGuid().ToString(),
-                CustomerId = request.CustomerId              
-            };
-
-
+            var bookingOrder = new BookingOrder(request.CustomerId);
+                        
             foreach (BookingOrderDetails bookdetails in request.BookingDetails)
             {
-                var bookingDetailsObj = new BookingOrderDetail
-                {
-                    Price = bookdetails.Price,
-                    Origin = bookdetails.Origin,
-                    Destination = bookdetails.Destination,
-                    PackageType = bookdetails.PackageType
-                };
-
-                entity.BookingDetails.Add(bookingDetailsObj);
+                bookingOrder.AddBookingDetails(bookingOrder.BookingOrderId,
+                    bookdetails.PackageType, bookdetails.Origin, bookdetails.Destination, bookdetails.Price);
             }
 
-
-            return await _context.AddAsync(entity);*/
-
-            return "1";
+            return await _bookingContext.AddAsync(bookingOrder);
         }
     }
 }

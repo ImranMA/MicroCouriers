@@ -22,13 +22,9 @@ namespace Booking.Persistence.Repositories
         }
 
         public async Task<BookingOrder> UpdateAsync(BookingOrder bookingOrder)
-        {
-            bookingOrder =  await _context.Bookings.FindAsync(bookingOrder.BookingOrderId);
-            if (bookingOrder == null)
-            {
-                return bookingOrder;
-            }
-            _context.Entry(bookingOrder).CurrentValues.SetValues(bookingOrder);
+        {            
+            _context.Bookings.Update(bookingOrder);
+            await _context.SaveChangesAsync();
 
             return bookingOrder;
         }

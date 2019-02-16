@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿using Booking.Application.Booking.Queries.DTO;
+using Booking.Domain.AggregatesModel.BookingAggregate;
+using MediatR;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,13 +18,12 @@ namespace Booking.Application.Booking.Queries.GetBooking
 
         public async Task<BookingOrderDTO> Handle(GetBookingQuery request, CancellationToken cancellationToken)
         {
-            /*  BookingOrder bookingObj = await _context.FindByIdAsync(request.BookingId);
-
-
+             BookingOrder bookingObj = await _context.FindByIdAsync(request.BookingId);
+            
               var bookingDTO = new BookingOrderDTO
               {
                   BookingOrderId = bookingObj.BookingOrderId,
-                  CustomerId = bookingObj.CustomerId               
+                  CustomerId = bookingObj.CustomerID               
               };
 
               ICollection<BookingOrderDetailDTO> listBoookingDetails = new List<BookingOrderDetailDTO>();
@@ -40,8 +42,7 @@ namespace Booking.Application.Booking.Queries.GetBooking
 
               bookingDTO.BookingDetails = listBoookingDetails;
 
-              return bookingDTO;*/
-            return new BookingOrderDTO();
+              return bookingDTO;           
         }
     }
 }
