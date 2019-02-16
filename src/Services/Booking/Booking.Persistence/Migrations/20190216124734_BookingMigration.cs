@@ -2,7 +2,7 @@
 
 namespace Booking.Persistence.Migrations
 {
-    public partial class Creation : Migration
+    public partial class BookingMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,9 +11,9 @@ namespace Booking.Persistence.Migrations
                 columns: table => new
                 {
                     BookingOrderId = table.Column<string>(nullable: false),
-                    CustomerId = table.Column<string>(nullable: true),
-                    PaymentId = table.Column<string>(nullable: true),
-                    NotificationId = table.Column<string>(nullable: true)
+                    CustomerID = table.Column<string>(nullable: true),
+                    PaymentID = table.Column<string>(nullable: true),
+                    NotificationID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

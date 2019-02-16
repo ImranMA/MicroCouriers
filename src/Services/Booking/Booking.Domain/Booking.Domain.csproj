@@ -5,8 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Entities\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Infrastructure\" />
+    <Folder Include="AggregatesModel\" />
+    <Folder Include="NewFolder\" />
     <Folder Include="Services\" />
     <Folder Include="ValueObjects\" />
   </ItemGroup>

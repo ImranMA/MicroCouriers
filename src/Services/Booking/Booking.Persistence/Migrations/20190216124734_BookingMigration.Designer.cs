@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Booking.Persistence.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    [Migration("20190208045847_Creation")]
-    partial class Creation
+    [Migration("20190216124734_BookingMigration")]
+    partial class BookingMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,23 +20,23 @@ namespace Booking.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Booking.Domain.Entities.BookingOrder", b =>
+            modelBuilder.Entity("Booking.Domain.AggregatesModel.BookingAggregate.BookingOrder", b =>
                 {
                     b.Property<string>("BookingOrderId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CustomerId");
+                    b.Property<string>("CustomerID");
 
-                    b.Property<string>("NotificationId");
+                    b.Property<string>("NotificationID");
 
-                    b.Property<string>("PaymentId");
+                    b.Property<string>("PaymentID");
 
                     b.HasKey("BookingOrderId");
 
                     b.ToTable("Bookings");
                 });
 
-            modelBuilder.Entity("Booking.Domain.Entities.BookingOrderDetail", b =>
+            modelBuilder.Entity("Booking.Domain.AggregatesModel.BookingAggregate.BookingOrderDetail", b =>
                 {
                     b.Property<string>("BookingOrderDetailId")
                         .ValueGeneratedOnAdd();
@@ -59,9 +59,9 @@ namespace Booking.Persistence.Migrations
                     b.ToTable("BookingsDetails");
                 });
 
-            modelBuilder.Entity("Booking.Domain.Entities.BookingOrderDetail", b =>
+            modelBuilder.Entity("Booking.Domain.AggregatesModel.BookingAggregate.BookingOrderDetail", b =>
                 {
-                    b.HasOne("Booking.Domain.Entities.BookingOrder")
+                    b.HasOne("Booking.Domain.AggregatesModel.BookingAggregate.BookingOrder")
                         .WithMany("BookingDetails")
                         .HasForeignKey("BookingOrderId");
                 });

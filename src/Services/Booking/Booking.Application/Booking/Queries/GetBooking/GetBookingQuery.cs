@@ -1,8 +1,4 @@
-﻿using Booking.Domain.Entities;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MediatR;
 
 namespace Booking.Application.Booking.Queries.GetBooking
 {

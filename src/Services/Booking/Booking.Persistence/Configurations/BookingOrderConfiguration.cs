@@ -1,9 +1,6 @@
-﻿using Booking.Domain.Entities;
+﻿using Booking.Domain.AggregatesModel.BookingAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Booking.Persistence.Configurations
 {

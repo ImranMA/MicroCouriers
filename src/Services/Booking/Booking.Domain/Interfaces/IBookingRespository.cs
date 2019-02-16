@@ -1,4 +1,4 @@
-﻿using Booking.Domain.Entities;
+﻿using Booking.Domain.AggregatesModel.BookingAggregate;
 using System;
 using System.Collections.Generic;
 using System.Text;
