@@ -1,6 +1,6 @@
 # MicroCouriers
 
-I am working on the sample app to demonstrate the  Architectural and design patterns. The purpose of this application is to create microservices
+MicroCouriers is finctional courier service used to book and track orders. I am working on the sample app to demonstrate the  Architectural and design patterns. The purpose of this application is to create microservices
 and deploy the application on Kubernetes with complete build pipeline. 
 
 * DDD
