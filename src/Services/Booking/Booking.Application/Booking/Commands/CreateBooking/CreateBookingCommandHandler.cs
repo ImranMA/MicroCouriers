@@ -16,12 +16,12 @@ namespace Booking.Application.Booking.Commands.CreateBooking
         private readonly IMediator _mediator;
         private readonly IEventBus _eventBus;
         public CreateBookingCommandHandler(IMediator mediator, IBookingRespository context,
-           IEventBus eventBus)
+           IEventBus eventBus, IBookingIntegrationEventService bookingIntegrationEventService)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _bookingContext = context;
             _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-            //_bookingIntegrationEventService = bookingIntegrationEventService ?? throw new ArgumentNullException(nameof(bookingIntegrationEventService));
+            _bookingIntegrationEventService = bookingIntegrationEventService ?? throw new ArgumentNullException(nameof(bookingIntegrationEventService));
         }
 
         public async Task<string> Handle(CreateBookingCommand request, CancellationToken cancellationToken)

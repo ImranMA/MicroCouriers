@@ -24,11 +24,11 @@ namespace Booking.Application.IntegrationEvents
         private readonly IIntegrationEventLogService _eventLogService;
 
         public BookingIntegrationEventService(IEventBus eventBus,
-            BookingDbContext orderingContext,
+            BookingDbContext bookingContext,
             IntegrationEventLogContext eventLogContext,
             Func<DbConnection, IIntegrationEventLogService> integrationEventLogServiceFactory)
         {
-            _bookingContext = orderingContext ?? throw new ArgumentNullException(nameof(orderingContext));
+            _bookingContext = bookingContext ?? throw new ArgumentNullException(nameof(bookingContext));
             _eventLogContext = eventLogContext ?? throw new ArgumentNullException(nameof(eventLogContext));
             _integrationEventLogServiceFactory = integrationEventLogServiceFactory ?? throw new ArgumentNullException(nameof(integrationEventLogServiceFactory));
             _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));

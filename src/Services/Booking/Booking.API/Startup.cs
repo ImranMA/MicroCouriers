@@ -47,15 +47,13 @@ namespace Booking.API
         {
             services.
                 AddCustomOptions(Configuration).
-                AddIntegrationServices(Configuration).
+               
+                AddIntegrationServices(Configuration)
+                .AddCustomDbContext(Configuration).
                 RegisterEventBus(Configuration).
                 AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
            
-
-            // Add DbContext using SQL Server Provider
-            services.AddDbContext<BookingDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("MicroCouriersDataBase")));
 
 
             //Add Repos
@@ -65,13 +63,14 @@ namespace Booking.API
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
-           // services.AddMediatR(typeof(GetBookingQueryHandler).GetTypeInfo().Assembly);
-            //services.AddMediatR(typeof(CreateBookingCommandHandler).GetTypeInfo().Assembly);
+             services.AddMediatR(typeof(GetBookingQueryHandler).GetTypeInfo().Assembly);
+             services.AddMediatR(typeof(CreateBookingCommandHandler).GetTypeInfo().Assembly);
 
             var container = new ContainerBuilder();
             container.Populate(services);
 
             container.RegisterModule(new MediatorModule());
+            //container.RegisterModule(new ApplicationModule(Configuration.GetConnectionString("MicroCouriersDataBase")));
 
             return new AutofacServiceProvider(container.Build());   
 
@@ -126,10 +125,16 @@ namespace Booking.API
 
         public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
         {
+
+            // Add DbContext using SQL Server Provider
+            services.AddDbContext<BookingDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase")));
+
+
             services.AddEntityFrameworkSqlServer()
                    .AddDbContext<BookingDbContext>(options =>
                    {
-                       options.UseSqlServer(configuration["ConnectionString"],
+                       options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase"),
                            sqlServerOptionsAction: sqlOptions =>
                            {
                                sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
@@ -141,7 +146,7 @@ namespace Booking.API
 
             services.AddDbContext<IntegrationEventLogContext>(options =>
             {
-                options.UseSqlServer(configuration["ConnectionString"],
+                options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase"),
                                      sqlServerOptionsAction: sqlOptions =>
                                      {
                                          sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
