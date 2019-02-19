@@ -25,7 +25,11 @@ namespace Booking.Persistence.Migrations
 
                     b.Property<string>("CustomerID");
 
+                    b.Property<string>("Destination");
+
                     b.Property<string>("NotificationID");
+
+                    b.Property<string>("Origin");
 
                     b.Property<string>("PaymentID");
 
@@ -41,9 +45,7 @@ namespace Booking.Persistence.Migrations
 
                     b.Property<string>("BookingOrderId");
 
-                    b.Property<string>("Destination");
-
-                    b.Property<string>("Origin");
+                    b.Property<string>("PackageDescription");
 
                     b.Property<string>("PackageType");
 

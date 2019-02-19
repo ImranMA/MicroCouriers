@@ -13,18 +13,16 @@ namespace Booking.Domain.AggregatesModel.BookingAggregate
         public string BookingOrderDetailId { get; set; }
         public string BookingOrderId { get; set; }
         public string PackageType { get; set; }
-        public string Origin { get; set; }
-        public string Destination { get; set; }
+        public string PackageDescription { get; set; }
         public decimal Price { get; set; }
 
-        public BookingOrderDetail(string bookingOrderId, string packageType, string origin,
-           string destination, decimal price)
+        public BookingOrderDetail(string bookingOrderId, string packageType, 
+           string packageDescription, decimal price)
         {
             BookingOrderDetailId = Guid.NewGuid().ToString();
             BookingOrderId = bookingOrderId;
             PackageType = packageType;
-            Destination = destination;
-            Origin = origin;
+            PackageDescription = packageDescription;
             Price = price;
         }
 

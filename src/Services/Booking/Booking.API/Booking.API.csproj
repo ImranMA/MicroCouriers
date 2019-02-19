@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.1" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.3.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
@@ -15,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBusServiceBus\EventBusServiceBus.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus\EventBus.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\IntegrationEventLogEF\IntegrationEventLogEF.csproj" />
     <ProjectReference Include="..\Booking.Application\Booking.Application.csproj" />
     <ProjectReference Include="..\Booking.Common\Booking.Common.csproj" />
     <ProjectReference Include="..\Booking.Infrastructure\Booking.Infrastructure.csproj" />

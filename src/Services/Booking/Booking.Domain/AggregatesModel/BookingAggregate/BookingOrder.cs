@@ -13,20 +13,25 @@ namespace Booking.Domain.AggregatesModel.BookingAggregate
         public string CustomerID { get; set; }
         public string PaymentID { get; set; }
         public string NotificationID { get; set; }
+        public string Origin { get; set; }
+        public string Destination { get; set; }
 
         public BookingOrder()
         {
             _bookingDetails = new List<BookingOrderDetail>();
         }
 
-        public BookingOrder(string paymentID,string notificationID, string bookingOrderId)
+        /*public BookingOrder(string paymentID,string notificationID, 
+            string bookingOrderId,string origin, string destination)
         {
             BookingOrderId = bookingOrderId;
             PaymentID = paymentID;
             NotificationID = notificationID;
-        }
+            Origin = origin;
+            Destination = destination;
+        }*/
 
-        public BookingOrder(string customerId)
+        public BookingOrder(string customerId, string origin, string destination)
         {
             BookingOrderId = Guid.NewGuid().ToString();
             CustomerID = customerId;
@@ -35,10 +40,10 @@ namespace Booking.Domain.AggregatesModel.BookingAggregate
 
 
 
-        public void AddBookingDetails(string BookingOrderId, string PackageType, string Origin,
-            string Destination, decimal Price)
+        public void AddBookingDetails(string bookingOrderId, string packageType, 
+            string packageDesc, decimal price)
         {
-            var bookingOrderDetail = new BookingOrderDetail(BookingOrderId, PackageType, Origin, Destination, Price);
+            var bookingOrderDetail = new BookingOrderDetail(bookingOrderId, packageType, packageDesc, price);
             _bookingDetails.Add(bookingOrderDetail);
         }
 

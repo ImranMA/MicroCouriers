@@ -15,6 +15,8 @@ namespace Booking.Application.Booking.Commands.CreateBooking
             BookingDetails = new List<BookingOrderDetails>();
         }
 
+        public string Origin { get; set; }
+        public string Destination { get; set; }
         public string CustomerId { get; set; }
         
     }
@@ -22,8 +24,7 @@ namespace Booking.Application.Booking.Commands.CreateBooking
     public class BookingOrderDetails
     {
         public string PackageType { get; set; }
-        public string Origin { get; set; }
-        public string Destination { get; set; }
+        public string PackageDescription { get; set; }    
         public decimal Price { get; set; }
     }
 }

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Booking.Persistence.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    [Migration("20190216124734_BookingMigration")]
-    partial class BookingMigration
+    [Migration("20190219043535_InitialBooking")]
+    partial class InitialBooking
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,7 +27,11 @@ namespace Booking.Persistence.Migrations
 
                     b.Property<string>("CustomerID");
 
+                    b.Property<string>("Destination");
+
                     b.Property<string>("NotificationID");
+
+                    b.Property<string>("Origin");
 
                     b.Property<string>("PaymentID");
 
@@ -43,9 +47,7 @@ namespace Booking.Persistence.Migrations
 
                     b.Property<string>("BookingOrderId");
 
-                    b.Property<string>("Destination");
-
-                    b.Property<string>("Origin");
+                    b.Property<string>("PackageDescription");
 
                     b.Property<string>("PackageType");
 

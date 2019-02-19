@@ -18,11 +18,11 @@ namespace Booking.API.Controllers
           
         // GET: api/Booking
         [HttpGet]
-        public async Task<ActionResult<string>> Get(GetBookingQuery booking)
+        public async Task<ActionResult<string>> Get(string Id)
         {
             try
             {
-                return Ok(await Mediator.Send(booking));
+                return Ok(await Mediator.Send(new GetBookingQuery() { BookingId = Id }));
             }
             catch(Exception ex)
             {
@@ -41,9 +41,16 @@ namespace Booking.API.Controllers
         // POST: api/products
         [HttpPost]
         public async Task<ActionResult<string>> Create([FromBody] CreateBookingCommand command)
-        {   
-            var bookingOrderId = await Mediator.Send(command);
-            return Ok(bookingOrderId);
+        {
+            try
+            {
+                var bookingOrderId = await Mediator.Send(command);
+                return Ok(bookingOrderId);
+            }
+            catch(Exception ex){
+                return NotFound();
+            }
+            
         }
 
         // PUT: api/Booking/5

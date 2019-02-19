@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus\EventBus.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\IntegrationEventLogEF\IntegrationEventLogEF.csproj" />
     <ProjectReference Include="..\Booking.Domain\Booking.Domain.csproj" />
     <ProjectReference Include="..\Booking.Persistence\Booking.Persistence.csproj" />
   </ItemGroup>

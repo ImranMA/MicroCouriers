@@ -32,8 +32,7 @@ namespace Booking.Application.Booking.Queries.GetBooking
                   var bookingDetailsObj= new BookingOrderDetailDTO
                   {
                       Price = bookdetails.Price,
-                      Origin = bookdetails.Origin,
-                      Destination = bookdetails.Destination,
+                      Origin = bookdetails.PackageDescription,                  
                       PackageType = bookdetails.PackageType
                   };
 
