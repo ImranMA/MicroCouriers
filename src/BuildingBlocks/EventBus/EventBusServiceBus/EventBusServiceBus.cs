@@ -19,7 +19,7 @@
         private readonly IEventBusSubscriptionsManager _subsManager;
         private readonly SubscriptionClient _subscriptionClient;
         private readonly ILifetimeScope _autofac;
-        private readonly string AUTOFAC_SCOPE_NAME = "eshop_event_bus";
+        private readonly string AUTOFAC_SCOPE_NAME = "microcourier_event_bus";
         private const string INTEGRATION_EVENT_SUFIX = "IntegrationEvent";
 
         public EventBusServiceBus(IServiceBusPersisterConnection serviceBusPersisterConnection,
@@ -53,9 +53,9 @@
 
             var topicClient = _serviceBusPersisterConnection.CreateModel();
 
-            topicClient.SendAsync(message)
-                .GetAwaiter()
-                .GetResult();
+            topicClient.SendAsync(message);
+                //.GetAwaiter()
+               // .GetResult();
         }
 
         public void SubscribeDynamic<TH>(string eventName)

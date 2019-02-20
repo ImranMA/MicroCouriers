@@ -28,10 +28,23 @@ namespace Microsoft.eShopOnContainers.BuildingBlocks.IntegrationEventLogEF.Servi
                     .ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning))
                     .Options);
 
-            _eventTypes = Assembly.Load(Assembly.GetEntryAssembly().FullName)
-                .GetTypes()
-                .Where(t => t.Name.EndsWith(nameof(IntegrationEvent)))
-                .ToList();
+            var assemblies = Assembly.GetEntryAssembly().GetReferencedAssemblies();
+
+            foreach (var assemblyName in assemblies)
+            {
+                //using Clean Architecture , expecting the Application DLL
+                if (assemblyName.Name.ToLower().Contains(".application"))
+                {
+                  
+                    _eventTypes = Assembly.Load(assemblyName.FullName)
+                      .GetTypes()
+                      .Where(t => t.Name.EndsWith(nameof(IntegrationEvent)))
+                      .ToList();                  
+
+                }
+
+            }          
+       
         }
 
         public async Task<IEnumerable<IntegrationEventLogEntry>> RetrieveEventLogsPendingToPublishAsync()

@@ -69,7 +69,7 @@ namespace Booking.API
             var container = new ContainerBuilder();
             container.Populate(services);
 
-            container.RegisterModule(new MediatorModule());
+            //container.RegisterModule(new MediatorModule());
             //container.RegisterModule(new ApplicationModule(Configuration.GetConnectionString("MicroCouriersDataBase")));
 
             return new AutofacServiceProvider(container.Build());   
@@ -130,31 +130,32 @@ namespace Booking.API
             services.AddDbContext<BookingDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase")));
 
+            /*
+           services.AddEntityFrameworkSqlServer()
+                  .AddDbContext<BookingDbContext>(options =>
+                  {
+                      options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase"),
+                          sqlServerOptionsAction: sqlOptions =>
+                          {
+                              sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                              sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                          });
+                  },
+                      ServiceLifetime.Scoped  //Showing explicitly that the DbContext is shared across the HTTP request scope (graph of objects started in the HTTP request)
+                  );
 
-            services.AddEntityFrameworkSqlServer()
-                   .AddDbContext<BookingDbContext>(options =>
-                   {
-                       options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase"),
-                           sqlServerOptionsAction: sqlOptions =>
-                           {
-                               sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
-                               sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
-                           });
-                   },
-                       ServiceLifetime.Scoped  //Showing explicitly that the DbContext is shared across the HTTP request scope (graph of objects started in the HTTP request)
-                   );
 
-            services.AddDbContext<IntegrationEventLogContext>(options =>
-            {
-                options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase"),
-                                     sqlServerOptionsAction: sqlOptions =>
-                                     {
-                                         sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
-                                         //Configuring Connection Resiliency: https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency 
-                                         sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
-                                     });
-            });
-
+           services.AddDbContext<IntegrationEventLogContext>(options =>
+           {
+               options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase"),
+                                    sqlServerOptionsAction: sqlOptions =>
+                                    {
+                                        sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                                        //Configuring Connection Resiliency: https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency 
+                                        sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                                    });
+           });
+           */
             return services;
         }
 

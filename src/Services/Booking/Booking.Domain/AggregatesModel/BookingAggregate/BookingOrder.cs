@@ -35,6 +35,8 @@ namespace Booking.Domain.AggregatesModel.BookingAggregate
         {
             BookingOrderId = Guid.NewGuid().ToString();
             CustomerID = customerId;
+            Origin = origin;
+            Destination = destination;
            _bookingDetails = new List<BookingOrderDetail>();
         }
 

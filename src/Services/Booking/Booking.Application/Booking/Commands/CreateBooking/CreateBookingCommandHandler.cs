@@ -16,12 +16,12 @@ namespace Booking.Application.Booking.Commands.CreateBooking
         private readonly IMediator _mediator;
         private readonly IEventBus _eventBus;
         public CreateBookingCommandHandler(IMediator mediator, IBookingRespository context,
-           IEventBus eventBus, IBookingIntegrationEventService bookingIntegrationEventService)
+           IEventBus eventBus)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _bookingContext = context;
             _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-            _bookingIntegrationEventService = bookingIntegrationEventService ?? throw new ArgumentNullException(nameof(bookingIntegrationEventService));
+           // _bookingIntegrationEventService = bookingIntegrationEventService ?? throw new ArgumentNullException(nameof(bookingIntegrationEventService));
         }
 
         public async Task<string> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
@@ -35,9 +35,10 @@ namespace Booking.Application.Booking.Commands.CreateBooking
             }
 
             var bookingAddIntegrationEvent = new BookingAddIntegrationEvent(bookingOrder.BookingOrderId, bookingOrder.Origin, bookingOrder.Destination);
-            await _bookingIntegrationEventService.AddAndSaveEventAsync(bookingAddIntegrationEvent);
+            //await _bookingIntegrationEventService.AddAndSaveEventAsync(bookingAddIntegrationEvent);
             var booking = await _bookingContext.AddAsync(bookingOrder);
-            await _bookingIntegrationEventService.PublishEventsThroughEventBusAsync();
+            _eventBus.Publish(bookingAddIntegrationEvent);
+            
 
             return booking;
         }
