@@ -15,31 +15,23 @@ namespace Booking.Domain.AggregatesModel.BookingAggregate
         public string NotificationID { get; set; }
         public string Origin { get; set; }
         public string Destination { get; set; }
+        public bookingStateEnum BookingState { get; set; }
 
         public BookingOrder()
         {
             _bookingDetails = new List<BookingOrderDetail>();
         }
+        
 
-        /*public BookingOrder(string paymentID,string notificationID, 
-            string bookingOrderId,string origin, string destination)
-        {
-            BookingOrderId = bookingOrderId;
-            PaymentID = paymentID;
-            NotificationID = notificationID;
-            Origin = origin;
-            Destination = destination;
-        }*/
-
-        public BookingOrder(string customerId, string origin, string destination)
+        public BookingOrder(string customerId, string origin, string destination, bookingStateEnum bookingState)
         {
             BookingOrderId = Guid.NewGuid().ToString();
             CustomerID = customerId;
             Origin = origin;
             Destination = destination;
+            BookingState = bookingState;
            _bookingDetails = new List<BookingOrderDetail>();
         }
-
 
 
         public void AddBookingDetails(string bookingOrderId, string packageType, 

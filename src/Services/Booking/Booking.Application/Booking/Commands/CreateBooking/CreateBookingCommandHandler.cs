@@ -1,6 +1,7 @@
 ﻿using Booking.Application.IntegrationEvents;
 using Booking.Application.IntegrationEvents.Events;
 using Booking.Domain.AggregatesModel.BookingAggregate;
+using Booking.Domain.Booking;
 using MediatR;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
 using System;
@@ -12,7 +13,7 @@ namespace Booking.Application.Booking.Commands.CreateBooking
     public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand, string>
     {
         private readonly IBookingRespository _bookingContext;
-        private readonly IBookingIntegrationEventService _bookingIntegrationEventService;
+        //private readonly IBookingIntegrationEventService _bookingIntegrationEventService;
         private readonly IMediator _mediator;
         private readonly IEventBus _eventBus;
         public CreateBookingCommandHandler(IMediator mediator, IBookingRespository context,
@@ -26,17 +27,30 @@ namespace Booking.Application.Booking.Commands.CreateBooking
 
         public async Task<string> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
         {
-            var bookingOrder = new BookingOrder(request.CustomerId, request.Origin,request.Destination);
+
+            //Create Agreegate Root
+            var bookingOrder = new BookingOrder(request.CustomerId, request.Origin,request.Destination 
+                , bookingStateEnum.Pending);
                         
+
+            //Add Order Details
             foreach (BookingOrderDetails bookdetails in request.BookingDetails)
             {
                 bookingOrder.AddBookingDetails(bookingOrder.BookingOrderId,
                     bookdetails.PackageType, bookdetails.PackageDescription, bookdetails.Price);
             }
 
-            var bookingAddIntegrationEvent = new BookingAddIntegrationEvent(bookingOrder.BookingOrderId, bookingOrder.Origin, bookingOrder.Destination);
-            //await _bookingIntegrationEventService.AddAndSaveEventAsync(bookingAddIntegrationEvent);
+            //Create Integration Event
+            var bookingAddIntegrationEvent = new BookingAddIntegrationEvent(bookingOrder.BookingOrderId, 
+                bookingOrder.Origin,
+                bookingOrder.Destination);
+          
+            
+            //Save the Data in local DB
             var booking = await _bookingContext.AddAsync(bookingOrder);
+
+
+            //Publish Event to Service Bus Topic
             _eventBus.Publish(bookingAddIntegrationEvent);
             
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Booking.Application.Booking
+namespace Booking.Domain.Booking
 {
     public interface IBookingRespository
     {

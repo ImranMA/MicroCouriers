@@ -15,7 +15,8 @@ namespace Booking.Persistence.Migrations
                     PaymentID = table.Column<string>(nullable: true),
                     NotificationID = table.Column<string>(nullable: true),
                     Origin = table.Column<string>(nullable: true),
-                    Destination = table.Column<string>(nullable: true)
+                    Destination = table.Column<string>(nullable: true),
+                    BookingState = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

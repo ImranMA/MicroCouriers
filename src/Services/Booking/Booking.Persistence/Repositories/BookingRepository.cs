@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Booking.Application.Booking;
+using Booking.Domain.Booking;
 using Booking.Domain.AggregatesModel.BookingAggregate;
 
 namespace Booking.Persistence.Repositories

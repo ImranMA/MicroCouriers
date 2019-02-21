@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Booking.Domain.AggregatesModel.BookingAggregate;
+using Booking.Domain.Booking;
 using MediatR;
 
 namespace Booking.Application.Booking.Commands.UpdateBooking

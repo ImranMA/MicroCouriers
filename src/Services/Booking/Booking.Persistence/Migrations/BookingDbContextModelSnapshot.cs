@@ -23,6 +23,8 @@ namespace Booking.Persistence.Migrations
                     b.Property<string>("BookingOrderId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("BookingState");
+
                     b.Property<string>("CustomerID");
 
                     b.Property<string>("Destination");

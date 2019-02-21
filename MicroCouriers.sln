@@ -31,15 +31,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tracking", "Tracking", "{CD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tracking.API", "src\Services\Tracking\Tracking.API\Tracking.API.csproj", "{98FA57AE-4571-4EA0-952E-39EEC1A952DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.Infrastructure", "src\Services\Booking\Booking.Infrastructure\Booking.Infrastructure.csproj", "{5496DA94-34C3-43A8-8861-2E8D8C430132}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.Infrastructure", "src\Services\Booking\Booking.Infrastructure\Booking.Infrastructure.csproj", "{5496DA94-34C3-43A8-8861-2E8D8C430132}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.Application", "src\Services\Booking\Booking.Application\Booking.Application.csproj", "{C39125FD-2179-4904-A7C3-DF91063B8A66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.Application", "src\Services\Booking\Booking.Application\Booking.Application.csproj", "{C39125FD-2179-4904-A7C3-DF91063B8A66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.Domain", "src\Services\Booking\Booking.Domain\Booking.Domain.csproj", "{429FDA36-472E-49F4-BD88-77885A4A5446}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.Domain", "src\Services\Booking\Booking.Domain\Booking.Domain.csproj", "{429FDA36-472E-49F4-BD88-77885A4A5446}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.Persistence", "src\Services\Booking\Booking.Persistence\Booking.Persistence.csproj", "{221D8DD8-AA1A-45DF-A997-B3E06DC4B5A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.Persistence", "src\Services\Booking\Booking.Persistence\Booking.Persistence.csproj", "{221D8DD8-AA1A-45DF-A997-B3E06DC4B5A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.Common", "src\Services\Booking\Booking.Common\Booking.Common.csproj", "{D3786C56-BCAD-49A3-858A-E3501BC33095}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.Common", "src\Services\Booking\Booking.Common\Booking.Common.csproj", "{D3786C56-BCAD-49A3-858A-E3501BC33095}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payment", "Payment", "{627B4517-E86F-4C5E-8932-48914A73535B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.API", "src\Services\Payment\Payment.API\Payment.API.csproj", "{42E6677C-F4CB-4256-8216-5F5B9AAD30A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Domain", "src\Services\Payment\Payment.Domain\Payment.Domain.csproj", "{2852B6F1-468A-493F-8C92-944DBDB2C071}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Persistence", "src\Services\Payment\Payment.Persistence\Payment.Persistence.csproj", "{0398F8C0-A1C6-462F-9CBB-49F8DEA98F06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Application", "src\Services\Payment\Payment.Application\Payment.Application.csproj", "{295BE563-F92C-42F7-A34E-54C2ADCCEBFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +97,22 @@ Global
 		{D3786C56-BCAD-49A3-858A-E3501BC33095}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3786C56-BCAD-49A3-858A-E3501BC33095}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3786C56-BCAD-49A3-858A-E3501BC33095}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42E6677C-F4CB-4256-8216-5F5B9AAD30A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42E6677C-F4CB-4256-8216-5F5B9AAD30A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42E6677C-F4CB-4256-8216-5F5B9AAD30A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42E6677C-F4CB-4256-8216-5F5B9AAD30A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2852B6F1-468A-493F-8C92-944DBDB2C071}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2852B6F1-468A-493F-8C92-944DBDB2C071}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2852B6F1-468A-493F-8C92-944DBDB2C071}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2852B6F1-468A-493F-8C92-944DBDB2C071}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0398F8C0-A1C6-462F-9CBB-49F8DEA98F06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0398F8C0-A1C6-462F-9CBB-49F8DEA98F06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0398F8C0-A1C6-462F-9CBB-49F8DEA98F06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0398F8C0-A1C6-462F-9CBB-49F8DEA98F06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{295BE563-F92C-42F7-A34E-54C2ADCCEBFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{295BE563-F92C-42F7-A34E-54C2ADCCEBFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{295BE563-F92C-42F7-A34E-54C2ADCCEBFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{295BE563-F92C-42F7-A34E-54C2ADCCEBFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +135,11 @@ Global
 		{429FDA36-472E-49F4-BD88-77885A4A5446} = {6C03A784-9997-48A4-A4C1-035E4E413F29}
 		{221D8DD8-AA1A-45DF-A997-B3E06DC4B5A2} = {6C03A784-9997-48A4-A4C1-035E4E413F29}
 		{D3786C56-BCAD-49A3-858A-E3501BC33095} = {6C03A784-9997-48A4-A4C1-035E4E413F29}
+		{627B4517-E86F-4C5E-8932-48914A73535B} = {79411553-3052-439E-A4C3-09D3734EC560}
+		{42E6677C-F4CB-4256-8216-5F5B9AAD30A5} = {627B4517-E86F-4C5E-8932-48914A73535B}
+		{2852B6F1-468A-493F-8C92-944DBDB2C071} = {627B4517-E86F-4C5E-8932-48914A73535B}
+		{0398F8C0-A1C6-462F-9CBB-49F8DEA98F06} = {627B4517-E86F-4C5E-8932-48914A73535B}
+		{295BE563-F92C-42F7-A34E-54C2ADCCEBFA} = {627B4517-E86F-4C5E-8932-48914A73535B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E13E4D21-76D2-45C9-B2EC-29A70284CD9E}

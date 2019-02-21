@@ -1,5 +1,6 @@
 ﻿using Booking.Application.Booking.Queries.DTO;
 using Booking.Domain.AggregatesModel.BookingAggregate;
+using Booking.Domain.Booking;
 using MediatR;
 using System.Collections.Generic;
 using System.Threading;

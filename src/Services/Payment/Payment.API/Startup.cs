@@ -2,20 +2,9 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Booking.API.Infrastructure.AutofacModules;
-using Booking.Application.Booking;
-using Booking.Application.Booking.Commands.CreateBooking;
-using Booking.Application.Booking.Queries.GetBooking;
-using Booking.Application.IntegrationEvents;
-using Booking.Domain.Booking;
-using Booking.Persistence;
-using Booking.Persistence.Repositories;
-using MediatR;
-using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,8 +20,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Payment.Application.IntegrationEvents;
+using Payment.Persistence;
 
-namespace Booking.API
+namespace Payment.API
 {
     public class Startup
     {
@@ -47,33 +38,15 @@ namespace Booking.API
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.
-                AddCustomOptions(Configuration).
-
-                AddIntegrationServices(Configuration)
-                .AddCustomDbContext(Configuration).
-                RegisterEventBus(Configuration).
-                AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-
-            //Add Repos
-            services.AddScoped<IBookingRespository, BookingRepository>();
-
-            // Add MediatR and handlers
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
-            services.AddMediatR(typeof(GetBookingQueryHandler).GetTypeInfo().Assembly);
-            services.AddMediatR(typeof(CreateBookingCommandHandler).GetTypeInfo().Assembly);
+                  AddCustomOptions(Configuration).
+                  AddIntegrationServices(Configuration)
+                  .AddCustomDbContext(Configuration).
+                  RegisterEventBus(Configuration).
+                  AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             var container = new ContainerBuilder();
             container.Populate(services);
-
-            //container.RegisterModule(new MediatorModule());
-            //container.RegisterModule(new ApplicationModule(Configuration.GetConnectionString("MicroCouriersDataBase")));
-
             return new AutofacServiceProvider(container.Build());
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -91,7 +64,7 @@ namespace Booking.API
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            //eventBus.Subscribe<OrderPlaceIntegrationEvent, OrderPlaceIntegrationEventHandler>();
+            eventBus.Subscribe<BookingAddIntegrationEvent, BookingAddIntegrationEventHandler>();
             //eventBus.Subscribe<CustomerAddIntegrationEvent, CustomerAddIntegrationEventHandler>();
 
         }
@@ -104,10 +77,10 @@ namespace Booking.API
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            //services.AddTransient<Func<DbConnection, IIntegrationEventLogService>>(
-               // sp => (DbConnection c) => new IntegrationEventLogService(c));
+           // services.AddTransient<Func<DbConnection, IIntegrationEventLogService>>(
+                //sp => (DbConnection c) => new IntegrationEventLogService(c));
 
-            //services.AddTransient<IBookingIntegrationEventService, BookingIntegrationEventService>();
+           // services.AddTransient<IBookingIntegrationEventService, BookingIntegrationEventService>();
 
             services.AddSingleton<IServiceBusPersisterConnection>(sp =>
             {
@@ -126,37 +99,9 @@ namespace Booking.API
         {
 
             // Add DbContext using SQL Server Provider
-            //services.AddDbContext<BookingDbContext>(options =>
-               // options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase")));
+            services.AddDbContext<PaymentDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase"), x => x.MigrationsAssembly("Payment.Persistence")));
 
-            services.AddDbContext<BookingDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase"), x => x.MigrationsAssembly("Booking.Persistence")));
-            /*
-           services.AddEntityFrameworkSqlServer()
-                  .AddDbContext<BookingDbContext>(options =>
-                  {
-                      options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase"),
-                          sqlServerOptionsAction: sqlOptions =>
-                          {
-                              sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
-                              sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
-                          });
-                  },
-                      ServiceLifetime.Scoped  //Showing explicitly that the DbContext is shared across the HTTP request scope (graph of objects started in the HTTP request)
-                  );
-
-
-           services.AddDbContext<IntegrationEventLogContext>(options =>
-           {
-               options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase"),
-                                    sqlServerOptionsAction: sqlOptions =>
-                                    {
-                                        sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
-                                        //Configuring Connection Resiliency: https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency 
-                                        sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
-                                    });
-           });
-           */
             return services;
         }
 
@@ -176,7 +121,7 @@ namespace Booking.API
             });
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
-            //services.AddTransient<OrderPlaceIntegrationEventHandler>();
+            services.AddTransient<BookingAddIntegrationEventHandler>();
             //services.AddTransient<CustomerAddIntegrationEventHandler>();
 
             return services;

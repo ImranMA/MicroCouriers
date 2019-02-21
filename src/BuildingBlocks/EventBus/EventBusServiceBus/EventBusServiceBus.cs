@@ -53,9 +53,9 @@
 
             var topicClient = _serviceBusPersisterConnection.CreateModel();
 
-            topicClient.SendAsync(message);
-                //.GetAwaiter()
-               // .GetResult();
+            topicClient.SendAsync(message)
+                .GetAwaiter()
+                .GetResult();
         }
 
         public void SubscribeDynamic<TH>(string eventName)
