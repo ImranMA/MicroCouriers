@@ -21,7 +21,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Payment.Application.IntegrationEvents;
+using Payment.Application.Interface;
+using Payment.Application.PaymentService;
+using Payment.Domain.Interfaces;
+using Payment.Infrastructure.PaymentProcessing;
 using Payment.Persistence;
+using Payment.Persistence.Repositories;
 
 namespace Payment.API
 {
@@ -44,6 +49,13 @@ namespace Payment.API
                   RegisterEventBus(Configuration).
                   AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+
+            //Add Repos
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IPaymentExternalGateway, PaymentExternalGateway>();
+            services.AddScoped<IPaymentRepository, PaymentsRepository>();
+
+
             var container = new ContainerBuilder();
             container.Populate(services);
             return new AutofacServiceProvider(container.Build());
@@ -64,7 +76,7 @@ namespace Payment.API
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.Subscribe<BookingAddIntegrationEvent, BookingAddIntegrationEventHandler>();
+            //eventBus.Subscribe<BookingAddIntegrationEvent, BookingAddIntegrationEventHandler>();
             //eventBus.Subscribe<CustomerAddIntegrationEvent, CustomerAddIntegrationEventHandler>();
 
         }
@@ -121,7 +133,7 @@ namespace Payment.API
             });
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
-            services.AddTransient<BookingAddIntegrationEventHandler>();
+           // services.AddTransient<BookingAddIntegrationEventHandler>();
             //services.AddTransient<CustomerAddIntegrationEventHandler>();
 
             return services;

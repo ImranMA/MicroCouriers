@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Booking.Domain.Booking;
 using Booking.Domain.AggregatesModel.BookingAggregate;
+using System;
 
 namespace Booking.Persistence.Repositories
 {
@@ -15,6 +16,8 @@ namespace Booking.Persistence.Repositories
 
         public async Task<string> AddAsync(BookingOrder bookingOrder)
         {
+            bookingOrder.CreatedDate = DateTime.Now;
+
             _context.Set<BookingOrder>().Add(bookingOrder);
             await _context.SaveChangesAsync();
 
@@ -22,7 +25,9 @@ namespace Booking.Persistence.Repositories
         }
 
         public async Task<BookingOrder> UpdateAsync(BookingOrder bookingOrder)
-        {            
+        {
+            bookingOrder.UpdatedDate = DateTime.Now;
+
             _context.Bookings.Update(bookingOrder);
             await _context.SaveChangesAsync();
 

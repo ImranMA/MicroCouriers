@@ -18,11 +18,12 @@ namespace Booking.API.Controllers
           
         // GET: api/Booking
         [HttpGet]
-        public async Task<ActionResult<string>> Get(string Id)
+        public async Task<ActionResult<BookingOrderDTO>> Get(string Id)
         {
             try
             {
-                return Ok(await Mediator.Send(new GetBookingQuery() { BookingId = Id }));
+                var resultSet = await Mediator.Send(new GetBookingQuery() { BookingId = Id });
+                return Ok(resultSet);
             }
             catch(Exception ex)
             {

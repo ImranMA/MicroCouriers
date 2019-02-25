@@ -11,6 +11,7 @@ using Booking.Application.Booking;
 using Booking.Application.Booking.Commands.CreateBooking;
 using Booking.Application.Booking.Queries.GetBooking;
 using Booking.Application.IntegrationEvents;
+using Booking.Application.IntegrationEvents.Events;
 using Booking.Domain.Booking;
 using Booking.Persistence;
 using Booking.Persistence.Repositories;
@@ -91,7 +92,7 @@ namespace Booking.API
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            //eventBus.Subscribe<OrderPlaceIntegrationEvent, OrderPlaceIntegrationEventHandler>();
+            eventBus.Subscribe<PaymentProcessedIntegrationEvent, PaymentProcessedIntegrationEventHandler>();
             //eventBus.Subscribe<CustomerAddIntegrationEvent, CustomerAddIntegrationEventHandler>();
 
         }
@@ -176,7 +177,7 @@ namespace Booking.API
             });
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
-            //services.AddTransient<OrderPlaceIntegrationEventHandler>();
+            services.AddTransient<PaymentProcessedIntegrationEventHandler>();
             //services.AddTransient<CustomerAddIntegrationEventHandler>();
 
             return services;

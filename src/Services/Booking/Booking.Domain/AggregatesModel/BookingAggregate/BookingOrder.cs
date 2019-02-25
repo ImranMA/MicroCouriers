@@ -15,7 +15,12 @@ namespace Booking.Domain.AggregatesModel.BookingAggregate
         public string NotificationID { get; set; }
         public string Origin { get; set; }
         public string Destination { get; set; }
+
         public bookingStateEnum BookingState { get; set; }
+
+        public DateTime CreatedDate { get;  set; }
+
+        public DateTime? UpdatedDate { get; set; }
 
         public BookingOrder()
         {

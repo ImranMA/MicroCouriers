@@ -7,9 +7,9 @@ namespace Payment.Domain.Interfaces
 {
     public interface IPaymentRepository
     {        
-        Task<string> AddAsync( Payments bookingOrder);
-        Task<Payments> UpdateAsync(Payments bookingOrder);
-        Task<Payments> FindByIdAsync(string bookingOrderId);
+        Task<Payments> AddAsync( Payments payment);
+        Task<Payments> UpdateAsync(Payments payment);
+        Task<Payments> FindByIdAsync(string paymentId);
     }
 
 }

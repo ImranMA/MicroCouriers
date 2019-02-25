@@ -43,13 +43,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.Common", "src\Servi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payment", "Payment", "{627B4517-E86F-4C5E-8932-48914A73535B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.API", "src\Services\Payment\Payment.API\Payment.API.csproj", "{42E6677C-F4CB-4256-8216-5F5B9AAD30A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payment.API", "src\Services\Payment\Payment.API\Payment.API.csproj", "{42E6677C-F4CB-4256-8216-5F5B9AAD30A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Domain", "src\Services\Payment\Payment.Domain\Payment.Domain.csproj", "{2852B6F1-468A-493F-8C92-944DBDB2C071}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payment.Domain", "src\Services\Payment\Payment.Domain\Payment.Domain.csproj", "{2852B6F1-468A-493F-8C92-944DBDB2C071}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Persistence", "src\Services\Payment\Payment.Persistence\Payment.Persistence.csproj", "{0398F8C0-A1C6-462F-9CBB-49F8DEA98F06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payment.Persistence", "src\Services\Payment\Payment.Persistence\Payment.Persistence.csproj", "{0398F8C0-A1C6-462F-9CBB-49F8DEA98F06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Application", "src\Services\Payment\Payment.Application\Payment.Application.csproj", "{295BE563-F92C-42F7-A34E-54C2ADCCEBFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payment.Application", "src\Services\Payment\Payment.Application\Payment.Application.csproj", "{295BE563-F92C-42F7-A34E-54C2ADCCEBFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Infrastructure", "src\Services\Payment\Payment.Infrastructure\Payment.Infrastructure.csproj", "{698F4B77-31FA-45AB-B969-1ABD05CC3A83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,6 +115,10 @@ Global
 		{295BE563-F92C-42F7-A34E-54C2ADCCEBFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{295BE563-F92C-42F7-A34E-54C2ADCCEBFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{295BE563-F92C-42F7-A34E-54C2ADCCEBFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{698F4B77-31FA-45AB-B969-1ABD05CC3A83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{698F4B77-31FA-45AB-B969-1ABD05CC3A83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{698F4B77-31FA-45AB-B969-1ABD05CC3A83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{698F4B77-31FA-45AB-B969-1ABD05CC3A83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -140,6 +146,7 @@ Global
 		{2852B6F1-468A-493F-8C92-944DBDB2C071} = {627B4517-E86F-4C5E-8932-48914A73535B}
 		{0398F8C0-A1C6-462F-9CBB-49F8DEA98F06} = {627B4517-E86F-4C5E-8932-48914A73535B}
 		{295BE563-F92C-42F7-A34E-54C2ADCCEBFA} = {627B4517-E86F-4C5E-8932-48914A73535B}
+		{698F4B77-31FA-45AB-B969-1ABD05CC3A83} = {627B4517-E86F-4C5E-8932-48914A73535B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E13E4D21-76D2-45C9-B2EC-29A70284CD9E}

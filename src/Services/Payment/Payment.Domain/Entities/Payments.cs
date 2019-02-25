@@ -12,6 +12,12 @@ namespace Payment.Domain.Entities
 
         public decimal Price { get; set; }
 
-        public PaymetStatus paymentStatus { get; set; }
+        public string CustomerId { get; set; }
+
+        public PaymetStatus PaymentStatus { get; set; }
+
+        public DateTime CreatedDate { get;  set; }
+
+        public DateTime? UpdatedDate { get; set; }
     }
 }
