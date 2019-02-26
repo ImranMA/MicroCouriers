@@ -3,7 +3,7 @@ using Booking.Application.IntegrationEvents.Events;
 using Booking.Domain.AggregatesModel.BookingAggregate;
 using Booking.Domain.Booking;
 using MediatR;
-using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
+using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Abstractions;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

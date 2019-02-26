@@ -6,7 +6,7 @@ using Payment.Application.Interface;
 using Payment.Application.DTO;
 using Payment.Domain.Entities;
 using Payment.Domain.Interfaces;
-using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
+using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Abstractions;
 using Payment.Application.IntegrationEvents;
 
 namespace Payment.Application.PaymentService

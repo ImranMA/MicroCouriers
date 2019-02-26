@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Booking.Application.Booking.Commands.CreateBooking;
-using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
+using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

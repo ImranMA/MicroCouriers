@@ -1,10 +1,10 @@
 ﻿using Booking.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
-using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Events;
-using Microsoft.eShopOnContainers.BuildingBlocks.IntegrationEventLogEF;
-using Microsoft.eShopOnContainers.BuildingBlocks.IntegrationEventLogEF.Services;
+using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Abstractions;
+using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Events;
+using Microsoft.MicroCouriers.BuildingBlocks.IntegrationEventLogEF;
+using Microsoft.MicroCouriers.BuildingBlocks.IntegrationEventLogEF.Services;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;

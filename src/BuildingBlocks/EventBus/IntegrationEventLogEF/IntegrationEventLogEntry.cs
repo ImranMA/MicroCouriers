@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
-using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Events;
+using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Events;
 using System.Linq;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 
-namespace Microsoft.eShopOnContainers.BuildingBlocks.IntegrationEventLogEF
+namespace Microsoft.MicroCouriers.BuildingBlocks.IntegrationEventLogEF
 {
     public class IntegrationEventLogEntry
     {

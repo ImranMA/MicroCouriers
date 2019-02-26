@@ -1,6 +1,6 @@
 ﻿using Booking.Domain.AggregatesModel.BookingAggregate;
 using Booking.Domain.Booking;
-using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
+using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,7 +25,8 @@ namespace Booking.Application.IntegrationEvents.Events
                 var booking = await _bookingContext.FindByIdAsync(eventMsg.BookingOrderId);
 
                 if(eventMsg.PaymentStatus == PaymetStatus.Completed)
-                {                    
+                {
+                    booking.PaymentID = eventMsg.PaymentId;
                     booking.BookingState = bookingStateEnum.Completed;
                 }               
 

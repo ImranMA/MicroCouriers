@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 
-namespace Microsoft.eShopOnContainers.BuildingBlocks.EventBusServiceBus
+namespace Microsoft.MicroCouriers.BuildingBlocks.EventBusServiceBus
 {
     public class DefaultServiceBusPersisterConnection :IServiceBusPersisterConnection
     {

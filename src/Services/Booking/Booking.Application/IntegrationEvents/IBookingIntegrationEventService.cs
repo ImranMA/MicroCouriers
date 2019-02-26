@@ -1,4 +1,4 @@
-﻿using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Events;
+﻿using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;
