@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus\EventBus.csproj" />
+    <ProjectReference Include="..\Tracking.Domain\Tracking.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

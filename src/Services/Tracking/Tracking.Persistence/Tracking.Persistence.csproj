@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <PackageReference Include="Dapper" Version="1.50.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Polly" Version="7.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tracking.Domain\Tracking.Domain.csproj" />
   </ItemGroup>
 
 </Project>

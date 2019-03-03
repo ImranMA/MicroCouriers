@@ -16,6 +16,9 @@ using System;
 using MediatR;
 using MediatR.Pipeline;
 using Autofac.Extensions.DependencyInjection;
+using Tracking.Domain.Interfaces;
+using Tracking.Persistence.Repositories;
+using Tracking.Application.IntegrationEvents;
 
 namespace Tracking.API
 {
@@ -42,7 +45,13 @@ namespace Tracking.API
 
             // Add MediatR and handlers
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
-       
+
+            var eventStoreConnectionString = Configuration.GetConnectionString("EventStoreCN");
+           // services.AddScoped<ITrackingRepository, TrackingRepository>(Configuration.GetConnectionString(""));
+
+            services.AddTransient<ITrackingRepository>((sp) =>
+               new TrackingRepository(eventStoreConnectionString));
+
             //services.AddMediatR(typeof(GetBookingQueryHandler).GetTypeInfo().Assembly);
             //services.AddMediatR(typeof(CreateBookingCommandHandler).GetTypeInfo().Assembly);
 
@@ -53,7 +62,7 @@ namespace Tracking.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ITrackingRepository trackingRepo)
         {
             if (env.IsDevelopment())
             {
@@ -61,7 +70,17 @@ namespace Tracking.API
             }
 
             app.UseMvc();
+            trackingRepo.EnsureDatabase();
+            ConfigureEventBus(app);
         }
+
+        private void ConfigureEventBus(IApplicationBuilder app)
+        {
+            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+            eventBus.Subscribe<PaymentProcessedIntegrationEvent, PaymentProcessedIntegrationEventHandler>();
+           
+        }
+
     }
 
     static class CustomExtensionsMethods
@@ -108,8 +127,8 @@ namespace Tracking.API
             });
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
-            //services.AddTransient<PaymentProcessedIntegrationEventHandler>();
-            //services.AddTransient<CustomerAddIntegrationEventHandler>();
+            services.AddTransient<PaymentProcessedIntegrationEventHandler>();
+          
 
             return services;
         }

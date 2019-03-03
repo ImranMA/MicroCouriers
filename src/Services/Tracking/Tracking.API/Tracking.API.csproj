@@ -19,6 +19,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBusServiceBus\EventBusServiceBus.csproj" />
+    <ProjectReference Include="..\Tracking.Application\Tracking.Application.csproj" />
+    <ProjectReference Include="..\Tracking.Domain\Tracking.Domain.csproj" />
+    <ProjectReference Include="..\Tracking.Persistence\Tracking.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

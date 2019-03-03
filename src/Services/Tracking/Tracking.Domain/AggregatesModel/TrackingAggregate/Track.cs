@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using Tracking.Domain.Events;
 
 namespace Tracking.Domain.AggregatesModel.TrackingAggregate
 {
-    public class Tracking
+    public class Track
     {
       
         /// <summary>
@@ -38,13 +39,13 @@ namespace Tracking.Domain.AggregatesModel.TrackingAggregate
         public List<string> orderHistory { get; private set; }
 
 
-        public Tracking()
+        public Track()
         {
             OriginalVersion = 0;
             Version = 0;
         }
 
-        public Tracking(IEnumerable<EventBase> events)
+        public Track(IEnumerable<EventBase> events)
         {
             OriginalVersion = 0;
             Version = 0;
@@ -74,12 +75,20 @@ namespace Tracking.Domain.AggregatesModel.TrackingAggregate
         {
 
         }
+        */
 
-    */
-
+        public IEnumerable<EventBase> PaymentProcessed(PaymentProcessed e)
+        {            
+            return HandleEvent(e);
+        }
 
         private IEnumerable<EventBase> Handle(BookingCreated e)
         {           
+            return new EventBase[] { e };
+        }
+
+        private IEnumerable<EventBase> Handle(PaymentProcessed e)
+        {
             return new EventBase[] { e };
         }
     }

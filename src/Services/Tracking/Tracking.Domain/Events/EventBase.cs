@@ -8,7 +8,7 @@ namespace Tracking.Domain.Events
     {
         public readonly Guid MessageId;
 
-        public readonly string MessageType;
+        public string MessageType;
 
         public string BookingId { get; set; }
 
