@@ -53,11 +53,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payment.Application", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payment.Infrastructure", "src\Services\Payment\Payment.Infrastructure\Payment.Infrastructure.csproj", "{698F4B77-31FA-45AB-B969-1ABD05CC3A83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracking.Application", "src\Services\Tracking\Tracking.Application\Tracking.Application.csproj", "{B76FBF27-69C8-4BD2-B7EF-16B75EFD659E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tracking.Application", "src\Services\Tracking\Tracking.Application\Tracking.Application.csproj", "{B76FBF27-69C8-4BD2-B7EF-16B75EFD659E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracking.Domain", "src\Services\Tracking\Tracking.Domain\Tracking.Domain.csproj", "{6E083418-FFA9-49FA-A329-AE90B3332604}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tracking.Domain", "src\Services\Tracking\Tracking.Domain\Tracking.Domain.csproj", "{6E083418-FFA9-49FA-A329-AE90B3332604}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracking.Persistence", "src\Services\Tracking\Tracking.Persistence\Tracking.Persistence.csproj", "{97E01F2B-F28B-44D2-9740-65479241A989}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tracking.Persistence", "src\Services\Tracking\Tracking.Persistence\Tracking.Persistence.csproj", "{97E01F2B-F28B-44D2-9740-65479241A989}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracking.Common", "src\Services\Tracking\Tracking.Common\Tracking.Common.csproj", "{F7AAEA94-E263-487F-9603-B2ED228ABCE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -137,6 +139,10 @@ Global
 		{97E01F2B-F28B-44D2-9740-65479241A989}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97E01F2B-F28B-44D2-9740-65479241A989}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97E01F2B-F28B-44D2-9740-65479241A989}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7AAEA94-E263-487F-9603-B2ED228ABCE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7AAEA94-E263-487F-9603-B2ED228ABCE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7AAEA94-E263-487F-9603-B2ED228ABCE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7AAEA94-E263-487F-9603-B2ED228ABCE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -168,6 +174,7 @@ Global
 		{B76FBF27-69C8-4BD2-B7EF-16B75EFD659E} = {CDD19F22-3AA3-4ED0-8C90-A52D50A4D8EC}
 		{6E083418-FFA9-49FA-A329-AE90B3332604} = {CDD19F22-3AA3-4ED0-8C90-A52D50A4D8EC}
 		{97E01F2B-F28B-44D2-9740-65479241A989} = {CDD19F22-3AA3-4ED0-8C90-A52D50A4D8EC}
+		{F7AAEA94-E263-487F-9603-B2ED228ABCE1} = {CDD19F22-3AA3-4ED0-8C90-A52D50A4D8EC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E13E4D21-76D2-45C9-B2EC-29A70284CD9E}

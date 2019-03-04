@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus\EventBus.csproj" />
+    <ProjectReference Include="..\Tracking.Common\Tracking.Common.csproj" />
     <ProjectReference Include="..\Tracking.Domain\Tracking.Domain.csproj" />
   </ItemGroup>
 

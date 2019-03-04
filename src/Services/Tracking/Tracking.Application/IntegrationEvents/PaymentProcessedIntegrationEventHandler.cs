@@ -2,8 +2,10 @@
 using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Events;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tracking.Common;
 using Tracking.Domain.AggregatesModel.TrackingAggregate;
 using Tracking.Domain.Events;
 using Tracking.Domain.Interfaces;
@@ -13,10 +15,12 @@ namespace Tracking.Application.IntegrationEvents
     public class PaymentProcessedIntegrationEventHandler : IIntegrationEventHandler<PaymentProcessedIntegrationEvent>
     {
         private readonly ITrackingRepository _trackingContext;
+        private static List<Type> _assemblyTypes;
 
         public PaymentProcessedIntegrationEventHandler(ITrackingRepository trackingContext)
         {
             _trackingContext = trackingContext;
+            _assemblyTypes = TypeResolver.AssemblyTypes;
         }
 
         public async Task Handle(PaymentProcessedIntegrationEvent eventMsg)
@@ -39,7 +43,11 @@ namespace Tracking.Application.IntegrationEvents
                     }
 
                     PaymentProcessed eventPaymentProcessed = new PaymentProcessed(eventMsg.BookingOrderId, description);
-                    eventPaymentProcessed.MessageType = typeof(PaymentProcessed).ToString();
+                   
+                    Type eventType = _assemblyTypes
+                      .Where(t => t.Name.Contains("PaymentProcessed")).FirstOrDefault();
+
+                    eventPaymentProcessed.MessageType = eventType.Name.ToString();
 
                     events.AddRange(trackings.PaymentProcessed(eventPaymentProcessed));
 

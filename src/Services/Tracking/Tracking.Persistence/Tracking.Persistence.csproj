@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Tracking.Common\Tracking.Common.csproj" />
     <ProjectReference Include="..\Tracking.Domain\Tracking.Domain.csproj" />
   </ItemGroup>
 

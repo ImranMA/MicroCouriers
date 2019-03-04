@@ -14,6 +14,9 @@ using Tracking.Persistence.Model;
 using Polly;
 using Newtonsoft.Json.Linq;
 using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Events;
+using System.Reflection;
+using System.Linq;
+using Tracking.Common;
 
 namespace Tracking.Persistence.Repositories
 {
@@ -22,6 +25,7 @@ namespace Tracking.Persistence.Repositories
         private static readonly JsonSerializerSettings _serializerSettings;
         private static readonly Dictionary<DateTime, string> _store = new Dictionary<DateTime, string>();
         private string _connectionString;
+        private static List<Type> _assemblyTypes;
 
         static TrackingRepository()
         {
@@ -31,6 +35,8 @@ namespace Tracking.Persistence.Repositories
             {
                 NamingStrategy = new CamelCaseNamingStrategy()
             });
+
+            _assemblyTypes = TypeResolver.AssemblyTypes;
         }
 
         public TrackingRepository(string connectionString)
@@ -220,8 +226,11 @@ namespace Tracking.Persistence.Repositories
         /// <param name="messageType">The message-type of the event.</param>
         /// <param name="eventData">The event-data JSON to deserialize.</param>
         private EventBase DeserializeEventData(string messageType, string eventData)
-        {
-            Type eventType = Type.GetType($"Tracking.Domain.Events.{messageType}");
+        {            
+            Type eventType = _assemblyTypes
+                     .Where(t => t.Name.Contains(messageType)).FirstOrDefault();
+                               
+            //Type eventType1 = Type.GetType($"Tracking.Domain.Events.{messageType}");
             JObject obj = JsonConvert.DeserializeObject<JObject>(eventData, _serializerSettings);
             return obj.ToObject(eventType) as EventBase;
         }

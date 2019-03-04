@@ -70,13 +70,6 @@ namespace Tracking.Domain.AggregatesModel.TrackingAggregate
             return events;
         }
 
-
-        /*public IEnumerable<EventBase> CreateOrderHistory()
-        {
-
-        }
-        */
-
         public IEnumerable<EventBase> PaymentProcessed(PaymentProcessed e)
         {            
             return HandleEvent(e);
