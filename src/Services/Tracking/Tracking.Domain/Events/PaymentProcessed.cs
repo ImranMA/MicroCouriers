@@ -6,10 +6,14 @@ namespace Tracking.Domain.Events
 {
     public class PaymentProcessed : EventBase
     {     
-        public PaymentProcessed(string bookingId, string description)
+        public PaymentProcessed(string bookingId, string description , 
+            Guid messageId , string messageType , DateTime datetime)
         {
             BookingId = bookingId;
-            Description = description;
+            Description = description;           
+            base.MessageType = messageType;
+            base.MessageId = messageId;
+            base.Date = datetime;
         }
     }
 }

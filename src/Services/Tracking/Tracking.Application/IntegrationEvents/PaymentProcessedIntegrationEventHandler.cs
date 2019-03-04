@@ -41,25 +41,34 @@ namespace Tracking.Application.IntegrationEvents
                     {
                         description = "Payment Done";
                     }
+                    else if (eventMsg.PaymentStatus == PaymetStatus.Canceled)
+                    {
+                        description = "Payment Failed";
+                    }
+                    else if (eventMsg.PaymentStatus == PaymetStatus.Pending)
+                    {
+                        description = "Payment Pending";
+                    }
 
-                    PaymentProcessed eventPaymentProcessed = new PaymentProcessed(eventMsg.BookingOrderId, description);
-                   
-                    Type eventType = _assemblyTypes
-                      .Where(t => t.Name.Contains("PaymentProcessed")).FirstOrDefault();
+                    var messageType = _assemblyTypes
+                      .Where(t => t.Name.Contains("PaymentProcessed")).FirstOrDefault().
+                      Name.ToString();
 
-                    eventPaymentProcessed.MessageType = eventType.Name.ToString();
+                    PaymentProcessed eventPaymentProcessed = new
+                        PaymentProcessed(eventMsg.BookingOrderId, description,eventMsg.Id,messageType,eventMsg.CreationDate);
+                                       
 
                     events.AddRange(trackings.PaymentProcessed(eventPaymentProcessed));
 
                     await _trackingContext.SaveTrackingAsync(eventMsg.BookingOrderId, trackings.OriginalVersion,
                         trackings.Version, events);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
 
                 }
-                
-               
+
+
             }
         }
     }

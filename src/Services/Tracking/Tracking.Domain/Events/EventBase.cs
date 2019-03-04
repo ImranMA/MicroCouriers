@@ -6,9 +6,9 @@ namespace Tracking.Domain.Events
 {
     public class EventBase
     {
-        public readonly Guid MessageId;
+        public  Guid MessageId;
 
-        public string MessageType;
+        public  string MessageType;
 
         public string BookingId { get; set; }
 
