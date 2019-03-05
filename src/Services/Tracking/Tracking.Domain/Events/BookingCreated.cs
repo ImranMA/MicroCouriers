@@ -10,11 +10,17 @@ namespace Tracking.Domain.Events
         public string Destination { get; set; }
 
 
-        public BookingCreated(string bookingId, string origin, string destination)
+        public BookingCreated(string bookingId, string description,
+         Guid messageId, string messageType, DateTime datetime, string 
+            origin, string destination)
         {
             BookingId = bookingId;
+            Description = description;
             Origin = origin;
             Destination = destination;
-        }
+            base.MessageType = messageType;
+            base.MessageId = messageId;
+            base.Date = datetime;
+        }     
     }
 }

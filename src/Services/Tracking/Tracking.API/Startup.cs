@@ -78,7 +78,10 @@ namespace Tracking.API
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
             eventBus.Subscribe<PaymentProcessedIntegrationEvent, PaymentProcessedIntegrationEventHandler>();
-           
+            eventBus.Subscribe<BookingAddIntegrationEvent, BookingAddIntegrationEventHandler>();
+            eventBus.Subscribe<OrderPickedIntegrationEvent, OrderPickedIntegrationEventHandler>();
+            eventBus.Subscribe<OrderTransitIntegrationEvent, OrderTransitIntegrationEventHandler>();
+            eventBus.Subscribe<OrderDeliveredIntegrationEvent, OrderDeliveredIntegrationEventHandler>();
         }
 
     }
@@ -128,7 +131,11 @@ namespace Tracking.API
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
             services.AddTransient<PaymentProcessedIntegrationEventHandler>();
-          
+            services.AddTransient<BookingAddIntegrationEventHandler>();
+            services.AddTransient<OrderPickedIntegrationEventHandler>();
+            services.AddTransient<OrderTransitIntegrationEventHandler>();
+            services.AddTransient<OrderDeliveredIntegrationEventHandler>();
+
 
             return services;
         }

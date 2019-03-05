@@ -4,20 +4,16 @@ using System.Text;
 
 namespace Tracking.Domain.Events
 {
-    public class OrderDelivered : EventBase
+    public class OrderInTransit : EventBase
     {
-        public string SignedBy{ get; set; }
-
-        public OrderDelivered(string bookingId, string description,
-          Guid messageId, string messageType, DateTime datetime ,string signedBy)
+        public OrderInTransit(string bookingId, string description,
+            Guid messageId, string messageType, DateTime datetime)
         {
             BookingId = bookingId;
             Description = description;
-            SignedBy = signedBy;
             base.MessageType = messageType;
             base.MessageId = messageId;
             base.Date = datetime;
         }
-
     }
 }

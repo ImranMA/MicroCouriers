@@ -55,8 +55,8 @@ namespace Tracking.Application.IntegrationEvents
                       Name.ToString();
 
                     PaymentProcessed eventPaymentProcessed = new
-                        PaymentProcessed(eventMsg.BookingOrderId, description,eventMsg.Id,messageType,eventMsg.CreationDate);
-                                       
+                        PaymentProcessed(eventMsg.BookingOrderId, description, eventMsg.Id, messageType, eventMsg.CreationDate);
+
 
                     events.AddRange(trackings.PaymentProcessed(eventPaymentProcessed));
 
@@ -67,8 +67,6 @@ namespace Tracking.Application.IntegrationEvents
                 {
 
                 }
-
-
             }
         }
     }

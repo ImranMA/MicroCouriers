@@ -43,10 +43,12 @@ namespace Tracking.Domain.AggregatesModel.TrackingAggregate
         {
             OriginalVersion = 0;
             Version = 0;
+            orderHistory = new List<string>();
         }
 
         public Track(IEnumerable<EventBase> events)
         {
+            orderHistory = new List<string>();
             OriginalVersion = 0;
             Version = 0;
             IsReplaying = true;
@@ -75,13 +77,64 @@ namespace Tracking.Domain.AggregatesModel.TrackingAggregate
             return HandleEvent(e);
         }
 
+        public IEnumerable<EventBase> BookingAdd(BookingCreated e)
+        {   
+            return HandleEvent(e);
+        }
+
+        public IEnumerable<EventBase> OrderPicked(OrderPicked e)
+        {
+            return HandleEvent(e);
+        }
+
+        public IEnumerable<EventBase> OrderInTransit(OrderInTransit e)
+        {
+            return HandleEvent(e);
+        }
+
+        public IEnumerable<EventBase> OrderDelivered(OrderDelivered e)
+        {
+            return HandleEvent(e);
+        }
+
+
+
+
+
+        //Hanlders
+
         private IEnumerable<EventBase> Handle(BookingCreated e)
-        {           
+        {
+            orderHistory.Add("Status - " + e.MessageType.ToString() +
+           "- Date - " + e.Date.ToShortDateString() + " -Origin " + e.Origin + " - Dest " + e.Destination);
+
             return new EventBase[] { e };
         }
 
         private IEnumerable<EventBase> Handle(PaymentProcessed e)
         {
+            return new EventBase[] { e };
+        }
+
+        private IEnumerable<EventBase> Handle(OrderPicked e)
+        {
+            orderHistory.Add("Status - " + e.MessageType.ToString() +
+                "- Date - " + e.Date.ToShortDateString() +  "  - Desc " + e.Description);
+            return new EventBase[] { e };
+        }
+
+        private IEnumerable<EventBase> Handle(OrderInTransit e)
+        {
+            orderHistory.Add("Status - " + e.MessageType.ToString() +
+                "- Date - " + e.Date.ToShortDateString() + "  - Desc " + e.Description);
+
+            return new EventBase[] { e };
+        }
+
+        private IEnumerable<EventBase> Handle(OrderDelivered e)
+        {
+            orderHistory.Add("Status - " + e.MessageType.ToString() + 
+                "- Date - " + e.Date.ToShortDateString() + " - Received By" + e.SignedBy + "  - Desc " + e.Description);
             return new EventBase[] { e };
         }
     }
