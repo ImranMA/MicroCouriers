@@ -16,11 +16,13 @@ namespace Tracking.Application.IntegrationEvents
     {
         private readonly ITrackingRepository _trackingContext;
         private static List<Type> _assemblyTypes;
+        private readonly IEventBus _eventBus;
 
-        public PaymentProcessedIntegrationEventHandler(ITrackingRepository trackingContext)
+        public PaymentProcessedIntegrationEventHandler(ITrackingRepository trackingContext , IEventBus eventBus)
         {
             _trackingContext = trackingContext;
             _assemblyTypes = TypeResolver.AssemblyTypes;
+            _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
         public async Task Handle(PaymentProcessedIntegrationEvent eventMsg)
@@ -62,6 +64,11 @@ namespace Tracking.Application.IntegrationEvents
 
                     await _trackingContext.SaveTrackingAsync(eventMsg.BookingOrderId, trackings.OriginalVersion,
                         trackings.Version, events);
+
+                    //Publish the event here
+                    //Create Integration Event
+                    var orderStatusChanged = new OrderStatusChangedIntegrationEvent(eventMsg.BookingOrderId , "PaymentProcessed");
+                    _eventBus.Publish(orderStatusChanged);
                 }
                 catch (Exception ex)
                 {

@@ -94,6 +94,7 @@ namespace Booking.API
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
             eventBus.Subscribe<PaymentProcessedIntegrationEvent, PaymentProcessedIntegrationEventHandler>();
+            eventBus.Subscribe<OrderStatusChangedIntegrationEvent, OrderStatusChangedIntegrationEventHandler>();
             //eventBus.Subscribe<CustomerAddIntegrationEvent, CustomerAddIntegrationEventHandler>();
 
         }
@@ -179,7 +180,7 @@ namespace Booking.API
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
             services.AddTransient<PaymentProcessedIntegrationEventHandler>();
-            //services.AddTransient<CustomerAddIntegrationEventHandler>();
+            services.AddTransient<OrderStatusChangedIntegrationEventHandler>();
 
             return services;
         }

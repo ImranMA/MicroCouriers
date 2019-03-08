@@ -4,23 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Tracking.ReadModel.Cache
+namespace ReadModel.AzFn.Redis
 {
     public class RedisCacheService //: ICacheService
     {
-       // private readonly ISettings _settings;
+        // private readonly ISettings _settings;
         private readonly IDatabase _cache;
         private static ConnectionMultiplexer _connectionMultiplexer;
 
         static RedisCacheService()
         {
-            var connection = "microcouriers.redis.cache.windows.net,abortConnect=false,ssl=true,password=microcouriers.redis.cache.windows.net:6380,password=UaIei+7JYi+3TinfolGRob5lIQ4HZ1Uk8IKyIcHcjfc=,ssl=True,abortConnect=False"; //ConfigurationManager.AppSettings["RedisConnection"];
+            var connection = Environment.GetEnvironmentVariable("REDIS");
             _connectionMultiplexer = ConnectionMultiplexer.Connect(connection);
         }
 
         public RedisCacheService()
         {
-           // _settings = settings;
+            // _settings = settings;
             _cache = _connectionMultiplexer.GetDatabase();
         }
 
@@ -47,7 +47,7 @@ namespace Tracking.ReadModel.Cache
 
         public void Clear()
         {
-            var endpoints = _connectionMultiplexer.GetEndPoints(true);           
+            var endpoints = _connectionMultiplexer.GetEndPoints(true);
             foreach (var endpoint in endpoints)
             {
                 var server = _connectionMultiplexer.GetServer(endpoint);

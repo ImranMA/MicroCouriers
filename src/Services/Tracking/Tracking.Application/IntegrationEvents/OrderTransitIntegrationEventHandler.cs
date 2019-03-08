@@ -17,11 +17,13 @@ namespace Tracking.Application.IntegrationEvents
     {
         private readonly ITrackingRepository _trackingContext;
         private static List<Type> _assemblyTypes;
+        private readonly IEventBus _eventBus;
 
-        public OrderTransitIntegrationEventHandler(ITrackingRepository trackingContext)
+        public OrderTransitIntegrationEventHandler(ITrackingRepository trackingContext, IEventBus eventBus)
         {
             _trackingContext = trackingContext;
             _assemblyTypes = TypeResolver.AssemblyTypes;
+            _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
         public async Task Handle(OrderTransitIntegrationEvent eventMsg)
@@ -50,6 +52,12 @@ namespace Tracking.Application.IntegrationEvents
 
                     await _trackingContext.SaveTrackingAsync(eventMsg.BookingId, trackings.OriginalVersion,
                         trackings.Version, events);
+
+
+                    //Publish the event here
+                    //Create Integration Event
+                    var orderStatusChanged = new OrderStatusChangedIntegrationEvent(eventMsg.BookingId, "OrderInTransit");
+                    _eventBus.Publish(orderStatusChanged);
                 }
                 catch (Exception ex)
                 {

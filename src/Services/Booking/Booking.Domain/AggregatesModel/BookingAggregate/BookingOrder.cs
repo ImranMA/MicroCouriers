@@ -18,6 +18,8 @@ namespace Booking.Domain.AggregatesModel.BookingAggregate
 
         public bookingStateEnum BookingState { get; set; }
 
+        public string OrderStatus { get; set; }
+
         public DateTime CreatedDate { get;  set; }
 
         public DateTime? UpdatedDate { get; set; }
