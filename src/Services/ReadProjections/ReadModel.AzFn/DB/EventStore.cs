@@ -77,6 +77,7 @@ namespace ReadModel.AzFn.DB
             {
                 try
                 {
+                   // var getcahc= rCache.Get(BookingId); 
                     rCache.Remove(BookingId);
                     Track trackings = await _trackingContext.GetTrackingAsync(BookingId);
                     var result = String.Join(", ", trackings.orderHistory.ToArray());

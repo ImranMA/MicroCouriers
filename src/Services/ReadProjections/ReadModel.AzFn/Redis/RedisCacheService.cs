@@ -6,9 +6,8 @@ using System.Text;
 
 namespace ReadModel.AzFn.Redis
 {
-    public class RedisCacheService //: ICacheService
-    {
-        // private readonly ISettings _settings;
+    public class RedisCacheService 
+    {       
         private readonly IDatabase _cache;
         private static ConnectionMultiplexer _connectionMultiplexer;
 
@@ -19,8 +18,7 @@ namespace ReadModel.AzFn.Redis
         }
 
         public RedisCacheService()
-        {
-            // _settings = settings;
+        {           
             _cache = _connectionMultiplexer.GetDatabase();
         }
 

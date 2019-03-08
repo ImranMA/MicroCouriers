@@ -19,6 +19,9 @@ using Autofac.Extensions.DependencyInjection;
 using Tracking.Domain.Interfaces;
 using Tracking.Persistence.Repositories;
 using Tracking.Application.IntegrationEvents;
+using Tracking.Application.Interface;
+using Tracking.Application.TrackingServices;
+using StackExchange.Redis;
 
 namespace Tracking.API
 {
@@ -43,6 +46,11 @@ namespace Tracking.API
                   AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 
+            //Add Repos
+          
+            services.AddScoped<ITrackingService, TrackingService>();
+            services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Configuration.GetSection("cache:REDIS").Value));
+            
             // Add MediatR and handlers
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
 

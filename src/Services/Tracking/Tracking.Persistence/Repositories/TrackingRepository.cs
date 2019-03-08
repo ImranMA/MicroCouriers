@@ -21,7 +21,7 @@ using Tracking.Common;
 namespace Tracking.Persistence.Repositories
 {
     public class TrackingRepository : ITrackingRepository
-    {
+    {     
         private static readonly JsonSerializerSettings _serializerSettings;
         private static readonly Dictionary<DateTime, string> _store = new Dictionary<DateTime, string>();
         private string _connectionString;
@@ -39,9 +39,9 @@ namespace Tracking.Persistence.Repositories
             _assemblyTypes = TypeResolver.AssemblyTypes;
         }
 
-        public TrackingRepository(string connectionString)
+        public TrackingRepository(string connectionString )
         {
-            _connectionString = connectionString;
+            _connectionString = connectionString;          
         }
 
         public async Task<Track> GetTrackingAsync(string id)

@@ -54,8 +54,6 @@ namespace Tracking.Application.IntegrationEvents
                 {
 
                 }
-
-
             }
         }
     }

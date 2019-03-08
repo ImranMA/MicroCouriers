@@ -44,6 +44,11 @@ namespace ReadModel.AzFn.DB
             _connectionString = connectionString;
         }
 
+        public async Task<string> GetOrderHistory(string id)
+        {
+            return string.Empty;
+        }
+
         public async Task<Track> GetTrackingAsync(string id)
         {
             Track tracking = null;
@@ -175,6 +180,11 @@ namespace ReadModel.AzFn.DB
         }
 
         public void EnsureDatabase()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> GetOrderHistroy(string bookingId)
         {
             throw new NotImplementedException();
         }
