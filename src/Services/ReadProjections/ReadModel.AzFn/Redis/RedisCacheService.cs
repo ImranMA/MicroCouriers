@@ -29,8 +29,22 @@ namespace ReadModel.AzFn.Redis
 
         public void Save(string key, string value)
         {
-            var ts = TimeSpan.FromMinutes(60);
+         
+            var ts = TimeSpan.FromDays(1);
             _cache.StringSet(key, value, ts);
+
+            /*RedisValue token = Environment.MachineName;
+            if (_cache.LockTake(key, token, ts))
+            {
+                try
+                {
+                    _cache.StringSet(key, value, ts);
+                }
+                finally
+                {
+                    _cache.LockRelease(key, token);
+                }
+            }*/
         }
 
         public string Get(string key)

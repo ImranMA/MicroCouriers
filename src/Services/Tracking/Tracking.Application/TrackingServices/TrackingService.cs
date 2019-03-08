@@ -37,9 +37,10 @@ namespace Tracking.Application.TrackingServices
                 {
                     //format result
                     bookingHistroy = String.Join(", ", result.orderHistory.ToArray());
-
+                                       
                     //Update Cache
-                   await _cache.StringSetAsync(bookingId, bookingHistroy);
+                    var ts = TimeSpan.FromDays(1);
+                    await _cache.StringSetAsync(bookingId, bookingHistroy, ts);
                 }               
             }
 
