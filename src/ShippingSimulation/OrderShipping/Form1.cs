@@ -15,6 +15,8 @@ using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Abstractions;
 using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Events;
 using Newtonsoft.Json;
 using OrderShipping.Events;
+using System.Net;
+using System.IO;
 
 // This is the code for your desktop app.
 // Press Ctrl+F5 (or go to Debug > Start Without Debugging) to run your app.
@@ -87,6 +89,26 @@ namespace OrderShipping
                 Publish(orderPicked);
             }
         }
-  
+
+        private void btn_getBooking_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var bookingID = txtBookingID.Text;
+                string URL = "http://localhost:5002/api/tracking/" + bookingID;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
+                request.ContentType = "application/json; charset=utf-8";
+                //request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes("username:password"));
+                // request.PreAuthenticate = true;
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    // Console.WriteLine();
+                    txtBooingStatus.Text = reader.ReadToEnd();
+                }
+            }
+            catch(Exception ex) { }
+        }
     }
 }

@@ -32,7 +32,7 @@ namespace OrderShipping
             this.label1 = new System.Windows.Forms.Label();
             this.btn_UpdateStatus = new System.Windows.Forms.Button();
             this.cmbOrderStatus = new System.Windows.Forms.ComboBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtBooingStatus = new System.Windows.Forms.TextBox();
             this.btn_getBooking = new System.Windows.Forms.Button();
             this.txtDesc = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -75,22 +75,23 @@ namespace OrderShipping
             this.cmbOrderStatus.Size = new System.Drawing.Size(319, 28);
             this.cmbOrderStatus.TabIndex = 3;
             // 
-            // textBox2
+            // txtBooingStatus
             // 
-            this.textBox2.Location = new System.Drawing.Point(533, 45);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(246, 300);
-            this.textBox2.TabIndex = 4;
+            this.txtBooingStatus.Location = new System.Drawing.Point(533, 45);
+            this.txtBooingStatus.Multiline = true;
+            this.txtBooingStatus.Name = "txtBooingStatus";
+            this.txtBooingStatus.Size = new System.Drawing.Size(500, 397);
+            this.txtBooingStatus.TabIndex = 4;
             // 
             // btn_getBooking
             // 
-            this.btn_getBooking.Location = new System.Drawing.Point(533, 374);
+            this.btn_getBooking.Location = new System.Drawing.Point(533, 448);
             this.btn_getBooking.Name = "btn_getBooking";
             this.btn_getBooking.Size = new System.Drawing.Size(147, 44);
             this.btn_getBooking.TabIndex = 5;
             this.btn_getBooking.Text = "Get Booking";
             this.btn_getBooking.UseVisualStyleBackColor = true;
+            this.btn_getBooking.Click += new System.EventHandler(this.btn_getBooking_Click);
             // 
             // txtDesc
             // 
@@ -113,11 +114,11 @@ namespace OrderShipping
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1045, 555);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtDesc);
             this.Controls.Add(this.btn_getBooking);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txtBooingStatus);
             this.Controls.Add(this.cmbOrderStatus);
             this.Controls.Add(this.btn_UpdateStatus);
             this.Controls.Add(this.label1);
@@ -135,7 +136,7 @@ namespace OrderShipping
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btn_UpdateStatus;
         private System.Windows.Forms.ComboBox cmbOrderStatus;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtBooingStatus;
         private System.Windows.Forms.Button btn_getBooking;
         private System.Windows.Forms.TextBox txtDesc;
         private System.Windows.Forms.Label label2;
