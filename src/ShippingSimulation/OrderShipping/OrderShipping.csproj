@@ -104,16 +104,16 @@
     <Compile Include="Events\OrderDeliveredIntegrationEvent.cs" />
     <Compile Include="Events\OrderPickedIntegrationEvent.cs" />
     <Compile Include="Events\OrderTransitIntegrationEvent.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="OrderStatusUpdate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="OrderStatusUpdate.Designer.cs">
+      <DependentUpon>OrderStatusUpdate.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="OrderStatusUpdate.resx">
+      <DependentUpon>OrderStatusUpdate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
