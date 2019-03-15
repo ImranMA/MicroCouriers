@@ -23,13 +23,13 @@
 
   <ItemGroup>
     <Reference Include="EventBus">
-      <HintPath>..\..\..\SharedLib\EventBus.dll</HintPath>
+      <HintPath>..\ExternalDep\EventBus.dll</HintPath>
     </Reference>
     <Reference Include="EventBusServiceBus">
-      <HintPath>..\..\..\SharedLib\EventBusServiceBus.dll</HintPath>
+      <HintPath>..\ExternalDep\EventBusServiceBus.dll</HintPath>
     </Reference>
     <Reference Include="IntegrationEventLogEF">
-      <HintPath>..\..\..\SharedLib\IntegrationEventLogEF.dll</HintPath>
+      <HintPath>..\ExternalDep\IntegrationEventLogEF.dll</HintPath>
     </Reference>
   </ItemGroup>
 

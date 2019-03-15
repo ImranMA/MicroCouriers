@@ -4,10 +4,4 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Reference Include="EventBus">
-      <HintPath>..\..\..\SharedLib\EventBus.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

@@ -1,7 +1,4 @@
-﻿using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Events;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tracking.Domain.AggregatesModel.TrackingAggregate;
 using Tracking.Domain.Events;
