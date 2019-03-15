@@ -15,9 +15,9 @@ namespace Booking.API.Controllers
     [ApiController]
     public class BookingController : BaseController
     {
-          
-        // GET: api/Booking
-        [HttpGet]
+
+        // GET: api/Booking/5
+        [HttpGet("{id}", Name = "Get")]
         public async Task<ActionResult<BookingOrderDTO>> Get(string Id)
         {
             try
@@ -32,12 +32,12 @@ namespace Booking.API.Controllers
                        
         }
 
-        // GET: api/Booking/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        //// GET: api/Booking/5
+        //[HttpGet("{id}", Name = "Get")]
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
 
         // POST: api/products
         [HttpPost]
