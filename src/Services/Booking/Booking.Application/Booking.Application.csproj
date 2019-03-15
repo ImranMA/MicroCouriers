@@ -5,8 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus\EventBus.csproj" />
-    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\IntegrationEventLogEF\IntegrationEventLogEF.csproj" />
     <ProjectReference Include="..\Booking.Domain\Booking.Domain.csproj" />
     <ProjectReference Include="..\Booking.Persistence\Booking.Persistence.csproj" />
   </ItemGroup>
@@ -14,6 +12,18 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="MediatR" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="EventBus">
+      <HintPath>..\..\..\SharedLib\EventBus.dll</HintPath>
+    </Reference>
+    <Reference Include="EventBusServiceBus">
+      <HintPath>..\..\..\SharedLib\EventBusServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="IntegrationEventLogEF">
+      <HintPath>..\..\..\SharedLib\IntegrationEventLogEF.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

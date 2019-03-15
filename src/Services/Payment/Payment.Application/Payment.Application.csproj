@@ -5,10 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBusServiceBus\EventBusServiceBus.csproj" />
-    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus\EventBus.csproj" />
     <ProjectReference Include="..\Payment.Domain\Payment.Domain.csproj" />
     <ProjectReference Include="..\Payment.Persistence\Payment.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="EventBus">
+      <HintPath>..\..\..\SharedLib\EventBus.dll</HintPath>
+    </Reference>
+    <Reference Include="EventBusServiceBus">
+      <HintPath>..\..\..\SharedLib\EventBusServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="IntegrationEventLogEF">
+      <HintPath>..\..\..\SharedLib\IntegrationEventLogEF.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

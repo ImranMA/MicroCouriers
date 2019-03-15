@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus\EventBus.csproj" />
+    <Reference Include="EventBus">
+      <HintPath>..\..\..\SharedLib\EventBus.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

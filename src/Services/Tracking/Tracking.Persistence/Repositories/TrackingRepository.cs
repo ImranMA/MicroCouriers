@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Tracking.Domain.AggregatesModel.TrackingAggregate;
 using Tracking.Domain.Events;
@@ -13,8 +12,6 @@ using System.Data.SqlClient;
 using Tracking.Persistence.Model;
 using Polly;
 using Newtonsoft.Json.Linq;
-using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Events;
-using System.Reflection;
 using System.Linq;
 using Tracking.Common;
 
