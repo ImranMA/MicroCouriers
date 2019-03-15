@@ -25,7 +25,7 @@ namespace OrderShipping
 {
     public partial class Shipping : Form
     {
-        const string ServiceBusConnectionString = "Endpoint=sb://msservice.servicebus.windows.net/;SharedAccessKeyName=microcouriers;SharedAccessKey=mSS+Ai3NmAG06LMlOO3cJZ+JVEDEMnd63AfqmVNeHYg=;";
+        const string ServiceBusConnectionString = "";
         const string TopicName = "microcourier";
         static ITopicClient topicClient;       
         private const string INTEGRATION_EVENT_SUFIX = "IntegrationEvent";
