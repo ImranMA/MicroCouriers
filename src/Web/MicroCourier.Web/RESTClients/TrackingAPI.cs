@@ -14,34 +14,32 @@ using Newtonsoft.Json;
 
 namespace MicroCourier.Web.RESTClients
 {
-    public class PaymentAPI : IPaymentAPI
+    public class TrackingAPI : ITrackingAPI
     {
         private readonly HttpClient _client;
-
-        public PaymentAPI(IConfiguration config, HttpClient httpclient)
+    
+        public TrackingAPI(IConfiguration config, HttpClient httpclient)
         {
-            _client = httpclient;
-            string apiHostAndPort = config.GetSection("APIServiceLocations").GetValue<string>("PaymentAPI");
+            string apiHostAndPort = config.GetSection("APIServiceLocations").GetValue<string>("TrackingAPI");
             string baseUri = $"http://{apiHostAndPort}";
+
+            _client = httpclient;         
             _client.BaseAddress = new Uri(baseUri);
 
         }
-        public async Task<string> CreatedPayment(PaymentDTO payment)
+
+        public async Task<TrackingDTO> GetOrderHistory(string bookingId)
         {
             try
             {
-                var result = await _client.PostAsync("/api/payment", new StringContent(JsonConvert.SerializeObject(payment),
-               Encoding.UTF8, "application/json"));
-
-                if (result.StatusCode != HttpStatusCode.OK)
-                    return null;
-
-                return await result.Content.ReadAsStringAsync();
+                var result = await _client.GetAsync("/api/tracking/" + bookingId);
+                return await result.Content.ReadAsAsync<TrackingDTO>();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
+
     }
 }

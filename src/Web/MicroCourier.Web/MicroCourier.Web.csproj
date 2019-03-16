@@ -16,4 +16,9 @@
     <PackageReference Include="Refit" Version="4.6.99" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <None Include="wwwroot\css\MicroCourierStyle.css" />
+  </ItemGroup>
+
 </Project>

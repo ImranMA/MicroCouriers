@@ -24,19 +24,23 @@ namespace MicroCourier.Web.Controllers
         }
 
         // GET: api/Booking/5
+        [Produces("application/json")]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
             try
             {
                 var res = await _bookingAPI.GetBookingById(id);
+
+                if (res == null)
+                    return NotFound("Sorry Requested ID not Found");
+
                 return Ok(res);
             }
             catch (BrokenCircuitException)
             {
-                // Catches error when Basket.api is in circuit-opened mode                 
-                HandleBrokenCircuitException();
-                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry The Service Is Not Available");
+                // Catches error when api is in circuit-opened mode                
+                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Booking Service Is Not Available. Please try again later.");
             }
             catch(Exception ex)
             {
@@ -44,16 +48,11 @@ namespace MicroCourier.Web.Controllers
             }
         }
 
-        private void HandleBrokenCircuitException()
-        {
-           // ViewBag.BasketInoperativeMsg = "Booking Service is inoperative, please try later on. (Business Msg Due to Circuit-Breaker)";
-        }
-
         // POST: api/booking
+        [Produces("application/json")]
         [HttpPost]
-        public async Task<ActionResult<string>> Create([FromBody] CreateBookingCommand command)
+        public async Task<IActionResult> Create([FromBody] CreateBookingCommand command)
         {
-
             try
             {
                 var res = await _bookingAPI.CreatedBooking(command);
@@ -61,9 +60,8 @@ namespace MicroCourier.Web.Controllers
             }
             catch (BrokenCircuitException)
             {
-                // Catches error when Basket.api is in circuit-opened mode                 
-                HandleBrokenCircuitException();
-                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry The Service Is Not Available");
+                // Catches error when Basket.api is in circuit-opened mode                
+                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Booking Service Is Not Available. Please try again later.");
             }
             catch (Exception ex)
             {

@@ -87,6 +87,11 @@ namespace MicroCourier.Web
               .AddPolicyHandler(GetRetryPolicy())
              .AddPolicyHandler(GetCircuitBreakerPolicy());
 
+            services.AddHttpClient<ITrackingAPI, TrackingAPI>()
+            .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Sample. Default lifetime is 2 minutes                   
+             .AddPolicyHandler(GetRetryPolicy())
+            .AddPolicyHandler(GetCircuitBreakerPolicy());
+
             return services;
         }
 

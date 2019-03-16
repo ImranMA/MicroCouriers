@@ -18,15 +18,15 @@ namespace MicroCourier.Web.RESTClients
     {
         private readonly HttpClient _client;
         //private IBookingAPI _clientBooking;
-               
+
 
         public BookingAPI(IConfiguration config, HttpClient httpclient)
         {
             _client = httpclient;
             string apiHostAndPort = config.GetSection("APIServiceLocations").GetValue<string>("BookingAPI");
-            string baseUri = $"http://{apiHostAndPort}";           
+            string baseUri = $"http://{apiHostAndPort}";
             _client.BaseAddress = new Uri(baseUri);
-           
+
         }
 
         public async Task<BookingOrderDTO> GetBookingById([AliasAs("id")] string bookingId)
@@ -34,6 +34,10 @@ namespace MicroCourier.Web.RESTClients
             try
             {
                 var result = await _client.GetAsync("/api/booking/" + bookingId);
+
+                if (result.StatusCode != HttpStatusCode.OK)
+                    return null;
+
                 return await result.Content.ReadAsAsync<BookingOrderDTO>();
             }
             catch (Exception ex)
@@ -44,10 +48,21 @@ namespace MicroCourier.Web.RESTClients
 
         public async Task<string> CreatedBooking(CreateBookingCommand command)
         {
-            var result = await _client.PostAsync("/api/booking", new StringContent(JsonConvert.SerializeObject(command),
-                Encoding.UTF8, "application/json"));
-            return await result.Content.ReadAsStringAsync();
+            try
+            {
+                var result = await _client.PostAsync("/api/booking", new StringContent(JsonConvert.SerializeObject(command),
+                     Encoding.UTF8, "application/json"));
+
+                if (result.StatusCode != HttpStatusCode.OK)
+                    return null;
+
+                return await result.Content.ReadAsStringAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }           
         }
-       
+
     }
 }

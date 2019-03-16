@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 namespace MicroCourier.Web.RESTClients
 {
     public interface IBookingAPI
-    {
-        [Get("/booking/{id}")]
-        Task<BookingOrderDTO> GetBookingById([AliasAs("id")] string bookingId);
+    {    
+        Task<BookingOrderDTO> GetBookingById(string bookingId);
 
-        [Post("/booking")]
         Task<string> CreatedBooking(CreateBookingCommand command);
     }
 }

@@ -19,30 +19,38 @@ namespace Booking.Application.Booking.Queries.GetBooking
 
         public async Task<BookingOrderDTO> Handle(GetBookingQuery request, CancellationToken cancellationToken)
         {
-             BookingOrder bookingObj = await _context.FindByIdAsync(request.BookingId);
-            
-              var bookingDTO = new BookingOrderDTO
-              {
-                  BookingOrderId = bookingObj.BookingOrderId,
-                  CustomerId = bookingObj.CustomerID               
-              };
+            BookingOrder bookingObj = await _context.FindByIdAsync(request.BookingId);
 
-              ICollection<BookingOrderDetailDTO> listBoookingDetails = new List<BookingOrderDetailDTO>();
-              foreach (BookingOrderDetail bookdetails in bookingObj.BookingDetails)
-              {
-                  var bookingDetailsObj= new BookingOrderDetailDTO
-                  {
-                      Price = bookdetails.Price,
-                      Origin = bookdetails.PackageDescription,                  
-                      PackageType = bookdetails.PackageType
-                  };
+            if (bookingObj == null)
+            {
+                return null;
+            }
 
-                  listBoookingDetails.Add(bookingDetailsObj);
-              }
+            var bookingDTO = new BookingOrderDTO
+            {
+                BookingOrderId = bookingObj.BookingOrderId,
+                CustomerId = bookingObj.CustomerID,
+                Origin = bookingObj.Origin,
+                Destination = bookingObj.Destination                
+            };
 
-              bookingDTO.BookingDetails = listBoookingDetails;
+            ICollection<BookingOrderDetailDTO> listBoookingDetails = new List<BookingOrderDetailDTO>();
+            foreach (BookingOrderDetail bookdetails in bookingObj.BookingDetails)
+            {
+                var bookingDetailsObj = new BookingOrderDetailDTO
+                {
+                    Price = bookdetails.Price,
+                    Description = bookdetails.PackageDescription,
+                    PackageType = bookdetails.PackageType
+                };
 
-              return bookingDTO;           
+                listBoookingDetails.Add(bookingDetailsObj);
+            }
+
+            bookingDTO.BookingDetails = listBoookingDetails;
+
+
+            return bookingDTO;
         }
     }
 }

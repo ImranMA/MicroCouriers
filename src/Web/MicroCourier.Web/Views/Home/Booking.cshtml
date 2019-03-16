@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewData["Title"] = "Booking";
+}
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"        
+        crossorigin="anonymous"></script>
+<body>
+
+    <h3>Booking Form</h3>
+
+    <div class="Formcontainer">
+        <div action="/action_page.php">
+            <label for="fname">Pick Up</label>
+            <input type="text" id="txtOrigin" name="origin" placeholder="Type pick up address..">
+
+            <label for="fname">Destination</label>
+            <input type="text" id="txtDestination" name="destination" placeholder="Type destination address..">
+
+            <h4>Order Items</h4> <button onclick="AddItem()">+</button>
+            <br />
+            <table id="tblOrderItems"></table>
+            <br />           
+            <input type="button" onclick="SaveAll();" class="btn" value="Save Booking And Pay" />
+        </div>
+    </div>
+
+</body>
+
+<script>
+
+    var count = parseInt(0);
+
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max) + 20);
+    }
+
+    //Mocking the price estimator
+    function CalculatePricing(item) {        
+        var price = getRandomInt(100);
+        $("#txtPrice" + item).val("$"+price + " Including All Taxes");
+    }
+
+    //Add the booking items
+    function AddItem() {
+        count++;
+        var items = "<tr class='item'>" +
+            "<td>Describe : <input class='itemDescription' type='text' placeholder='Package Description and Volume'><td>" +
+            "<td>Weight : <select><option>0 - .5 KG</option><option>0.5 - 2KG</option><option>2KG - 5KG</option><option>5KG - 10KG</option><option>>10KG - Please call</option></select><td>" +
+            "<td>Service Type: <select class='ItemType'><option value='S'>Standard</option><option value='E'>Express</option></select><td>" +
+            "<td>Approx Price : <input class='txtPrice' id='txtPrice" + count + "' type='text'  ><td>" +
+            "<td><input value='Estimate Price' type='button' class='btn' onclick='CalculatePricing(" + count.toString() + ")' /><td>" +
+            "</tr>"
+        $("#tblOrderItems").append(items);
+    }    
+
+    function SaveAll() {
+        debugger
+        var orderArrary = new Array();
+        $("tr.item").each(function () {   
+            var itemDes, ItemPrice, ItemType;
+
+            itemDes = $(this).find("input.itemDescription").val(),
+            ItemPrice = $(this).find("input.txtPrice").val(),
+            ItemType = $(this).find("select.ItemType").val();
+
+            ItemPrice = ItemPrice.replace(" Including All Taxes", "");
+            ItemPrice = ItemPrice.replace("$", "");
+                     
+            var OrderObj = {
+                "PackageType": ItemType,
+                "Price": ItemPrice,
+                "PackageDescription": itemDes
+            };
+
+            orderArrary.push(OrderObj);
+        });
+
+        debugger
+        var command = {
+            Origin: $("#txtOrigin").val(),
+            Destination: $("#txtDestination").val(),
+            BookingDetails: orderArrary
+        };
+
+
+        $.ajax({
+            type: "POST",
+            url: "/api/booking",
+            contentType: "application/json",
+            data: JSON.stringify(command),
+            dataType: "json",
+            success: removeItemCompleted,
+            error: removeItemFailed
+        });
+
+        function removeItemCompleted(results) {
+            debugger
+        }
+
+        function removeItemFailed(request, status, error) {
+            debugger
+        }
+
+      
+    }
+
+</script>
+
+

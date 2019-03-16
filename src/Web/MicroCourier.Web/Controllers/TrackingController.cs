@@ -12,54 +12,51 @@ namespace MicroCourier.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PaymentController : ControllerBase
+    public class TrackingController : ControllerBase
     {
+        private readonly ITrackingAPI _trackingAPI;
 
-        private readonly IPaymentAPI _paymentAPI;
-
-        public PaymentController(IPaymentAPI paymentAPI)
+        public TrackingController(ITrackingAPI trackingAPI)
         {
-            _paymentAPI = paymentAPI;
+            _trackingAPI = trackingAPI;
         }
 
 
-        // GET: api/Payment
+        // GET: api/Tracking
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/Payment/5
+        // GET: api/Tracking/5
         [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/payment
-        [Produces("application/json")]
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] PaymentDTO payment)
+        public async Task<IActionResult> Get(string id)
         {
             try
             {
-                var res = await _paymentAPI.CreatedPayment(payment);
+                var res= await _trackingAPI.GetOrderHistory(id);
                 return Ok(res);
             }
             catch (BrokenCircuitException)
             {
-                // Catches error when payment.api is in circuit-opened mode               
-                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Payment Service Is Not Available. Please Try again later.");
+                // Catches error when api is in circuit-opened mode              
+                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Tracking Service Is Not Available. Please try again later.");
             }
             catch (Exception ex)
             {
                 return NotFound(ex.Message.ToString());
             }
-
+           
         }
 
-        // PUT: api/Payment/5
+        // POST: api/Tracking
+        [HttpPost]
+        public void Post([FromBody] string value)
+        {
+        }
+
+        // PUT: api/Tracking/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {

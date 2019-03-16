@@ -29,7 +29,7 @@ namespace Tracking.API.Controllers
         }
 
         // GET: api/Tracking/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public async Task<TrackingDTO> Get(string id)
         {
             return await _trackingService.FindByIdAsync(id) ;

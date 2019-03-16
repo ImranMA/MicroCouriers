@@ -35,10 +35,19 @@ namespace Payment.API.Controllers
         }
 
         // POST: api/Payment
+        [Produces("application/json")]
         [HttpPost]
-        public async Task<ActionResult<string>> Post([FromBody] PaymentDTO paymentDTO)
+        public async Task<IActionResult> Post([FromBody] PaymentDTO paymentDTO)
         {
-            return await _paymentService.AddAsync(paymentDTO);
+            try
+            {
+                var paymentId = await _paymentService.AddAsync(paymentDTO);
+                return Ok(paymentId);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry We are Unable to Create Booking.");
+            }       
         }
 
         // PUT: api/Payment/5

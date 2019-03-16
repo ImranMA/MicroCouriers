@@ -17,41 +17,36 @@ namespace Booking.API.Controllers
     {
 
         // GET: api/Booking/5
-        [HttpGet("{id}", Name = "Get")]
-        public async Task<ActionResult<BookingOrderDTO>> Get(string Id)
+        [Produces("application/json")]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(string Id)
         {
             try
             {
                 var resultSet = await Mediator.Send(new GetBookingQuery() { BookingId = Id });
                 return Ok(resultSet);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                return NotFound(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Some problem Occured");
             }
                        
         }
 
-        //// GET: api/Booking/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
 
-        // POST: api/products
+        // POST: api/booking
+        [Produces("application/json")]
         [HttpPost]
-        public async Task<ActionResult<string>> Create([FromBody] CreateBookingCommand command)
+        public async Task<IActionResult> Create([FromBody] CreateBookingCommand command)
         {
             try
             {
                 var bookingOrderId = await Mediator.Send(command);
                 return Ok(bookingOrderId);
             }
-            catch(Exception ex){
-                return NotFound();
-            }
-            
+            catch(Exception){
+                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry We are Unable to Create Booking.");
+            }            
         }
 
         // PUT: api/Booking/5
