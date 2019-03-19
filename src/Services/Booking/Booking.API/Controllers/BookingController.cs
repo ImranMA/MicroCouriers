@@ -35,7 +35,7 @@ namespace Booking.API.Controllers
 
 
         // POST: api/booking
-        [Produces("application/json")]
+        //Return Booking Reference
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateBookingCommand command)
         {

@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewData["Title"] = "Tracking";
+}
+
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"
+        crossorigin="anonymous"></script>
+<body>
+
+    <h3>Tracking</h3>
+
+    <div class="Formcontainer">
+        <div action="/action_page.php">          
+            <label for="fname">Booking Ref</label>
+            <input class="col-md-2 col-lg-2"  type="text" id="txtBR" name="origin">
+            
+            <div id="bookingDetails"></div>
+            <br />
+            <input type="button" onclick="getTrackingDetails();" class="btn" value="Find" />
+
+            <h5 style="color:Red" id="msgtxt"></h5>
+        </div>
+    </div>
+
+</body>
+
+
+<script>
+
+
+
+    function getTrackingDetails() {
+        debugger
+        var trackingid = $("#txtBR").val();
+
+        $.ajax({
+            type: "Get",
+            url: "/api/tracking/" + trackingid,
+            contentType: "application/json",           
+            dataType: "json",
+            success: TrackingDetails,
+            error: TrackingDetailsError
+        });
+
+    }
+
+
+
+    function TrackingDetailsError() {
+        debugger
+    }
+
+
+    function TrackingDetails(results) {
+        var trackingHistory = results.trackingHistory;
+        $("#bookingDetails").html(trackingHistory);
+    }
+
+</script>

@@ -54,7 +54,7 @@
     }    
 
     function SaveAll() {
-        debugger
+        
         var orderArrary = new Array();
         $("tr.item").each(function () {   
             var itemDes, ItemPrice, ItemType;
@@ -75,7 +75,7 @@
             orderArrary.push(OrderObj);
         });
 
-        debugger
+        
         var command = {
             Origin: $("#txtOrigin").val(),
             Destination: $("#txtDestination").val(),
@@ -88,17 +88,17 @@
             url: "/api/booking",
             contentType: "application/json",
             data: JSON.stringify(command),
-            dataType: "json",
-            success: removeItemCompleted,
-            error: removeItemFailed
+            dataType: "text",
+            success: BookingCreated,
+            error: BookingCreatonFailed
         });
 
-        function removeItemCompleted(results) {
-            debugger
+        function BookingCreated(results) {            
+            window.location.href = "/home/payment?bookingid=" + results;
         }
 
-        function removeItemFailed(request, status, error) {
-            debugger
+        function BookingCreatonFailed(request, status, error) {
+            
         }
 
       

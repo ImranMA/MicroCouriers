@@ -38,7 +38,7 @@ namespace MicroCourier.Web.Controllers
         }
 
         // POST: api/payment
-        [Produces("application/json")]
+        //[Produces("application/json")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] PaymentDTO payment)
         {

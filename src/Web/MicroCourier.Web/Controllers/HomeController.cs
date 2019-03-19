@@ -20,7 +20,17 @@ namespace MicroCourier.Web.Controllers
             return View();
         }
 
+        public IActionResult Tracking()
+        {
+            return View();
+        }
+
         public IActionResult Booking()
+        {
+            return View();
+        }
+
+        public IActionResult Payment()
         {
             return View();
         }

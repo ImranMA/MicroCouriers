@@ -69,7 +69,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ShippingSimulation", "Shipp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderShipping", "src\ShippingSimulation\OrderShipping\OrderShipping.csproj", "{3BF67944-A301-46D3-AF24-EE6538AF0C7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroCourier.Web", "src\Web\MicroCourier.Web\MicroCourier.Web.csproj", "{04FDED46-05DF-4E1A-873F-2329098D7DB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroCourier.Web", "src\Web\MicroCourier.Web\MicroCourier.Web.csproj", "{04FDED46-05DF-4E1A-873F-2329098D7DB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

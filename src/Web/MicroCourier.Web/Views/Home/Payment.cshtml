@@ -1,0 +1,122 @@
+﻿
+@{
+    ViewData["Title"] = "Payment";
+}
+
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"
+        crossorigin="anonymous"></script>
+<body>
+
+    <h3>Payment</h3>
+
+    <div class="Formcontainer">
+        <div action="/action_page.php">
+            <label for="fname">Booking Ref</label>
+            <input class="col-md-3 col-lg-3" disabled="disabled" type="text" id="txtBR" name="origin">
+            <label for="fname">Amount</label>
+            <input class="col-md-2 col-lg-2" disabled="disabled" type="text" id="txtAmount" name="origin">
+            <select>
+                <option>
+                    CreditCard
+                </option>
+                <option>
+                    PayPal
+                </option>
+                <option>
+                    Other
+                </option>
+            </select>
+
+            <label for="fname">Credit Card #</label>
+            <input type="text" id="txtCCNumber" name="origin" placeholder="Enter Your Credit Card #">
+
+            <label for="fname">Name</label>
+            <input type="text" id="txtCCName" name="origin" placeholder="Name As Appear on CC">
+
+            <label for="fname">CCV</label>
+            <input type="text" id="txtCCV" name="origin" placeholder="Enter CCV Back of your card">
+
+            <br />
+            <input type="button" onclick="PayForBooking();" class="btn" value="Pay" />
+
+            <h5 style="color:Red" id="msgtxt"></h5>
+        </div>
+    </div>
+
+</body>
+
+<script>
+
+    $(document).ready(function () {
+        getBookingDetails();
+    });
+
+    function getBookingDetails() {
+        var bookingid = getUrlParameter('bookingid');
+
+        $.ajax({
+            type: "Get",
+            url: "/api/booking/" + bookingid,
+            contentType: "application/json",
+            //data: JSON.stringify(command),
+            dataType: "json",
+            success: BookingDetails,
+            error: BookingDetailsError
+        });
+
+    }
+
+    function PayForBooking() {
+
+        var command = {
+            BookingOrderId: $("#txtBR").val(),
+            Price: $("#txtAmount").val()            
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/api/payment",
+            contentType: "application/json",
+            data: JSON.stringify(command),
+            dataType: "text",
+            success: PaymentCreated,
+            error: PaymentFailed
+        });
+
+    }
+
+    function PaymentCreated(results) {        
+        $("#msgtxt").html("Thank you , your payment is procssed and ref is " + results + ". You will be notified soon. Please keep the booking Ref")
+    }
+
+    function PaymentFailed(request, status, error) {        
+        $("#msgtxt").html(request.responseText)
+    }
+
+    function BookingDetails(results) {
+        var totalPrice = parseInt(0);
+        $.each(results.bookingDetails, function (k, v) {
+            totalPrice += parseInt(this.price);
+        });
+        $("#txtBR").val(results.bookingOrderId);
+        $("#txtAmount").val(totalPrice);
+    }
+
+    function BookingDetailsError(request, status, error) {        
+    }
+
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+    };
+</script>

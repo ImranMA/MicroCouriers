@@ -35,7 +35,7 @@ namespace Payment.API.Controllers
         }
 
         // POST: api/Payment
-        [Produces("application/json")]
+        //[Produces("application/json")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] PaymentDTO paymentDTO)
         {

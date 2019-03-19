@@ -48,8 +48,8 @@ namespace MicroCourier.Web.Controllers
             }
         }
 
-        // POST: api/booking
-        [Produces("application/json")]
+        // POST: api/booking      
+        //Return Booking Reference
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateBookingCommand command)
         {
