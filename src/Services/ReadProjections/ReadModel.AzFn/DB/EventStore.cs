@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Newtonsoft.Json;
 using ReadModel.AzFn.Redis;
 using System;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace ReadModel.AzFn.DB
                     foreach (var item in listId)
                     {
                         Track trackings = await _trackingContext.GetTrackingAsync(item);
-                        var result = String.Join(", ", trackings.orderHistory.ToArray());
+                        var result = JsonConvert.SerializeObject(trackings.orderHistory);// String.Join(", ", trackings.orderHistory.ToArray());
                         rCache.Save(item, result);
                     }
 
@@ -80,7 +81,7 @@ namespace ReadModel.AzFn.DB
                    // var getcahc= rCache.Get(BookingId); 
                     rCache.Remove(BookingId);
                     Track trackings = await _trackingContext.GetTrackingAsync(BookingId);
-                    var result = String.Join(", ", trackings.orderHistory.ToArray());
+                    var result = JsonConvert.SerializeObject(trackings.orderHistory);
                     rCache.Save(BookingId, result);
 
                 }

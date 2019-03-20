@@ -10,13 +10,14 @@
     <h3>Tracking</h3>
 
     <div class="Formcontainer">
-        <div action="/action_page.php">          
+        <div action="/action_page.php">
             <label for="fname">Booking Ref</label>
-            <input class="col-md-2 col-lg-2"  type="text" id="txtBR" name="origin">
-            
-            <div id="bookingDetails"></div>
+            <input class="col-md-4 col-lg-4" type="text" id="txtBR" name="origin">
             <br />
             <input type="button" onclick="getTrackingDetails();" class="btn" value="Find" />
+            <div id="bookingDetails"></div>
+            <br />
+
 
             <h5 style="color:Red" id="msgtxt"></h5>
         </div>
@@ -46,14 +47,48 @@
 
 
 
-    function TrackingDetailsError() {
-        debugger
+    function TrackingDetailsError(request, status, error) {
+        $("#bookingDetails").html(request.responseText);
     }
 
 
     function TrackingDetails(results) {
+        debugger
         var trackingHistory = results.trackingHistory;
-        $("#bookingDetails").html(trackingHistory);
+        var arr = $.parseJSON(trackingHistory);
+        var resultString = "";
+        var Sep = "<br>-------------------------------------------";
+        $.each(arr, function (index, value) {
+            debugger
+            
+            if (this.OrderState.indexOf("Created")>-1) {
+                resultString += "<br>Booking Created - " + this.DateTime + "<br>" + "Origion - " + this.Origion + " Dest -" + this.Destination + "<br> Description :" + this.Description;
+            }
+
+            if (this.OrderState.indexOf("Payment") > -1) {
+                resultString += Sep;
+                resultString += "<br>Payment - " + this.DateTime + "<br>";
+            }
+
+            if (this.OrderState.indexOf("OrderPicked") > -1) {
+                resultString += Sep;
+                resultString += "<br>Order Picked - " + this.DateTime +  "<br> Description :" + this.Description;
+            }
+
+            if (this.OrderState.indexOf("OrderInTransit") > -1) {
+                resultString += Sep;
+                resultString += "<br>Order In Transit - " + this.DateTime + "<br> Description :" + this.Description;
+            }
+
+
+            if (this.OrderState.indexOf("Delivered") > -1) {
+                resultString += Sep;
+                resultString += "<br>Order Delivered - " + this.DateTime + "<br> Signed By: " + this.SignedBy + "<br> Description :" +  "" + this.Description;
+            }
+           // alert(index + ": " + value);
+        });
+
+        $("#bookingDetails").html(resultString);
     }
 
 </script>

@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
+﻿using Newtonsoft.Json;
 using StackExchange.Redis;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Tracking.Application.DTO;
 using Tracking.Application.Interface;
@@ -36,8 +34,8 @@ namespace Tracking.Application.TrackingServices
                 if (result != null)
                 {
                     //format result
-                    bookingHistroy = String.Join(", ", result.orderHistory.ToArray());
-                                       
+                    bookingHistroy = JsonConvert.SerializeObject(result.orderHistory);
+
                     //Update Cache
                     var ts = TimeSpan.FromDays(1);
                     await _cache.StringSetAsync(bookingId, bookingHistroy, ts);

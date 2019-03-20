@@ -4,12 +4,15 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <ApplicationInsightsResourceId>/subscriptions/37da0425-c79d-424d-9680-d7e23cc0980f/resourcegroups/MicroServicesStuff/providers/microsoft.insights/components/Booking.API</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/37da0425-c79d-424d-9680-d7e23cc0980f/resourcegroups/MicroServicesStuff/providers/microsoft.insights/components/Booking.API</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.1" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.3.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="6.0.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Azure.ServiceBus" Version="3.3.0" />
@@ -33,6 +36,10 @@
     <Reference Include="IntegrationEventLogEF">
       <HintPath>..\ExternalDep\IntegrationEventLogEF.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>

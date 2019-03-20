@@ -21,6 +21,7 @@
             <table id="tblOrderItems"></table>
             <br />           
             <input type="button" onclick="SaveAll();" class="btn" value="Save Booking And Pay" />
+            <div id="msgTxt" style="color:red"></div>
         </div>
     </div>
 
@@ -54,7 +55,7 @@
     }    
 
     function SaveAll() {
-        
+        $("#msgTxt").html("Please wait !");
         var orderArrary = new Array();
         $("tr.item").each(function () {   
             var itemDes, ItemPrice, ItemType;
@@ -94,6 +95,7 @@
         });
 
         function BookingCreated(results) {            
+            $("#msgTxt").html("Booking Done .. Redirecting To Payment");
             window.location.href = "/home/payment?bookingid=" + results;
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Tracking.Domain.Events;
+using Tracking.Domain.Model;
 
 namespace Tracking.Domain.AggregatesModel.TrackingAggregate
 {
@@ -33,19 +34,19 @@ namespace Tracking.Domain.AggregatesModel.TrackingAggregate
         public int OriginalVersion { get; private set; }
        
 
-        public List<string> orderHistory { get; private set; }
+        public List<OrderHistory> orderHistory { get; private set; }
 
 
         public Track()
         {
             OriginalVersion = 0;
             Version = 0;
-            orderHistory = new List<string>();
+            orderHistory = new List<OrderHistory>();
         }
 
         public Track(IEnumerable<EventBase> events)
         {
-            orderHistory = new List<string>();
+            orderHistory = new List<OrderHistory>();
             OriginalVersion = 0;
             Version = 0;
             IsReplaying = true;
@@ -102,36 +103,75 @@ namespace Tracking.Domain.AggregatesModel.TrackingAggregate
 
         private IEnumerable<EventBase> Handle(BookingCreated e)
         {
-            orderHistory.Add("Status - " + e.MessageType.ToString() +
-           "- Date - " + e.Date.ToShortDateString() + " -Origin " + e.Origin + " - Dest " + e.Destination);
+            OrderHistory bookingCreated = new OrderHistory();
+
+            bookingCreated.BookingOrderId = e.BookingId;
+            bookingCreated.DateTime = e.Date.ToString();
+            bookingCreated.Origion = e.Origin;
+            bookingCreated.Destination = e.Destination;
+            bookingCreated.Description = e.Description;
+            bookingCreated.OrderState = typeof(BookingCreated).ToString();
+            
+            orderHistory.Add(bookingCreated);
 
             return new EventBase[] { e };
         }
 
         private IEnumerable<EventBase> Handle(PaymentProcessed e)
         {
+            OrderHistory paymentProcessed = new OrderHistory();
+
+            paymentProcessed.BookingOrderId = e.BookingId;
+            paymentProcessed.DateTime = e.Date.ToString();         
+            paymentProcessed.Description = e.Description;
+            paymentProcessed.OrderState = typeof(PaymentProcessed).ToString();
+
+            orderHistory.Add(paymentProcessed);
+
             return new EventBase[] { e };
         }
 
         private IEnumerable<EventBase> Handle(OrderPicked e)
         {
-            orderHistory.Add("Status - " + e.MessageType.ToString() +
-                "- Date - " + e.Date.ToShortDateString() +  "  - Desc " + e.Description);
+            OrderHistory orderPicked = new OrderHistory();
+
+            orderPicked.BookingOrderId = e.BookingId;
+            orderPicked.DateTime = e.Date.ToString();
+            orderPicked.Description = e.Description;
+            orderPicked.OrderState = typeof(OrderPicked).ToString();
+
+            orderHistory.Add(orderPicked);
+
             return new EventBase[] { e };
         }
 
         private IEnumerable<EventBase> Handle(OrderInTransit e)
         {
-            orderHistory.Add("Status - " + e.MessageType.ToString() +
-                "- Date - " + e.Date.ToShortDateString() + "  - Desc " + e.Description);
+
+            OrderHistory orderInTransit = new OrderHistory();
+
+            orderInTransit.BookingOrderId = e.BookingId;
+            orderInTransit.DateTime = e.Date.ToString();
+            orderInTransit.Description = e.Description;
+            orderInTransit.OrderState = typeof(OrderInTransit).ToString();
+
+            orderHistory.Add(orderInTransit);
 
             return new EventBase[] { e };
         }
 
         private IEnumerable<EventBase> Handle(OrderDelivered e)
         {
-            orderHistory.Add("Status - " + e.MessageType.ToString() + 
-                "- Date - " + e.Date.ToShortDateString() + " - Received By" + e.SignedBy + "  - Desc " + e.Description);
+            OrderHistory orderDelivered = new OrderHistory();
+
+            orderDelivered.BookingOrderId = e.BookingId;
+            orderDelivered.DateTime = e.Date.ToString();
+            orderDelivered.Description = e.Description;
+            orderDelivered.OrderState = typeof(OrderDelivered).ToString();
+            orderDelivered.SignedBy = e.SignedBy;
+
+            orderHistory.Add(orderDelivered);
+
             return new EventBase[] { e };
         }
     }
