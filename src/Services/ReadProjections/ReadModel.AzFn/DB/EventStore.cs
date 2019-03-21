@@ -21,7 +21,7 @@ namespace ReadModel.AzFn.DB
 
         public EventStore()
         {
-            var value = Environment.GetEnvironmentVariable("EVENTSTOREDB");
+            var value = Environment.GetEnvironmentVariable("EventStoreCN");
             _connectionString = value;
             _trackingContext = new TrackingRepository(_connectionString);
         }

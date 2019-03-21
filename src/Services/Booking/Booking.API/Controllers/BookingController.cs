@@ -6,6 +6,7 @@ using Booking.Application.Booking.Commands.CreateBooking;
 using Booking.Application.Booking.Commands.UpdateBooking;
 using Booking.Application.Booking.Queries.GetBooking;
 using MediatR;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,14 @@ namespace Booking.API.Controllers
     [ApiController]
     public class BookingController : BaseController
     {
+
+        private TelemetryClient telemetry;
+
+        public BookingController(TelemetryClient telemetry)
+        {
+            this.telemetry = telemetry;
+        }
+
 
         // GET: api/Booking/5
         [Produces("application/json")]
@@ -26,8 +35,9 @@ namespace Booking.API.Controllers
                 var resultSet = await Mediator.Send(new GetBookingQuery() { BookingId = Id });
                 return Ok(resultSet);
             }
-            catch(Exception)
+            catch(Exception ex)
             {
+                telemetry.TrackException(ex);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Some problem Occured");
             }
                        
@@ -44,7 +54,8 @@ namespace Booking.API.Controllers
                 var bookingOrderId = await Mediator.Send(command);
                 return Ok(bookingOrderId);
             }
-            catch(Exception){
+            catch(Exception ex){
+                telemetry.TrackException(ex);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Sorry We are Unable to Create Booking.");
             }            
         }

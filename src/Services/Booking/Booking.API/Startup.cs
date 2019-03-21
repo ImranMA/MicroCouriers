@@ -32,6 +32,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.ApplicationInsights.Extensibility;
 
 namespace Booking.API
 {
@@ -56,6 +57,10 @@ namespace Booking.API
                 AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 
+            services.AddApplicationInsightsTelemetry(Configuration);
+
+            
+
             //Add Repos
             services.AddScoped<IBookingRespository, BookingRepository>();
 
@@ -79,12 +84,17 @@ namespace Booking.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,IConfiguration config)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+
+            var tConfig = app.ApplicationServices.GetRequiredService<TelemetryConfiguration>();
+            tConfig.InstrumentationKey = config["ApplicationInsights:InstrumentationKey"];// "dbd67a2f-a911-4d69-be31-e7c0b53b248d";
+
 
             app.UseMvc();
             ConfigureEventBus(app);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MicroCourier.Web.DTO;
 using MicroCourier.Web.RESTClients;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Polly.CircuitBreaker;
@@ -14,11 +15,13 @@ namespace MicroCourier.Web.Controllers
     [ApiController]
     public class TrackingController : ControllerBase
     {
+        private TelemetryClient telemetry;
         private readonly ITrackingAPI _trackingAPI;
 
-        public TrackingController(ITrackingAPI trackingAPI)
+        public TrackingController(ITrackingAPI trackingAPI, TelemetryClient telemetry)
         {
             _trackingAPI = trackingAPI;
+            this.telemetry = telemetry;
         }
 
 
@@ -38,14 +41,16 @@ namespace MicroCourier.Web.Controllers
                 var res= await _trackingAPI.GetOrderHistory(id);
                 return Ok(res);
             }
-            catch (BrokenCircuitException)
+            catch (BrokenCircuitException ex)
             {
+                telemetry.TrackException(ex);
                 // Catches error when api is in circuit-opened mode              
                 return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Tracking Service Is Not Available. Please try again later.");
             }
             catch (Exception ex)
             {
-                return NotFound(ex.Message.ToString());
+                telemetry.TrackException(ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Some problem Occured");
             }
            
         }

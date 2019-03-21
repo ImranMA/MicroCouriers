@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using MicroCourier.Web.RESTClients;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -38,11 +39,13 @@ namespace MicroCourier.Web
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddApplicationInsightsTelemetry(Configuration);
+
             services.AddHttpClientServices(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration config)
         {
             if (env.IsDevelopment())
             {
@@ -52,6 +55,9 @@ namespace MicroCourier.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            var tConfig = app.ApplicationServices.GetRequiredService<TelemetryConfiguration>();
+            tConfig.InstrumentationKey = config["ApplicationInsights:InstrumentationKey"];
 
             app.UseStaticFiles();
             app.UseCookiePolicy();

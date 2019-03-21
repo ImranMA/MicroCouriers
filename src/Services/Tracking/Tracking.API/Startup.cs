@@ -22,6 +22,7 @@ using Tracking.Application.IntegrationEvents;
 using Tracking.Application.Interface;
 using Tracking.Application.TrackingServices;
 using StackExchange.Redis;
+using Microsoft.ApplicationInsights.Extensibility;
 
 namespace Tracking.API
 {
@@ -46,8 +47,10 @@ namespace Tracking.API
                   AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 
+            services.AddApplicationInsightsTelemetry(Configuration);
+
             //Add Repos
-          
+
             services.AddScoped<ITrackingService, TrackingService>();
             services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Configuration.GetSection("cache:REDIS").Value));
             
@@ -70,15 +73,20 @@ namespace Tracking.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ITrackingRepository trackingRepo)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ITrackingRepository trackingRepo,IConfiguration config)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+
+            var tConfig = app.ApplicationServices.GetRequiredService<TelemetryConfiguration>();
+            tConfig.InstrumentationKey = config["ApplicationInsights:InstrumentationKey"];
+            
+
             app.UseMvc();
-            trackingRepo.EnsureDatabase();
+            //trackingRepo.EnsureDatabase();
             ConfigureEventBus(app);
         }
 

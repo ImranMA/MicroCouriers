@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Payment.Application.DTO;
@@ -13,11 +14,15 @@ namespace Payment.API.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
+
+        private TelemetryClient telemetry;
         private readonly IPaymentService _paymentService;
 
-        public PaymentController(IPaymentService paymentService)
+
+        public PaymentController(IPaymentService paymentService, TelemetryClient telemetry)
         {
             _paymentService = paymentService;
+            this.telemetry = telemetry;
         }
 
         // GET: api/Payment
@@ -44,8 +49,9 @@ namespace Payment.API.Controllers
                 var paymentId = await _paymentService.AddAsync(paymentDTO);
                 return Ok(paymentId);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                telemetry.TrackException(ex);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Sorry We are Unable to Create Booking.");
             }       
         }

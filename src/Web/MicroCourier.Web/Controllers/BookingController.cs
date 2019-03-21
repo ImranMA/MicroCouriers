@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MicroCourier.Web.Commands;
 using MicroCourier.Web.DTO;
 using MicroCourier.Web.RESTClients;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Polly.CircuitBreaker;
@@ -17,10 +18,12 @@ namespace MicroCourier.Web.Controllers
     {
 
         private readonly IBookingAPI _bookingAPI;
+        private TelemetryClient telemetry;
 
-        public BookingController(IBookingAPI bookingAPi)
+        public BookingController(IBookingAPI bookingAPi, TelemetryClient telemetry)
         {
             _bookingAPI = bookingAPi;
+            this.telemetry = telemetry;
         }
 
         // GET: api/Booking/5
@@ -37,14 +40,16 @@ namespace MicroCourier.Web.Controllers
 
                 return Ok(res);
             }
-            catch (BrokenCircuitException)
+            catch (BrokenCircuitException ex)
             {
+                telemetry.TrackException(ex);
                 // Catches error when api is in circuit-opened mode                
                 return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Booking Service Is Not Available. Please try again later.");
             }
             catch(Exception ex)
             {
-                return NotFound(ex.Message.ToString());
+                telemetry.TrackException(ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Some problem Occured");
             }
         }
 
@@ -58,14 +63,16 @@ namespace MicroCourier.Web.Controllers
                 var res = await _bookingAPI.CreatedBooking(command);
                 return Ok(res);
             }
-            catch (BrokenCircuitException)
+            catch (BrokenCircuitException ex)
             {
+                telemetry.TrackException(ex);
                 // Catches error when Basket.api is in circuit-opened mode                
                 return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Booking Service Is Not Available. Please try again later.");
             }
             catch (Exception ex)
             {
-                return NotFound(ex.Message.ToString());
+                telemetry.TrackException(ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Some problem Occured");
             }         
 
         }

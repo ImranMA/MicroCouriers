@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Tracking.Application.DTO;
@@ -14,11 +15,12 @@ namespace Tracking.API.Controllers
     public class TrackingController : ControllerBase
     {
         private ITrackingService _trackingService;
+        private TelemetryClient telemetry;
 
-
-        public TrackingController(ITrackingService trackingservice)
+        public TrackingController(ITrackingService trackingservice, TelemetryClient telemetry)
         {
             _trackingService = trackingservice;
+            this.telemetry = telemetry;
         }
 
         // GET: api/Tracking
@@ -30,9 +32,19 @@ namespace Tracking.API.Controllers
 
         // GET: api/Tracking/5
         [HttpGet("{id}")]
-        public async Task<TrackingDTO> Get(string id)
+        public async Task<IActionResult> Get(string id)
         {
-            return await _trackingService.FindByIdAsync(id) ;
+            try
+            {
+                var resultSet = await _trackingService.FindByIdAsync(id);
+                return  Ok(resultSet);
+            }
+            catch(Exception ex)
+            {
+                telemetry.TrackException(ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Some problem Occured");
+            }
+           
         }
 
         // POST: api/Tracking
