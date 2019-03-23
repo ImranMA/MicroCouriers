@@ -24,6 +24,9 @@
     <Reference Include="IntegrationEventLogEF">
       <HintPath>..\ExternalDep\IntegrationEventLogEF.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.applicationinsights\2.4.0\lib\netstandard1.3\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
