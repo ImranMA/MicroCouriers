@@ -12,6 +12,7 @@ COPY ["Payment.Domain/Payment.Domain.csproj", "Payment.Domain/"]
 COPY ["Payment.Infrastructure/Payment.Infrastructure.csproj", "Payment.Infrastructure/"]
 COPY ["Payment.Persistence/Payment.Persistence.csproj", "Payment.Persistence/"]
 
+
 RUN dotnet restore "Payment.API/Payment.API.csproj"
 
 
