@@ -11,20 +11,25 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft;
 using Newtonsoft.Json;
+using Microsoft.ApplicationInsights;
 
 namespace MicroCourier.Web.RESTClients
 {
     public class BookingAPI : IBookingAPI
     {
+       
         private readonly HttpClient _client;
         //private IBookingAPI _clientBooking;
 
 
         public BookingAPI(IConfiguration config, HttpClient httpclient)
         {
+     
+            
             _client = httpclient;
-            string apiHostAndPort = config.GetSection("APIServiceLocations").GetValue<string>("BookingAPI");
-            string baseUri = $"http://{apiHostAndPort}";
+            string apiHostAndPort = config.GetSection("APIServiceLocations").GetValue<string>("BookingAPI");                     
+           
+            string baseUri = $"http://{apiHostAndPort}";            
             _client.BaseAddress = new Uri(baseUri);
 
         }
