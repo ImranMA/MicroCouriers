@@ -1,4 +1,6 @@
-﻿using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Abstractions;
+﻿using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.DataContracts;
+using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Abstractions;
 using Microsoft.MicroCouriers.BuildingBlocks.EventBus.Events;
 using System;
 using System.Collections.Generic;
@@ -18,12 +20,14 @@ namespace Tracking.Application.IntegrationEvents
         private readonly ITrackingRepository _trackingContext;
         private static List<Type> _assemblyTypes;
         private readonly IEventBus _eventBus;
+        private TelemetryClient telemetry;
 
-        public OrderTransitIntegrationEventHandler(ITrackingRepository trackingContext, IEventBus eventBus)
+        public OrderTransitIntegrationEventHandler(ITrackingRepository trackingContext, IEventBus eventBus, TelemetryClient telemetry)
         {
             _trackingContext = trackingContext;
             _assemblyTypes = TypeResolver.AssemblyTypes;
             _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+            this.telemetry = telemetry;
         }
 
         public async Task Handle(OrderTransitIntegrationEvent eventMsg)
@@ -32,6 +36,13 @@ namespace Tracking.Application.IntegrationEvents
 
             if (eventMsg.Id != Guid.Empty)
             {
+                RequestTelemetry requestTelemetry = new RequestTelemetry { Name = "OrderInTransit - Dequeue" };
+                requestTelemetry.Context.Operation.Id = Guid.NewGuid().ToString();
+                requestTelemetry.Context.Operation.ParentId = eventMsg.Id.ToString();
+
+
+                var operation = telemetry.StartOperation(requestTelemetry);
+
                 try
                 {
                     Track trackings = await _trackingContext.GetTrackingAsync(eventMsg.BookingId);
@@ -58,10 +69,19 @@ namespace Tracking.Application.IntegrationEvents
                     //Create Integration Event
                     var orderStatusChanged = new OrderStatusChangedIntegrationEvent(eventMsg.BookingId, "OrderInTransit");
                     _eventBus.Publish(orderStatusChanged);
-                }
-                catch (Exception ex)
-                {
 
+                    operation.Telemetry.ResponseCode = "200";
+                }
+                catch (Exception e)
+                {
+                    operation.Telemetry.ResponseCode = "500";
+                    telemetry.TrackException(e);
+                    throw;
+                }
+                finally
+                {
+                    // Update status code and success as appropriate.                
+                    telemetry.StopOperation(operation);
                 }
 
 
