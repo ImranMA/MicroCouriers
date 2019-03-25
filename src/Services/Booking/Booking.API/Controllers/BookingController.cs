@@ -34,6 +34,7 @@ namespace Booking.API.Controllers
             {
                 var resultSet = await Mediator.Send(new GetBookingQuery() { BookingId = Id });
                 return Ok(resultSet);
+
             }
             catch(Exception ex)
             {
