@@ -17,6 +17,7 @@ namespace Booking.API.Controllers
     public class BookingController : BaseController
     {
 
+
         private TelemetryClient telemetry;
 
         public BookingController(TelemetryClient telemetry)
