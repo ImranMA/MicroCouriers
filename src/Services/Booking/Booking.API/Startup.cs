@@ -34,6 +34,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.ApplicationInsights.Extensibility;
 
+
 namespace Booking.API
 {
     public class Startup
