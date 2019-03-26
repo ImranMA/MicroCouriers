@@ -42,7 +42,7 @@ namespace Tracking.Application.IntegrationEvents
 
                 try
                 {
-                    Track trackings = await _trackingContext.GetTrackingAsync(eventMsg.BookingId);
+                    Track trackings = await _trackingContext.GetEventVersion(eventMsg.BookingId);
 
                     if (trackings == null)
                         trackings = new Track();
@@ -57,6 +57,7 @@ namespace Tracking.Application.IntegrationEvents
 
 
                     events.AddRange(trackings.BookingAdd(bookingCreated));
+                    trackings.Version = trackings.OriginalVersion + 1;
 
                     await _trackingContext.SaveTrackingAsync(eventMsg.BookingId, trackings.OriginalVersion,
                         trackings.Version, events);
@@ -65,8 +66,8 @@ namespace Tracking.Application.IntegrationEvents
                 }
                 catch (Exception e)
                 {
-                    operation.Telemetry.ResponseCode = "500";
                     telemetry.TrackException(e);
+                    operation.Telemetry.ResponseCode = "500";                   
                     throw;
                 }
                 finally

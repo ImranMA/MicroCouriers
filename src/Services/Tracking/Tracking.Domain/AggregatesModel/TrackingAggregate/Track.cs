@@ -26,12 +26,12 @@ namespace Tracking.Domain.AggregatesModel.TrackingAggregate
         /// <summary>
         /// The current version of the aggregate after replaying all events in the event-store.
         /// </summary>
-        public int Version { get; private set; }
+        public int Version { get;  set; }
 
         /// <summary>
         /// The original version after handling any commands.
         /// </summary>
-        public int OriginalVersion { get; private set; }
+        public int OriginalVersion { get; set; }
        
 
         public List<OrderHistory> orderHistory { get; private set; }

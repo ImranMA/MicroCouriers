@@ -41,6 +41,41 @@ namespace Tracking.Persistence.Repositories
             _connectionString = connectionString;          
         }
 
+
+        public async Task<Track> GetEventVersion(string id)
+        {
+            Track tracking = null;
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                // get aggregate
+                Aggregate aggregate = await conn
+                       .QuerySingleOrDefaultAsync<Aggregate>(
+                           "select * from Tracking where Id = @Id",
+                           new { Id = id });
+
+                if (aggregate == null)
+                {
+                    return null;
+                }
+
+                // get events
+                /*IEnumerable<AggregateEvent> aggregateEvents = await conn
+                    .QueryAsync<AggregateEvent>(
+                        "select * from TrackingEvent where Id = @Id order by [Version];",
+                        new { Id = id });
+
+                List<EventBase> events = new List<EventBase>();
+                foreach (var aggregateEvent in aggregateEvents)
+                {
+                    events.Add(DeserializeEventData(aggregateEvent.MessageType, aggregateEvent.EventData));
+                }*/
+                tracking = new Track();
+                tracking.OriginalVersion = aggregate.CurrentVersion;
+
+            }
+            return tracking;
+        }
+
         public async Task<Track> GetTrackingAsync(string id)
         {
             Track tracking = null;
@@ -119,7 +154,7 @@ namespace Tracking.Persistence.Repositories
                     if (affectedRows == 0)
                     {
                         transaction.Rollback();
-                        //throw new ConcurrencyException();
+                        throw new Exception("Concurency Exception");
                     }
 
                     // store events

@@ -42,9 +42,10 @@ namespace Tracking.Application.IntegrationEvents
                 var operation = telemetry.StartOperation(requestTelemetry);
 
                 try
-                {                   
+                {
 
-                    Track trackings = await _trackingContext.GetTrackingAsync(eventMsg.BookingId);
+                    //Track trackings = await _trackingContext.GetTrackingAsync(eventMsg.BookingId);
+                    Track trackings = await _trackingContext.GetEventVersion(eventMsg.BookingId);
 
                     if (trackings == null)
                         trackings = new Track();
@@ -59,6 +60,7 @@ namespace Tracking.Application.IntegrationEvents
 
 
                     events.AddRange(trackings.OrderPicked(orderPicked));
+                    trackings.Version = trackings.OriginalVersion + 1;
 
                     await _trackingContext.SaveTrackingAsync(eventMsg.BookingId, trackings.OriginalVersion,
                         trackings.Version, events);

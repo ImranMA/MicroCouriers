@@ -34,6 +34,10 @@
                 subscriptionClientName);
             _autofac = autofac;
 
+            _subscriptionClient.PrefetchCount = 300;
+
+            //var check = _subscriptionClient.PrefetchCount;
+
             RemoveDefaultRule();
             RegisterSubscriptionClientMessageHandler();
         }
@@ -136,7 +140,7 @@
                         await _subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
                     }
                 },
-               new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = 10, AutoComplete = false });
+               new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = 20, AutoComplete = false });
         }
 
         private Task ExceptionReceivedHandler(ExceptionReceivedEventArgs exceptionReceivedEventArgs)
