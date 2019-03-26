@@ -43,27 +43,27 @@ namespace OrderShipping
             // 
             // txtBookingID
             // 
-            this.txtBookingID.Location = new System.Drawing.Point(131, 34);
+            this.txtBookingID.Location = new System.Drawing.Point(147, 42);
             this.txtBookingID.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtBookingID.Name = "txtBookingID";
-            this.txtBookingID.Size = new System.Drawing.Size(284, 22);
+            this.txtBookingID.Size = new System.Drawing.Size(319, 26);
             this.txtBookingID.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(35, 36);
+            this.label1.Location = new System.Drawing.Point(39, 45);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(67, 17);
+            this.label1.Size = new System.Drawing.Size(76, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "Booking#";
             // 
             // btn_UpdateStatus
             // 
-            this.btn_UpdateStatus.Location = new System.Drawing.Point(131, 269);
+            this.btn_UpdateStatus.Location = new System.Drawing.Point(147, 336);
             this.btn_UpdateStatus.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_UpdateStatus.Name = "btn_UpdateStatus";
-            this.btn_UpdateStatus.Size = new System.Drawing.Size(187, 42);
+            this.btn_UpdateStatus.Size = new System.Drawing.Size(210, 52);
             this.btn_UpdateStatus.TabIndex = 2;
             this.btn_UpdateStatus.Text = "Update Status";
             this.btn_UpdateStatus.UseVisualStyleBackColor = true;
@@ -75,27 +75,27 @@ namespace OrderShipping
             "Order Picked",
             "Order In Transit",
             "Order Delivered"});
-            this.cmbOrderStatus.Location = new System.Drawing.Point(131, 155);
+            this.cmbOrderStatus.Location = new System.Drawing.Point(147, 194);
             this.cmbOrderStatus.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbOrderStatus.Name = "cmbOrderStatus";
-            this.cmbOrderStatus.Size = new System.Drawing.Size(284, 24);
+            this.cmbOrderStatus.Size = new System.Drawing.Size(319, 28);
             this.cmbOrderStatus.TabIndex = 3;
             // 
             // txtBooingStatus
             // 
-            this.txtBooingStatus.Location = new System.Drawing.Point(474, 36);
+            this.txtBooingStatus.Location = new System.Drawing.Point(533, 45);
             this.txtBooingStatus.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtBooingStatus.Multiline = true;
             this.txtBooingStatus.Name = "txtBooingStatus";
-            this.txtBooingStatus.Size = new System.Drawing.Size(445, 318);
+            this.txtBooingStatus.Size = new System.Drawing.Size(500, 396);
             this.txtBooingStatus.TabIndex = 4;
             // 
             // btn_getBooking
             // 
-            this.btn_getBooking.Location = new System.Drawing.Point(474, 358);
+            this.btn_getBooking.Location = new System.Drawing.Point(533, 448);
             this.btn_getBooking.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_getBooking.Name = "btn_getBooking";
-            this.btn_getBooking.Size = new System.Drawing.Size(131, 35);
+            this.btn_getBooking.Size = new System.Drawing.Size(147, 44);
             this.btn_getBooking.TabIndex = 5;
             this.btn_getBooking.Text = "Get Booking";
             this.btn_getBooking.UseVisualStyleBackColor = true;
@@ -103,51 +103,51 @@ namespace OrderShipping
             // 
             // txtDesc
             // 
-            this.txtDesc.Location = new System.Drawing.Point(131, 77);
+            this.txtDesc.Location = new System.Drawing.Point(147, 96);
             this.txtDesc.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtDesc.Multiline = true;
             this.txtDesc.Name = "txtDesc";
-            this.txtDesc.Size = new System.Drawing.Size(284, 61);
+            this.txtDesc.Size = new System.Drawing.Size(319, 75);
             this.txtDesc.TabIndex = 6;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(35, 89);
+            this.label2.Location = new System.Drawing.Point(39, 111);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 17);
+            this.label2.Size = new System.Drawing.Size(46, 20);
             this.label2.TabIndex = 7;
             this.label2.Text = "Desc";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(35, 210);
+            this.label3.Location = new System.Drawing.Point(39, 262);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(72, 17);
+            this.label3.Size = new System.Drawing.Size(81, 20);
             this.label3.TabIndex = 9;
             this.label3.Text = "Signed By";
             // 
             // txtSignedBy
             // 
-            this.txtSignedBy.Location = new System.Drawing.Point(131, 208);
+            this.txtSignedBy.Location = new System.Drawing.Point(147, 260);
             this.txtSignedBy.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtSignedBy.Name = "txtSignedBy";
-            this.txtSignedBy.Size = new System.Drawing.Size(284, 22);
+            this.txtSignedBy.Size = new System.Drawing.Size(319, 26);
             this.txtSignedBy.TabIndex = 8;
             // 
             // lblStatus
             // 
-            this.lblStatus.Location = new System.Drawing.Point(128, 358);
+            this.lblStatus.Location = new System.Drawing.Point(144, 448);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(100, 23);
+            this.lblStatus.Size = new System.Drawing.Size(112, 29);
             this.lblStatus.TabIndex = 10;
             // 
             // Shipping
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(929, 444);
+            this.ClientSize = new System.Drawing.Size(1045, 555);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtSignedBy);
@@ -162,6 +162,7 @@ namespace OrderShipping
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Shipping";
             this.Text = "Shipping";
+            this.Load += new System.EventHandler(this.Shipping_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using System.Threading.Tasks;
+using Polly;
 
 namespace Booking.Persistence
 {
@@ -14,7 +15,10 @@ namespace Booking.Persistence
         public BookingDbContext(DbContextOptions<BookingDbContext> options)
             : base(options)
         {
-
+            Policy
+           .Handle<Exception>()
+           .WaitAndRetry(5, r => TimeSpan.FromSeconds(5))
+           .Execute(() => Database.Migrate());
         }
         private IDbContextTransaction _currentTransaction;
         public DbSet<BookingOrder> Bookings { get; set; }

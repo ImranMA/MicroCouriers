@@ -17,6 +17,7 @@ namespace Booking.API.Controllers
     public class BookingController : BaseController
     {
 
+
         private TelemetryClient telemetry;
 
         public BookingController(TelemetryClient telemetry)
@@ -34,6 +35,7 @@ namespace Booking.API.Controllers
             {
                 var resultSet = await Mediator.Send(new GetBookingQuery() { BookingId = Id });
                 return Ok(resultSet);
+
             }
             catch(Exception ex)
             {
