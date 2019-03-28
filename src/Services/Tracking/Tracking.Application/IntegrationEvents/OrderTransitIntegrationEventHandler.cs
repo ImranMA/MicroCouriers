@@ -36,13 +36,6 @@ namespace Tracking.Application.IntegrationEvents
 
             if (eventMsg.Id != Guid.Empty)
             {
-                RequestTelemetry requestTelemetry = new RequestTelemetry { Name = "OrderInTransit - Dequeue" };
-                requestTelemetry.Context.Operation.Id = Guid.NewGuid().ToString();
-                requestTelemetry.Context.Operation.ParentId = eventMsg.Id.ToString();
-
-
-                var operation = telemetry.StartOperation(requestTelemetry);
-
                 try
                 {
                     Track trackings = await _trackingContext.GetTrackingAsync(eventMsg.BookingId);
@@ -70,20 +63,17 @@ namespace Tracking.Application.IntegrationEvents
                     var orderStatusChanged = new OrderStatusChangedIntegrationEvent(eventMsg.BookingId, "OrderInTransit");
                     _eventBus.Publish(orderStatusChanged);
 
-                    operation.Telemetry.ResponseCode = "200";
                 }
                 catch (Exception e)
                 {
-                    operation.Telemetry.ResponseCode = "500";
-                    telemetry.TrackException(e);
-                    throw;
-                }
-                finally
-                {
-                    // Update status code and success as appropriate.                
-                    telemetry.StopOperation(operation);
-                }
+                    var ExceptionTelemetry = new ExceptionTelemetry(e);
+                    ExceptionTelemetry.Properties.Add("OrderTransitIntegrationEvent", eventMsg.BookingId);
+                    ExceptionTelemetry.SeverityLevel = SeverityLevel.Critical;
 
+                    telemetry.TrackException(ExceptionTelemetry);
+
+                    throw; //Throw exception for service bus to abandon the message
+                }               
 
             }
         }

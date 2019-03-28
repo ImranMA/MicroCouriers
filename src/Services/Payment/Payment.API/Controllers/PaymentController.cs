@@ -52,7 +52,7 @@ namespace Payment.API.Controllers
             catch (Exception ex)
             {
                 telemetry.TrackException(ex);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry We are Unable to Create Booking.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry We are Unable to Process Payment.");
             }       
         }
 

@@ -35,14 +35,6 @@ namespace Tracking.Application.IntegrationEvents
 
             if (eventMsg.Id != Guid.Empty)
             {
-                RequestTelemetry requestTelemetry = new RequestTelemetry { Name = "PaymentProcessed - Dequeue" };
-                requestTelemetry.Context.Operation.Id = Guid.NewGuid().ToString();
-                requestTelemetry.Context.Operation.ParentId = eventMsg.Id.ToString();
-
-
-                var operation = telemetry.StartOperation(requestTelemetry);
-
-
                 try
                 {
                     Track trackings = await _trackingContext.GetEventVersion(eventMsg.BookingOrderId);
@@ -82,19 +74,16 @@ namespace Tracking.Application.IntegrationEvents
                     //Create Integration Event
                     var orderStatusChanged = new OrderStatusChangedIntegrationEvent(eventMsg.BookingOrderId , "PaymentProcessed");
                     _eventBus.Publish(orderStatusChanged);
-
-                    operation.Telemetry.ResponseCode = "200";
                 }
                 catch (Exception e)
                 {
-                    telemetry.TrackException(e);
-                    operation.Telemetry.ResponseCode = "500";                   
-                    throw;
-                }
-                finally
-                {
-                    // Update status code and success as appropriate.                
-                    telemetry.StopOperation(operation);
+                    var ExceptionTelemetry = new ExceptionTelemetry(e);
+                    ExceptionTelemetry.Properties.Add("PaymentProcessedIntegrationEvent", eventMsg.BookingOrderId);
+                    ExceptionTelemetry.SeverityLevel = SeverityLevel.Critical;
+
+                    telemetry.TrackException(ExceptionTelemetry);
+
+                    throw; //Throw exception for service bus to abandon the message
                 }
             }
         }

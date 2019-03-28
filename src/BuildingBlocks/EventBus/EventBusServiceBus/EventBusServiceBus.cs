@@ -34,7 +34,7 @@
                 subscriptionClientName);
             _autofac = autofac;
 
-            _subscriptionClient.PrefetchCount = 300;
+            _subscriptionClient.PrefetchCount = 400;
 
             //var check = _subscriptionClient.PrefetchCount;
 

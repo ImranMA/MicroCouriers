@@ -15,10 +15,10 @@ namespace Booking.Persistence
         public BookingDbContext(DbContextOptions<BookingDbContext> options)
             : base(options)
         {
-            Policy
-           .Handle<Exception>()
-           .WaitAndRetry(5, r => TimeSpan.FromSeconds(5))
-           .Execute(() => Database.Migrate());
+           // Policy
+           //.Handle<Exception>()
+           //.WaitAndRetry(5, r => TimeSpan.FromSeconds(5))
+           //.Execute(() => Database.Migrate());
         }
         private IDbContextTransaction _currentTransaction;
         public DbSet<BookingOrder> Bookings { get; set; }

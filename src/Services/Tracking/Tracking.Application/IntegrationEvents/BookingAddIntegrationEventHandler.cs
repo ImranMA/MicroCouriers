@@ -33,13 +33,6 @@ namespace Tracking.Application.IntegrationEvents
 
             if (eventMsg.Id != Guid.Empty)
             {
-                RequestTelemetry requestTelemetry = new RequestTelemetry { Name = "BookingCreated - Dequeue" };
-                requestTelemetry.Context.Operation.Id = Guid.NewGuid().ToString();
-                requestTelemetry.Context.Operation.ParentId = eventMsg.Id.ToString();
-              
-
-                var operation = telemetry.StartOperation(requestTelemetry);
-
                 try
                 {
                     Track trackings = await _trackingContext.GetEventVersion(eventMsg.BookingId);
@@ -61,20 +54,18 @@ namespace Tracking.Application.IntegrationEvents
 
                     await _trackingContext.SaveTrackingAsync(eventMsg.BookingId, trackings.OriginalVersion,
                         trackings.Version, events);
-
-                    operation.Telemetry.ResponseCode = "200";
                 }
                 catch (Exception e)
                 {
-                    telemetry.TrackException(e);
-                    operation.Telemetry.ResponseCode = "500";                   
+
+                    var ExceptionTelemetry = new ExceptionTelemetry(e);
+                    ExceptionTelemetry.Properties.Add("BookingAddIntegrationEvent", eventMsg.BookingId);
+                    ExceptionTelemetry.SeverityLevel = SeverityLevel.Critical;
+
+                    telemetry.TrackException(ExceptionTelemetry);
+                    
                     throw;
-                }
-                finally
-                {
-                    // Update status code and success as appropriate.                
-                    telemetry.StopOperation(operation);
-                }
+                }                
             }
         }
     }

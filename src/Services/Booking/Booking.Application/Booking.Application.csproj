@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="MediatR" Version="6.0.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.9.1" />
   </ItemGroup>
 
   <ItemGroup>

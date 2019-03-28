@@ -34,12 +34,12 @@ namespace Tracking.Application.IntegrationEvents
 
             if (eventMsg.Id != Guid.Empty)
             {
-                RequestTelemetry requestTelemetry = new RequestTelemetry { Name = "OrderDelivered - Dequeue" };
-                requestTelemetry.Context.Operation.Id = Guid.NewGuid().ToString();
-                requestTelemetry.Context.Operation.ParentId = eventMsg.Id.ToString();
+                //RequestTelemetry requestTelemetry = new RequestTelemetry { Name = "OrderDelivered - Dequeue" };
+                //requestTelemetry.Context.Operation.Id = Guid.NewGuid().ToString();
+                //requestTelemetry.Context.Operation.ParentId = eventMsg.Id.ToString();
 
 
-                var operation = telemetry.StartOperation(requestTelemetry);
+                //var operation = telemetry.StartOperation(requestTelemetry);
 
 
                 try
@@ -68,19 +68,16 @@ namespace Tracking.Application.IntegrationEvents
                     var orderStatusChanged = new OrderStatusChangedIntegrationEvent(eventMsg.BookingId, "OrderDelivered");
                     _eventBus.Publish(orderStatusChanged);
 
-                    operation.Telemetry.ResponseCode = "200";
                 }
                 catch (Exception e)
                 {
-                    operation.Telemetry.ResponseCode = "500";
-                    telemetry.TrackException(e);
+                    var ExceptionTelemetry = new ExceptionTelemetry(e);
+                    ExceptionTelemetry.Properties.Add("OrderDeliveredIntegrationEvent", eventMsg.BookingId);
+                    ExceptionTelemetry.SeverityLevel = SeverityLevel.Critical;
+
+                    telemetry.TrackException(ExceptionTelemetry);
                     throw;
-                }
-                finally
-                {
-                    // Update status code and success as appropriate.                
-                    telemetry.StopOperation(operation);
-                }
+                }               
 
             }
         }
