@@ -35,7 +35,17 @@ namespace Booking.Application.IntegrationEvents.Events
                     {
                         booking.PaymentID = eventMsg.PaymentId;
                         booking.BookingState = bookingStateEnum.Completed;
+                        booking.OrderStatus = "PaymentProcessed";
                     }
+                    else if (eventMsg.PaymentStatus == PaymetStatus.Canceled)
+                    {                       
+                        booking.BookingState = bookingStateEnum.Canceled;
+                    }
+                    else if (eventMsg.PaymentStatus == PaymetStatus.Pending)
+                    {
+                        booking.BookingState = bookingStateEnum.Pending;
+                    }
+                                       
 
                     await _bookingContext.UpdateAsync(booking);
                     

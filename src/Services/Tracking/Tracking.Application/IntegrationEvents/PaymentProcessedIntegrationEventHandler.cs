@@ -72,8 +72,8 @@ namespace Tracking.Application.IntegrationEvents
 
                     //Publish the event here
                     //Create Integration Event
-                    var orderStatusChanged = new OrderStatusChangedIntegrationEvent(eventMsg.BookingOrderId , "PaymentProcessed");
-                    _eventBus.Publish(orderStatusChanged);
+                    //var orderStatusChanged = new OrderStatusChangedIntegrationEvent(eventMsg.BookingOrderId , "PaymentProcessed");
+                    //_eventBus.Publish(orderStatusChanged);
                 }
                 catch (Exception e)
                 {

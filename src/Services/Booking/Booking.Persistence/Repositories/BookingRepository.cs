@@ -28,7 +28,7 @@ namespace Booking.Persistence.Repositories
         {
             bookingOrder.UpdatedDate = DateTime.Now;
 
-            _context.Bookings.Update(bookingOrder);
+            //_context.Bookings.Update(bookingOrder);
             await _context.SaveChangesAsync();
 
             return bookingOrder;
