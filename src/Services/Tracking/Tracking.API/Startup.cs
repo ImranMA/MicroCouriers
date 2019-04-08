@@ -51,9 +51,18 @@ namespace Tracking.API
 
             //Add Repos
 
-            services.AddScoped<ITrackingService, TrackingService>();
-            services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Configuration.GetSection("cache:REDIS").Value));
-            
+
+            //If Cache is available
+            if (Configuration.GetSection("cache:REDIS").Value != string.Empty)
+            {
+                services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Configuration.GetSection("cache:REDIS").Value));
+                services.AddScoped<ITrackingService, TrackingService>();
+            }
+            else
+            {
+                services.AddScoped<ITrackingService, TrackingSerivceWithoutCache>();
+            }
+
             // Add MediatR and handlers
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
 

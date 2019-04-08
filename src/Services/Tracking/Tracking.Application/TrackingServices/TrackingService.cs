@@ -24,7 +24,7 @@ namespace Tracking.Application.TrackingServices
         public async Task<TrackingDTO> FindByIdAsync(string bookingId)
         {
             //check in the redis cahce
-            var bookingHistroy = await _cache.StringGetAsync(bookingId);
+            var bookingHistroy = await GetFromCache(bookingId);
 
             //if not found in the cahce
             if (string.IsNullOrEmpty(bookingHistroy))
@@ -35,15 +35,25 @@ namespace Tracking.Application.TrackingServices
                 {
                     //format result
                     bookingHistroy = JsonConvert.SerializeObject(result.orderHistory);
-
-                    //Update Cache
-                    var ts = TimeSpan.FromDays(1);
-                    await _cache.StringSetAsync(bookingId, bookingHistroy, ts);
+                    SetCache(bookingId, bookingHistroy);
                 }               
             }
 
             return new TrackingDTO { BookingId = bookingId,
                 TrackingHistory = bookingHistroy };
+        }
+
+        //
+        private async Task<string> GetFromCache(string bookingId)
+        {
+            return await _cache.StringGetAsync(bookingId);
+        }
+
+        private async void SetCache(string bookingId,string bookingHistroy)
+        {
+            //Update Cache
+            var ts = TimeSpan.FromDays(1);
+            await _cache.StringSetAsync(bookingId, bookingHistroy, ts);
         }
     }
 }
