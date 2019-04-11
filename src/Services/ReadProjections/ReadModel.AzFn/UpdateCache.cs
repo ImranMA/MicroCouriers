@@ -13,10 +13,10 @@ namespace ReadModel.AzFn
     public static class UpdateCache
     {
         [FunctionName("UpdateCache")]
-        public static async void Run([ServiceBusTrigger("microcouriers-topic", "readprojection", Connection = "ServiceBus")]Message mySbMsg, ILogger log)
+        public static async void Run([ServiceBusTrigger("microcouriers-topic", "readprojection", Connection = "ServiceBus")]Message serviceBusMessage, ILogger log)
         {         
             EventStore eS = new EventStore();
-            await eS.UpdateBookingModelInCache(mySbMsg);
+            await eS.UpdateBookingModelInCache(serviceBusMessage);
            // log.LogInformation($"C# ServiceBus topic trigger function processed message: {mySbMsg}");
         }
     }

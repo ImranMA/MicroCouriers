@@ -31,7 +31,7 @@ namespace ReadModel.AzFn.Redis
         public async Task Save(string key, string value)
         {
          
-           var ts = TimeSpan.FromDays(1);
+           var ts = TimeSpan.FromHours(10);
            await _cache.StringSetAsync(key, value, ts);
 
             /*RedisValue token = Environment.MachineName;

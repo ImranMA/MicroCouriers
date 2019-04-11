@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus\EventBus.csproj" />
-    <ProjectReference Include="..\..\Tracking\Tracking.Common\Tracking.Common.csproj" />
     <ProjectReference Include="..\..\Tracking\Tracking.Domain\Tracking.Domain.csproj" />
   </ItemGroup>
   <ItemGroup>
