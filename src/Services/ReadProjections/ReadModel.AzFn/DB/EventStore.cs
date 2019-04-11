@@ -1,5 +1,7 @@
 ﻿using Dapper;
+using Microsoft.Azure.ServiceBus;
 using Newtonsoft.Json;
+using ReadModel.AzFn.Events;
 using ReadModel.AzFn.Redis;
 using System;
 using System.Collections.Generic;
@@ -7,88 +9,75 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
 using Tracking.Domain.AggregatesModel.TrackingAggregate;
+using Tracking.Domain.Events;
 using Tracking.Domain.Interfaces;
-
-
+using Tracking.Domain.Model;
 
 namespace ReadModel.AzFn.DB
 {
 
     public class EventStore
     {
-        private string _connectionString;
-        private readonly ITrackingRepository _trackingContext;
-
         public EventStore()
         {
-            var value = Environment.GetEnvironmentVariable("EventStoreCN");
-            _connectionString = value;
-            _trackingContext = new TrackingRepository(_connectionString);
+
         }
 
-        public async Task<IEnumerable<string>> GetAllBookings()
+        public async Task<IEnumerable<string>> UpdateBookingModelInCache(Message msg)
         {
             RedisCacheService rCache = new RedisCacheService();
+            List<EventBase> events = new List<EventBase>();
+            Track tracking = new Track();
+            var bookingId = string.Empty;
+
+            List<OrderHistory> trackingHistory = new List<OrderHistory>();
+
 
             IEnumerable<string> listId = new List<string>();
-            using (SqlConnection conn = new SqlConnection(_connectionString))
+            try
             {
-                try
+                if(msg.Label == "BookingAdd")
                 {
-                    rCache.ClearAllKeys();
+                    BookingAddIntegrationEvent eventMsg = JsonConvert.DeserializeObject<BookingAddIntegrationEvent>(Encoding.UTF8.GetString(msg.Body));
 
-                    // get aggregate
-                    listId = await conn
-                           .QueryAsync<string>(
-                               "select distinct id from TrackingEvent  where id in(select id from TrackingEvent group by id having sum(case when MessageType = 'OrderDelivered' then 1 else 0 end) = 0) ");
+                    string messageType = "BookingCreated";
 
-                    foreach (var item in listId)
-                    {
-                        var getva = rCache.Get(item);
-                    }
+                    BookingCreated bookingCreated = new
+                       BookingCreated(eventMsg.BookingId, string.Empty, eventMsg.Id
+                       , messageType, eventMsg.CreationDate, eventMsg.Origin, eventMsg.Destination);
 
-                    foreach (var item in listId)
-                    {
-                        Track trackings = await _trackingContext.GetTrackingAsync(item);
-                        var result = JsonConvert.SerializeObject(trackings.orderHistory);// String.Join(", ", trackings.orderHistory.ToArray());
-                        rCache.Save(item, result);
-                    }
-
-                    foreach (var item in listId)
-                    {
-                        var getva = rCache.Get(item);
-                    }
-
+                    bookingId = eventMsg.BookingId;
+                  
+                    
                 }
-                catch (Exception ex)
+                else if (msg.Label == "OrderPicked")
                 {
+                    OrderPickedIntegrationEvent eventMsg = JsonConvert.DeserializeObject<OrderPickedIntegrationEvent>(Encoding.UTF8.GetString(msg.Body));
 
+                    string messageType = "OrderPicked";
+
+                    OrderPicked orderPicked = new
+                        OrderPicked(eventMsg.BookingId, eventMsg.Description, eventMsg.Id
+                        , messageType, eventMsg.CreationDate);
+
+                    bookingId = eventMsg.BookingId;
+                    tracking.OrderPicked(orderPicked);
+                   
                 }
+
+                if(!string.IsNullOrEmpty(rCache.Get(bookingId)))
+                trackingHistory = JsonConvert.DeserializeObject<List<OrderHistory>>(rCache.Get(bookingId));
+
+                trackingHistory.AddRange(tracking.orderHistory);
+
+                var result = JsonConvert.SerializeObject(trackingHistory);
+                await rCache.Remove(bookingId);
+                await rCache.Save(bookingId, result);
 
             }
-            return listId;
-        }
-
-        public async Task<IEnumerable<string>> UpdateBookingInCache(string BookingId)
-        {            
-            RedisCacheService rCache = new RedisCacheService();
-
-            IEnumerable<string> listId = new List<string>();
-            using (SqlConnection conn = new SqlConnection(_connectionString))
+            catch (Exception ex)
             {
-                try
-                {
-                   // var getcahc= rCache.Get(BookingId); 
-                    rCache.Remove(BookingId);
-                    Track trackings = await _trackingContext.GetTrackingAsync(BookingId);
-                    var result = JsonConvert.SerializeObject(trackings.orderHistory);
-                    rCache.Save(BookingId, result);
 
-                }
-                catch (Exception ex)
-                {
-
-                }
             }
             return listId;
         }

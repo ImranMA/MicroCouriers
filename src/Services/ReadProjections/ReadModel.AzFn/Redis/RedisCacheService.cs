@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ReadModel.AzFn.Redis
 {
@@ -27,11 +28,11 @@ namespace ReadModel.AzFn.Redis
             return _cache.KeyExists(key);
         }
 
-        public void Save(string key, string value)
+        public async Task Save(string key, string value)
         {
          
-            var ts = TimeSpan.FromDays(1);
-            _cache.StringSet(key, value, ts);
+           var ts = TimeSpan.FromDays(1);
+           await _cache.StringSetAsync(key, value, ts);
 
             /*RedisValue token = Environment.MachineName;
             if (_cache.LockTake(key, token, ts))
@@ -52,9 +53,9 @@ namespace ReadModel.AzFn.Redis
             return _cache.StringGet(key);
         }
 
-        public void Remove(string key)
+        public async Task Remove(string key)
         {
-            _cache.KeyDelete(key);
+            await _cache.KeyDeleteAsync(key);
         }
 
         public void Clear()
