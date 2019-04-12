@@ -58,17 +58,6 @@ namespace Tracking.Persistence.Repositories
                     return null;
                 }
 
-                // get events
-                /*IEnumerable<AggregateEvent> aggregateEvents = await conn
-                    .QueryAsync<AggregateEvent>(
-                        "select * from TrackingEvent where Id = @Id order by [Version];",
-                        new { Id = id });
-
-                List<EventBase> events = new List<EventBase>();
-                foreach (var aggregateEvent in aggregateEvents)
-                {
-                    events.Add(DeserializeEventData(aggregateEvent.MessageType, aggregateEvent.EventData));
-                }*/
                 tracking = new Track();
                 tracking.OriginalVersion = aggregate.CurrentVersion;
 
@@ -184,12 +173,12 @@ namespace Tracking.Persistence.Repositories
         public void EnsureDatabase()
         {
             // init db
-            using (SqlConnection conn = new SqlConnection(_connectionString.Replace("TrackingEventStore", "master")))
+            using (SqlConnection conn = new SqlConnection(_connectionString.Replace("TrackingEventsStore", "master")))
             {
                 conn.Open();
 
                 // create database
-                string sql = "if DB_ID('TrackingEventStore') IS NULL CREATE DATABASE TrackingEventStore;";
+                string sql = "if DB_ID('TrackingEventsStore') IS NULL CREATE DATABASE TrackingEventsStore;";
 
                 Policy
                     .Handle<Exception>()
@@ -197,7 +186,7 @@ namespace Tracking.Persistence.Repositories
                     { Console.WriteLine("Error connecting to DB. Retrying in 5 sec."); })
                     .Execute(() => conn.Execute(sql));
 
-                conn.ChangeDatabase("TrackingEventStore");
+                conn.ChangeDatabase("TrackingEventsStore");
                 sql = @" 
                     if OBJECT_ID('Tracking') IS NULL 
                     CREATE TABLE Tracking (
@@ -221,28 +210,7 @@ namespace Tracking.Persistence.Repositories
                     .Execute(() => conn.Execute(sql));
             }
         }
-
-        /// <summary>
-        /// Get events for a certain aggregate.
-        /// </summary>
-        /// <param name="planningId">The id of the planning.</param>
-        /// <param name="conn">The SQL connection to use.</param>
-        /// <returns></returns>
-        /*private async Task<IEnumerable<EventBase>> GetAggregateEvents(string id, SqlConnection conn)
-        {
-            IEnumerable<AggregateEvent> aggregateEvents = await conn
-                .QueryAsync<AggregateEvent>(
-                    "select * from TrackingEvent where Id = @Id order by [Version]",
-                    new { Id = id });
-
-            List<EventBase> events = new List<EventBase>();
-            foreach (var aggregateEvent in aggregateEvents)
-            {
-                events.Add(DeserializeEventData(aggregateEvent.MessageType, aggregateEvent.EventData));
-            }
-            return events;
-        }*/
-
+        
         /// <summary>
         /// Serialize event-data to JSON.
         /// </summary>

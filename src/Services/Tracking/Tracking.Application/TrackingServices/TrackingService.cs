@@ -52,7 +52,7 @@ namespace Tracking.Application.TrackingServices
         private async void SetCache(string bookingId,string bookingHistroy)
         {
             //Update Cache
-            var ts = TimeSpan.FromDays(1);
+            var ts = TimeSpan.FromHours(10);
             await _cache.StringSetAsync(bookingId, bookingHistroy, ts);
         }
     }
