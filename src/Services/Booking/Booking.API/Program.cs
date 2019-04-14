@@ -13,6 +13,7 @@ namespace Booking.API
         {
             // CreateWebHostBuilder(args).Build().Run();
 
+            //Migrate/Create the database if it doesn't exists
             var host = CreateWebHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())

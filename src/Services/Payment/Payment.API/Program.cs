@@ -19,6 +19,7 @@ namespace Payment.API
         {
             // CreateWebHostBuilder(args).Build().Run();
 
+            //Create/Migrate the database
             var host = CreateWebHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
@@ -30,7 +31,7 @@ namespace Payment.API
                     var concreteContext = (PaymentDbContext)context;
                     concreteContext.Database.Migrate();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
 
                 }
