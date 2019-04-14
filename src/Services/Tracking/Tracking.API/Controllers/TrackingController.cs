@@ -32,19 +32,27 @@ namespace Tracking.API.Controllers
 
         // GET: api/Tracking/5
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(string id)
         {
             try
             {
                 var resultSet = await _trackingService.FindByIdAsync(id);
+
+                if (resultSet == null)
+                {
+                    return NotFound();
+                }
+
                 return  Ok(resultSet);
             }
             catch(Exception ex)
             {
                 telemetry.TrackException(ex);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Some problem Occured");
-            }
-           
+                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Some problem Occured In Tracking Service");
+            }           
         }
 
         // POST: api/Tracking

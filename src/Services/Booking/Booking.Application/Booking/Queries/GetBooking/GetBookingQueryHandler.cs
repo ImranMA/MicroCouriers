@@ -26,6 +26,7 @@ namespace Booking.Application.Booking.Queries.GetBooking
                 return null;
             }
 
+            //Get the Booking
             var bookingDTO = new BookingOrderDTO
             {
                 BookingOrderId = bookingObj.BookingOrderId,
@@ -34,6 +35,7 @@ namespace Booking.Application.Booking.Queries.GetBooking
                 Destination = bookingObj.Destination                
             };
 
+            //Get the Booking Details
             ICollection<BookingOrderDetailDTO> listBoookingDetails = new List<BookingOrderDetailDTO>();
             foreach (BookingOrderDetail bookdetails in bookingObj.BookingDetails)
             {
@@ -47,9 +49,10 @@ namespace Booking.Application.Booking.Queries.GetBooking
                 listBoookingDetails.Add(bookingDetailsObj);
             }
 
+            //Fill the Main booking with Details
             bookingDTO.BookingDetails = listBoookingDetails;
 
-
+            //Return Complete Object
             return bookingDTO;
         }
     }

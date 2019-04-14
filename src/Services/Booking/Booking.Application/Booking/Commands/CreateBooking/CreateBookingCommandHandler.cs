@@ -30,8 +30,7 @@ namespace Booking.Application.Booking.Commands.CreateBooking
 
             //Create Agreegate Root
             var bookingOrder = new BookingOrder(request.CustomerId, request.Origin,request.Destination 
-                , bookingStateEnum.Pending);
-                        
+                , bookingStateEnum.Pending);                        
 
             //Add Order Details
             foreach (BookingOrderDetails bookdetails in request.BookingDetails)
@@ -49,11 +48,10 @@ namespace Booking.Application.Booking.Commands.CreateBooking
             //Save the Data in local DB
             var booking = await _bookingContext.AddAsync(bookingOrder);
 
-
             //Publish Event to Service Bus Topic
-            _eventBus.Publish(bookingAddIntegrationEvent);
-            
+            _eventBus.Publish(bookingAddIntegrationEvent);            
 
+            //Return Booking Ref
             return booking;
         }
     }

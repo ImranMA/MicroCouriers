@@ -76,12 +76,7 @@ namespace Booking.API
             var container = new ContainerBuilder();
             container.Populate(services);
 
-            //container.RegisterModule(new MediatorModule());
-            //container.RegisterModule(new ApplicationModule(Configuration.GetConnectionString("MicroCouriersDataBase")));
-
             return new AutofacServiceProvider(container.Build());
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,22 +87,20 @@ namespace Booking.API
                 app.UseDeveloperExceptionPage();
             }
 
-
             var tConfig = app.ApplicationServices.GetRequiredService<TelemetryConfiguration>();
             tConfig.InstrumentationKey = config["ApplicationInsights:InstrumentationKey"];// "dbd67a2f-a911-4d69-be31-e7c0b53b248d";
-
-
+            
             app.UseMvc();
             ConfigureEventBus(app);
         }
 
+        //Subscribe to Events
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
             eventBus.Subscribe<PaymentProcessedIntegrationEvent, PaymentProcessedIntegrationEventHandler>();
             eventBus.Subscribe<OrderStatusChangedIntegrationEvent, OrderStatusChangedIntegrationEventHandler>();
-            //eventBus.Subscribe<CustomerAddIntegrationEvent, CustomerAddIntegrationEventHandler>();
-
+           
         }
     }
 
@@ -117,11 +110,6 @@ namespace Booking.API
         public static IServiceCollection AddIntegrationServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            //services.AddTransient<Func<DbConnection, IIntegrationEventLogService>>(
-               // sp => (DbConnection c) => new IntegrationEventLogService(c));
-
-            //services.AddTransient<IBookingIntegrationEventService, BookingIntegrationEventService>();
 
             services.AddSingleton<IServiceBusPersisterConnection>(sp =>
             {
@@ -138,39 +126,9 @@ namespace Booking.API
 
         public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-
-            // Add DbContext using SQL Server Provider
-            //services.AddDbContext<BookingDbContext>(options =>
-               // options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase")));
-
             services.AddDbContext<BookingDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase"), x => x.MigrationsAssembly("Booking.Persistence")));
-            /*
-           services.AddEntityFrameworkSqlServer()
-                  .AddDbContext<BookingDbContext>(options =>
-                  {
-                      options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase"),
-                          sqlServerOptionsAction: sqlOptions =>
-                          {
-                              sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
-                              sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
-                          });
-                  },
-                      ServiceLifetime.Scoped  //Showing explicitly that the DbContext is shared across the HTTP request scope (graph of objects started in the HTTP request)
-                  );
-
-
-           services.AddDbContext<IntegrationEventLogContext>(options =>
-           {
-               options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase"),
-                                    sqlServerOptionsAction: sqlOptions =>
-                                    {
-                                        sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
-                                        //Configuring Connection Resiliency: https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency 
-                                        sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
-                                    });
-           });
-           */
+          
             return services;
         }
 
@@ -222,7 +180,6 @@ namespace Booking.API
         }
 
     }
-
 
     public class ConfigurationSettings
     {

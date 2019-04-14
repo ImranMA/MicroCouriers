@@ -74,13 +74,13 @@ namespace MicroCourier.Web.Controllers
             catch (BrokenCircuitException ex)
             {
                 telemetry.TrackException(ex);
-                // Catches error when Basket.api is in circuit-opened mode                
+                // Catches error when bookingapi is in circuit-opened mode                
                 return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Booking Service Is Not Available. Please try again later.");
             }
             catch (Exception ex)
             {
                 telemetry.TrackException(ex);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Some problem Occured");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Some problem Occured In booking Service");
             }         
 
         }

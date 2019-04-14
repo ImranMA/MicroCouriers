@@ -42,12 +42,21 @@ namespace MicroCourier.Web.Controllers
         // POST: api/payment
         //[Produces("application/json")]
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] 
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Create([FromBody] PaymentDTO payment)
         {
             try
             {
-                var res = await _paymentAPI.CreatedPayment(payment);
-                return Ok(res);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+
+                var paymentIdRef = await _paymentAPI.CreatedPayment(payment);
+                return StatusCode(StatusCodes.Status201Created, paymentIdRef);
             }
             catch (BrokenCircuitException ex)
             {
@@ -58,9 +67,8 @@ namespace MicroCourier.Web.Controllers
             catch (Exception ex)
             {
                 telemetry.TrackException(ex);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Some problem Occured");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Some problem Occured In Payment service");
             }
-
         }
 
         // PUT: api/Payment/5

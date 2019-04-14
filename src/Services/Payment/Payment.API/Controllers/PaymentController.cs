@@ -17,20 +17,13 @@ namespace Payment.API.Controllers
 
         private TelemetryClient telemetry;
         private readonly IPaymentService _paymentService;
-
-
+        
         public PaymentController(IPaymentService paymentService, TelemetryClient telemetry)
         {
             _paymentService = paymentService;
             this.telemetry = telemetry;
         }
-
-        // GET: api/Payment
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+     
 
         // GET: api/Payment/5
         [HttpGet("{id}", Name = "Get")]
@@ -42,12 +35,22 @@ namespace Payment.API.Controllers
         // POST: api/Payment
         //[Produces("application/json")]
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Post([FromBody] PaymentDTO paymentDTO)
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                
                 var paymentId = await _paymentService.AddAsync(paymentDTO);
-                return Ok(paymentId);
+               
+                //We can replace this with CreatedAtAction as well
+                return StatusCode(StatusCodes.Status201Created, paymentId);
             }
             catch (Exception ex)
             {

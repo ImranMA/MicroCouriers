@@ -52,7 +52,7 @@ namespace Tracking.API
             //Add Repos
 
 
-            //If Cache is available
+            //If Cache is available we will read the booking history from Cache
             if (Configuration.GetSection("cache:REDIS").Value != string.Empty)
             {
                 services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Configuration.GetSection("cache:REDIS").Value));
@@ -69,11 +69,9 @@ namespace Tracking.API
             var eventStoreConnectionString = Configuration.GetConnectionString("EventStoreCN");
            // services.AddScoped<ITrackingRepository, TrackingRepository>(Configuration.GetConnectionString(""));
 
+            //Event Store Initialization
             services.AddTransient<ITrackingRepository>((sp) =>
                new TrackingRepository(eventStoreConnectionString));
-
-            //services.AddMediatR(typeof(GetBookingQueryHandler).GetTypeInfo().Assembly);
-            //services.AddMediatR(typeof(CreateBookingCommandHandler).GetTypeInfo().Assembly);
 
             var container = new ContainerBuilder();
             container.Populate(services);
@@ -88,17 +86,20 @@ namespace Tracking.API
             {
                 app.UseDeveloperExceptionPage();
             }
-
-
+            
             var tConfig = app.ApplicationServices.GetRequiredService<TelemetryConfiguration>();
             tConfig.InstrumentationKey = config["ApplicationInsights:InstrumentationKey"];
             
-
             app.UseMvc();
+
+            //Ensure Event Database exists
             trackingRepo.EnsureDatabase();
+
+
             ConfigureEventBus(app);
         }
 
+        //Subscribe to event bus
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
@@ -113,7 +114,6 @@ namespace Tracking.API
 
     static class CustomExtensionsMethods
     {
-
         public static IServiceCollection AddIntegrationServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -133,9 +133,7 @@ namespace Tracking.API
 
         public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-
-            // Add DbContext using SQL Server Provider
-            
+            // Add DbContext using SQL Server Provider            
             return services;
         }
 
@@ -191,8 +189,7 @@ namespace Tracking.API
         }
 
     }
-
-
+    
     public class ConfigurationSettings
     {
         public string EventBusConnection { get; set; }

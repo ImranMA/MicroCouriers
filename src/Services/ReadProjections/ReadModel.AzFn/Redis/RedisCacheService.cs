@@ -18,36 +18,28 @@ namespace ReadModel.AzFn.Redis
             _connectionMultiplexer = ConnectionMultiplexer.Connect(connection);
         }
 
+        //Get Cache Instance
         public RedisCacheService()
         {           
             _cache = _connectionMultiplexer.GetDatabase();
         }
 
+        //Check if key exists
         public bool Exists(string key)
         {
             return _cache.KeyExists(key);
         }
 
+
+        //Save into cache
         public async Task Save(string key, string value)
         {
-         
+           //We keep the event for 10 hours
            var ts = TimeSpan.FromHours(10);
            await _cache.StringSetAsync(key, value, ts);
-
-            /*RedisValue token = Environment.MachineName;
-            if (_cache.LockTake(key, token, ts))
-            {
-                try
-                {
-                    _cache.StringSet(key, value, ts);
-                }
-                finally
-                {
-                    _cache.LockRelease(key, token);
-                }
-            }*/
         }
 
+        //Get from Cache
         public string Get(string key)
         {
             return _cache.StringGet(key);
@@ -58,6 +50,7 @@ namespace ReadModel.AzFn.Redis
             await _cache.KeyDeleteAsync(key);
         }
 
+        //Clear whole database
         public void Clear()
         {
             var endpoints = _connectionMultiplexer.GetEndPoints(true);
@@ -68,12 +61,12 @@ namespace ReadModel.AzFn.Redis
             }
         }
 
+        //To Clear all cache
         public void ClearAllKeys()
         {
             var endpoints = _connectionMultiplexer.GetEndPoints();
             var server = _connectionMultiplexer.GetServer(endpoints.First());
-            //FlushDatabase didn't work for me: got error admin mode not enabled error
-            //server.FlushDatabase();
+            
             var keys = server.Keys();
             foreach (var key in keys)
             {

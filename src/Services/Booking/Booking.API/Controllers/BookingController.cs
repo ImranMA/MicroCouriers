@@ -16,8 +16,6 @@ namespace Booking.API.Controllers
     [ApiController]
     public class BookingController : BaseController
     {
-
-
         private TelemetryClient telemetry;
 
         public BookingController(TelemetryClient telemetry)
@@ -29,6 +27,9 @@ namespace Booking.API.Controllers
         // GET: api/Booking/5
         [Produces("application/json")]
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get(string Id)
         {
             try
@@ -47,8 +48,7 @@ namespace Booking.API.Controllers
             {
                 telemetry.TrackException(ex);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Sorry Some problem Occured");
-            }
-                       
+            }                       
         }
 
 
@@ -56,7 +56,7 @@ namespace Booking.API.Controllers
         //Return Booking Reference
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)] //400
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] 
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Create([FromBody] CreateBookingCommand command)
         {

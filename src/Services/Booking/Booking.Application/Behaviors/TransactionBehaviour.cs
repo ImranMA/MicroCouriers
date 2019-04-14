@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Booking.Application.Behaviors
 {
+    //The Method is used if we want to publish all the pending events at once
     public class TransactionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
         private readonly ILogger<TransactionBehaviour<TRequest, TResponse>> _logger;

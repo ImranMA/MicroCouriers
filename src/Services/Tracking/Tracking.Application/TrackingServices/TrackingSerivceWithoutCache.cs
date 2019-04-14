@@ -7,9 +7,10 @@ using Tracking.Domain.Interfaces;
 
 namespace Tracking.Application.TrackingServices
 {
+    //If we don't have any cahce configured we will read it from DB directly
+    //and seralize the response
     public class TrackingSerivceWithoutCache : ITrackingService
-    {
-
+    {       
         private readonly ITrackingRepository _context;
        
         public TrackingSerivceWithoutCache(ITrackingRepository context)
@@ -24,7 +25,7 @@ namespace Tracking.Application.TrackingServices
 
             if (result != null)
             {
-                //format result
+                //format result and serilize it
                 bookingHistroy = JsonConvert.SerializeObject(result.orderHistory);              
             }
 

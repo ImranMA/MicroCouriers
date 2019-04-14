@@ -15,48 +15,7 @@ services:
       - SA_PASSWORD=99888ukGh43hnDw89Hol8LN21112
    
       
-  bookingapi:
-    container_name: bookingapi
-    image: bookingapi:latest   
-    depends_on:      
-      - sqlserver
-    ports:
-      - "5000:80"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-      
-      
-  paymentapi:
-    container_name: paymentapi
-    image: paymentapi:latest   
-    depends_on:      
-      - sqlserver
-    ports:
-      - "5001:80"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-      
-      
-  trackingapi:
-    container_name: trackingapi
-    image: trackingapi:latest   
-    depends_on:      
-      - sqlserver
-    ports:
-      - "5002:80"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-
-      
-  mcweb:
-    container_name: mcweb
-    image: mcweb:latest   
-    depends_on:      
-      - sqlserver
-    ports:
-      - "5004:80"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+  
       
 volumes:
   sqlserverdata:

@@ -41,7 +41,7 @@ namespace Tracking.Persistence.Repositories
             _connectionString = connectionString;          
         }
 
-
+        //Get the Event Version against booking ID
         public async Task<Track> GetEventVersion(string id)
         {
             Track tracking = null;
@@ -60,11 +60,12 @@ namespace Tracking.Persistence.Repositories
 
                 tracking = new Track();
                 tracking.OriginalVersion = aggregate.CurrentVersion;
-
             }
+
             return tracking;
         }
 
+        //Get the Complete events histroy and append
         public async Task<Track> GetTrackingAsync(string id)
         {
             Track tracking = null;
@@ -97,6 +98,8 @@ namespace Tracking.Persistence.Repositories
             return tracking;
         }
 
+        //Append the new event and save it in the table.
+        //We need to make sure there is no version conflict
         public async Task SaveTrackingAsync(string bookingId, int originalVersion, int newVersion,
             IEnumerable<EventBase> newEvents)
         {
@@ -170,6 +173,7 @@ namespace Tracking.Persistence.Repositories
             }
         }
 
+        //Create the database if doesn't exists
         public void EnsureDatabase()
         {
             // init db
@@ -229,10 +233,9 @@ namespace Tracking.Persistence.Repositories
         {            
             Type eventType = _assemblyTypes
                      .Where(t => t.Name.Contains(messageType)).FirstOrDefault();
-                               
-            //Type eventType1 = Type.GetType($"Tracking.Domain.Events.{messageType}");
-            JObject obj = JsonConvert.DeserializeObject<JObject>(eventData, _serializerSettings);
-            return obj.ToObject(eventType) as EventBase;
+                           
+            JObject eventObj = JsonConvert.DeserializeObject<JObject>(eventData, _serializerSettings);
+            return eventObj.ToObject(eventType) as EventBase;
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Booking.Persistence.Repositories
             _context = dbContext;
         }
 
+        //Add the book
         public async Task<string> AddAsync(BookingOrder bookingOrder)
         {
             bookingOrder.CreatedDate = DateTime.Now;
@@ -24,6 +25,7 @@ namespace Booking.Persistence.Repositories
             return bookingOrder.BookingOrderId;
         }
 
+        //Update The Booking
         public async Task<BookingOrder> UpdateAsync(BookingOrder bookingOrder)
         {
             bookingOrder.UpdatedDate = DateTime.Now;
@@ -34,10 +36,12 @@ namespace Booking.Persistence.Repositories
             return bookingOrder;
         }
 
+        //Find Booking By ID
         public async Task<BookingOrder> FindByIdAsync(string bookingOrderId)
         {
             var bookingOrder = await _context.Bookings.FindAsync(bookingOrderId);
 
+            //If booking is not empty fill the booking details
             if (bookingOrder != null)
             {
                 await _context.Entry(bookingOrder)
@@ -46,7 +50,6 @@ namespace Booking.Persistence.Repositories
 
             return bookingOrder;
         }
-
        
     }
 }

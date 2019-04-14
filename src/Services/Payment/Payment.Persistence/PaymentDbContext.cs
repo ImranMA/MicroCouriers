@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace Payment.Persistence
 {
-
     public class PaymentDbContext : DbContext
     {
         public PaymentDbContext(DbContextOptions<PaymentDbContext> options)
@@ -18,16 +17,19 @@ namespace Payment.Persistence
         {
 
         }
-        private IDbContextTransaction _currentTransaction;
+      
         public DbSet<Payments> Payments { get; set; }
+
+        //Leaving the following section there incase we need to incoorporate Transactions
+        #region Transaction
+        private IDbContextTransaction _currentTransaction;
+
         public IDbContextTransaction GetCurrentTransaction => _currentTransaction;
-
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PaymentDbContext).Assembly);
         }
-
 
         public async Task BeginTransactionAsync()
         {
@@ -72,5 +74,7 @@ namespace Payment.Persistence
             }
         }
 
-    }    
+        #endregion
+
+    }
 }

@@ -31,12 +31,10 @@ namespace Tracking.Domain.AggregatesModel.TrackingAggregate
         /// <summary>
         /// The original version after handling any commands.
         /// </summary>
-        public int OriginalVersion { get; set; }
-       
+        public int OriginalVersion { get; set; }       
 
         public List<OrderHistory> orderHistory { get; private set; }
-
-
+        
         public Track()
         {
             OriginalVersion = 0;
@@ -95,12 +93,8 @@ namespace Tracking.Domain.AggregatesModel.TrackingAggregate
             return HandleEvent(e);
         }
 
-
-
-
-
-        //Hanlders
-
+                     
+        //Hanlders , We are building the booking history here
         private IEnumerable<EventBase> Handle(BookingCreated e)
         {
             OrderHistory bookingCreated = new OrderHistory();

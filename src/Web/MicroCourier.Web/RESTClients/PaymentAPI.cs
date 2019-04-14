@@ -33,8 +33,8 @@ namespace MicroCourier.Web.RESTClients
                 var result = await _client.PostAsync("/api/payment", new StringContent(JsonConvert.SerializeObject(payment),
                Encoding.UTF8, "application/json"));
 
-                if (result.StatusCode != HttpStatusCode.OK)
-                    return null;
+                if (result.StatusCode != HttpStatusCode.Created)
+                    throw new Exception(result.ReasonPhrase);
 
                 return await result.Content.ReadAsStringAsync();
             }

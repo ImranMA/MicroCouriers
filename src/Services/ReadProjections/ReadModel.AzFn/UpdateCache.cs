@@ -14,10 +14,15 @@ namespace ReadModel.AzFn
     {
         [FunctionName("UpdateCache")]
         public static async void Run([ServiceBusTrigger("microcouriers-topic", "readprojection", Connection = "ServiceBus")]Message serviceBusMessage, ILogger log)
-        {         
+        {
+            //Redis is our read model.Every Event Triggered will be appended against the booking.
+            //We are building the read Model in redis since we are using CQRS where read 
+            //model is seperate from Write
+
             EventStore eS = new EventStore();
             await eS.UpdateBookingModelInCache(serviceBusMessage);
-           // log.LogInformation($"C# ServiceBus topic trigger function processed message: {mySbMsg}");
+          
+            // log.LogInformation($"C# ServiceBus topic trigger function processed message: {mySbMsg}");
         }
     }
 }

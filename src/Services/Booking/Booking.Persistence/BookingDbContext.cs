@@ -15,24 +15,24 @@ namespace Booking.Persistence
         public BookingDbContext(DbContextOptions<BookingDbContext> options)
             : base(options)
         {
-           // Policy
-           //.Handle<Exception>()
-           //.WaitAndRetry(5, r => TimeSpan.FromSeconds(5))
-           //.Execute(() => Database.Migrate());
+          
         }
-        private IDbContextTransaction _currentTransaction;
+
+        //Leaving the following Section there incase we want to 
+        #region EventTransactions
         public DbSet<BookingOrder> Bookings { get; set; }
 
         public DbSet<BookingOrderDetail> BookingsDetails { get; set; }
+
+
+        private IDbContextTransaction _currentTransaction;
         public IDbContextTransaction GetCurrentTransaction => _currentTransaction;
-
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(BookingDbContext).Assembly);
         }
-
-
+        
         public async Task BeginTransactionAsync()
         {
             _currentTransaction = _currentTransaction ?? await Database.BeginTransactionAsync(IsolationLevel.ReadCommitted);
@@ -75,6 +75,6 @@ namespace Booking.Persistence
                 }
             }
         }
-
+        #endregion
     }
 }

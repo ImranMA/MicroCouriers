@@ -18,11 +18,6 @@ namespace ReadModel.AzFn.DB
 
     public class EventStore
     {
-        public EventStore()
-        {
-
-        }
-
         public async Task UpdateBookingModelInCache(Message msg)
         {
             RedisCacheService rCache = new RedisCacheService();
@@ -142,10 +137,10 @@ namespace ReadModel.AzFn.DB
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                throw ex;
             }
-
         }
     }
 }

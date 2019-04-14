@@ -82,9 +82,11 @@ namespace Payment.API
             ConfigureEventBus(app);
         }
 
+
+        //Subscribe to events
         private void ConfigureEventBus(IApplicationBuilder app)
         {
-            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+            //var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
             //eventBus.Subscribe<BookingAddIntegrationEvent, BookingAddIntegrationEventHandler>();
             //eventBus.Subscribe<CustomerAddIntegrationEvent, CustomerAddIntegrationEventHandler>();
 
@@ -97,11 +99,6 @@ namespace Payment.API
         public static IServiceCollection AddIntegrationServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-           // services.AddTransient<Func<DbConnection, IIntegrationEventLogService>>(
-                //sp => (DbConnection c) => new IntegrationEventLogService(c));
-
-           // services.AddTransient<IBookingIntegrationEventService, BookingIntegrationEventService>();
 
             services.AddSingleton<IServiceBusPersisterConnection>(sp =>
             {
@@ -118,7 +115,6 @@ namespace Payment.API
 
         public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-
             // Add DbContext using SQL Server Provider
             services.AddDbContext<PaymentDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase"), x => x.MigrationsAssembly("Payment.Persistence")));
@@ -142,8 +138,6 @@ namespace Payment.API
             });
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
-           // services.AddTransient<BookingAddIntegrationEventHandler>();
-            //services.AddTransient<CustomerAddIntegrationEventHandler>();
 
             return services;
         }
@@ -174,8 +168,7 @@ namespace Payment.API
         }
 
     }
-
-
+    
     public class ConfigurationSettings
     {
         public string EventBusConnection { get; set; }
