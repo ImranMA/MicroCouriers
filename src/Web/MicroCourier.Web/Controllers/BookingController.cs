@@ -56,12 +56,20 @@ namespace MicroCourier.Web.Controllers
         // POST: api/booking      
         //Return Booking Reference
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] //400
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Create([FromBody] CreateBookingCommand command)
         {
             try
             {
-                var res = await _bookingAPI.CreatedBooking(command);
-                return Ok(res);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var bookingId = await _bookingAPI.CreatedBooking(command);
+                return StatusCode(StatusCodes.Status201Created, bookingId);
             }
             catch (BrokenCircuitException ex)
             {

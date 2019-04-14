@@ -34,6 +34,12 @@ namespace Booking.API.Controllers
             try
             {
                 var resultSet = await Mediator.Send(new GetBookingQuery() { BookingId = Id });
+
+                if (resultSet == null)
+                {
+                    return NotFound();
+                }
+
                 return Ok(resultSet);
 
             }
@@ -49,12 +55,22 @@ namespace Booking.API.Controllers
         // POST: api/booking
         //Return Booking Reference
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] //400
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Create([FromBody] CreateBookingCommand command)
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
                 var bookingOrderId = await Mediator.Send(command);
-                return Ok(bookingOrderId);
+                
+                //We can replace this with CreatedAtAction as well
+                return StatusCode(StatusCodes.Status201Created, bookingOrderId);
             }
             catch(Exception ex){
                 telemetry.TrackException(ex);
