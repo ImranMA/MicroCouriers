@@ -12,14 +12,14 @@ namespace Booking.Application.Booking.Commands.CreateBooking
 {
     public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand, string>
     {
-        private readonly IBookingRespository _bookingContext;
-        //private readonly IBookingIntegrationEventService _bookingIntegrationEventService;
-        private readonly IMediator _mediator;
+        private readonly IBookingRespository _bookingContext;                
         private readonly IEventBus _eventBus;
-        public CreateBookingCommandHandler(IMediator mediator, IBookingRespository context,
+
+        //private readonly IBookingIntegrationEventService _bookingIntegrationEventService;
+
+        public CreateBookingCommandHandler(IBookingRespository context,
            IEventBus eventBus)
         {
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _bookingContext = context;
             _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
            // _bookingIntegrationEventService = bookingIntegrationEventService ?? throw new ArgumentNullException(nameof(bookingIntegrationEventService));

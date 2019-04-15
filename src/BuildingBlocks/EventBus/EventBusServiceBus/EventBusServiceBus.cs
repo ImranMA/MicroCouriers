@@ -38,7 +38,7 @@
 
             //var check = _subscriptionClient.PrefetchCount;
 
-            RemoveDefaultRule();
+            //RemoveDefaultRule();
             RegisterSubscriptionClientMessageHandler();
         }
 
