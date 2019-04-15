@@ -52,7 +52,7 @@ namespace Booking.Tests.FunctionalTests.Common
 
                     try
                     {
-                        // Seed the database with test data.
+                        // Seed the database with test data if required.
                         //Utilities.InitializeDbForTests(concreteContext);
                     }
                     catch (Exception ex)
