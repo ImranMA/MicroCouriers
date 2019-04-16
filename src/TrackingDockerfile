@@ -1,0 +1,39 @@
+FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
+WORKDIR /app
+EXPOSE 5002
+
+FROM microsoft/dotnet:2.2-sdk AS build
+WORKDIR /src
+
+
+
+COPY ["BuildingBlocks/EventBus/EventBus/EventBus.csproj", "/BuildingBlocks/EventBus/EventBus/"]
+COPY ["BuildingBlocks/EventBus/EventBusServiceBus/EventBusServiceBus.csproj", "/BuildingBlocks/EventBus/EventBusServiceBus/"]
+COPY ["BuildingBlocks/EventBus/IntegrationEventLogEF/IntegrationEventLogEF.csproj", "/BuildingBlocks/EventBus/IntegrationEventLogEF/"]
+
+COPY ["Services/Tracking/Tracking.API/Tracking.API.csproj", "Services/Tracking/Tracking.API/"]
+COPY ["Services/Tracking/Tracking.Application/Tracking.Application.csproj", "Services/Tracking/Tracking.Application/"]
+COPY ["Services/Tracking/Tracking.Common/Tracking.Common.csproj", "Services/Tracking/Tracking.Common/"]
+COPY ["Services/Tracking/Tracking.Domain/Tracking.Domain.csproj", "Services/Tracking/Tracking.Domain/"]
+COPY ["Services/Tracking/Tracking.Persistence/Tracking.Persistence.csproj", "Services/Tracking/Tracking.Persistence/"]
+
+RUN dotnet restore "Services/Tracking/Tracking.API/Tracking.API.csproj"
+
+
+COPY . .
+
+
+WORKDIR "/src/Services/Tracking/Tracking.API"
+
+
+RUN dotnet build "Tracking.API.csproj" -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish "Tracking.API.csproj" -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+
+
+ENTRYPOINT ["dotnet", "Tracking.API.dll"]

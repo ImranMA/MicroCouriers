@@ -1,0 +1,38 @@
+FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
+WORKDIR /app
+EXPOSE 5001
+
+FROM microsoft/dotnet:2.2-sdk AS build
+WORKDIR /src
+
+COPY ["BuildingBlocks/EventBus/EventBus/EventBus.csproj", "/BuildingBlocks/EventBus/EventBus/"]
+COPY ["BuildingBlocks/EventBus/EventBusServiceBus/EventBusServiceBus.csproj", "/BuildingBlocks/EventBus/EventBusServiceBus/"]
+COPY ["BuildingBlocks/EventBus/IntegrationEventLogEF/IntegrationEventLogEF.csproj", "/BuildingBlocks/EventBus/IntegrationEventLogEF/"]
+
+COPY ["Services/Payment/Payment.API/Payment.API.csproj", "Services/Payment/Payment.API/"]
+COPY ["Services/Payment/Payment.Application/Payment.Application.csproj", "Services/Payment/Payment.Application/"]
+COPY ["Services/Payment/Payment.Domain/Payment.Domain.csproj", "Services/Payment/Payment.Domain/"]
+COPY ["Services/Payment/Payment.Infrastructure/Payment.Infrastructure.csproj", "Services/Payment/Payment.Infrastructure/"]
+COPY ["Services/Payment/Payment.Persistence/Payment.Persistence.csproj", "Services/Payment/Payment.Persistence/"]
+
+
+RUN dotnet restore "Services/Payment/Payment.API/Payment.API.csproj"
+
+
+COPY . .
+
+
+WORKDIR "/src/Services/Payment/Payment.API"
+
+
+RUN dotnet build "Payment.API.csproj" -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish "Payment.API.csproj" -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+
+
+ENTRYPOINT ["dotnet", "Payment.API.dll"]

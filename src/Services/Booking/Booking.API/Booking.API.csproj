@@ -22,21 +22,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBusServiceBus\EventBusServiceBus.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus\EventBus.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\IntegrationEventLogEF\IntegrationEventLogEF.csproj" />
     <ProjectReference Include="..\Booking.Application\Booking.Application.csproj" />
     <ProjectReference Include="..\Booking.Common\Booking.Common.csproj" />
     <ProjectReference Include="..\Booking.Infrastructure\Booking.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="EventBus">
-      <HintPath>..\ExternalDep\EventBus.dll</HintPath>
-    </Reference>
-    <Reference Include="EventBusServiceBus">
-      <HintPath>..\ExternalDep\EventBusServiceBus.dll</HintPath>
-    </Reference>
-    <Reference Include="IntegrationEventLogEF">
-      <HintPath>..\ExternalDep\IntegrationEventLogEF.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
