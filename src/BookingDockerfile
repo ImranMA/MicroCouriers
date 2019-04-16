@@ -5,9 +5,9 @@ EXPOSE 5000
 FROM microsoft/dotnet:2.2-sdk AS build
 WORKDIR /src
 
-COPY ["BuildingBlocks/EventBus/EventBus/EventBus.csproj", "/BuildingBlocks/EventBus/EventBus/"]
-COPY ["BuildingBlocks/EventBus/EventBusServiceBus/EventBusServiceBus.csproj", "/BuildingBlocks/EventBus/EventBusServiceBus/"]
-COPY ["BuildingBlocks/EventBus/IntegrationEventLogEF/IntegrationEventLogEF.csproj", "/BuildingBlocks/EventBus/IntegrationEventLogEF/"]
+COPY ["BuildingBlocks/EventBus/EventBus/EventBus.csproj", "BuildingBlocks/EventBus/EventBus/"]
+COPY ["BuildingBlocks/EventBus/EventBusServiceBus/EventBusServiceBus.csproj", "BuildingBlocks/EventBus/EventBusServiceBus/"]
+COPY ["BuildingBlocks/EventBus/IntegrationEventLogEF/IntegrationEventLogEF.csproj", "BuildingBlocks/EventBus/IntegrationEventLogEF/"]
 
 COPY ["Services/Booking/Booking.API/Booking.API.csproj", "Services/Booking/Booking.API/"]
 COPY ["Services/Booking/Booking.Application/Booking.Application.csproj", "Services/Booking/Booking.Application/"]

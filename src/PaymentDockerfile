@@ -5,9 +5,9 @@ EXPOSE 5001
 FROM microsoft/dotnet:2.2-sdk AS build
 WORKDIR /src
 
-COPY ["BuildingBlocks/EventBus/EventBus/EventBus.csproj", "/BuildingBlocks/EventBus/EventBus/"]
-COPY ["BuildingBlocks/EventBus/EventBusServiceBus/EventBusServiceBus.csproj", "/BuildingBlocks/EventBus/EventBusServiceBus/"]
-COPY ["BuildingBlocks/EventBus/IntegrationEventLogEF/IntegrationEventLogEF.csproj", "/BuildingBlocks/EventBus/IntegrationEventLogEF/"]
+COPY ["BuildingBlocks/EventBus/EventBus/EventBus.csproj", "BuildingBlocks/EventBus/EventBus/"]
+COPY ["BuildingBlocks/EventBus/EventBusServiceBus/EventBusServiceBus.csproj", "BuildingBlocks/EventBus/EventBusServiceBus/"]
+COPY ["BuildingBlocks/EventBus/IntegrationEventLogEF/IntegrationEventLogEF.csproj", "BuildingBlocks/EventBus/IntegrationEventLogEF/"]
 
 COPY ["Services/Payment/Payment.API/Payment.API.csproj", "Services/Payment/Payment.API/"]
 COPY ["Services/Payment/Payment.Application/Payment.Application.csproj", "Services/Payment/Payment.Application/"]

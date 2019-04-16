@@ -7,9 +7,9 @@ WORKDIR /src
 
 
 
-COPY ["BuildingBlocks/EventBus/EventBus/EventBus.csproj", "/BuildingBlocks/EventBus/EventBus/"]
-COPY ["BuildingBlocks/EventBus/EventBusServiceBus/EventBusServiceBus.csproj", "/BuildingBlocks/EventBus/EventBusServiceBus/"]
-COPY ["BuildingBlocks/EventBus/IntegrationEventLogEF/IntegrationEventLogEF.csproj", "/BuildingBlocks/EventBus/IntegrationEventLogEF/"]
+COPY ["BuildingBlocks/EventBus/EventBus/EventBus.csproj", "BuildingBlocks/EventBus/EventBus/"]
+COPY ["BuildingBlocks/EventBus/EventBusServiceBus/EventBusServiceBus.csproj", "BuildingBlocks/EventBus/EventBusServiceBus/"]
+COPY ["BuildingBlocks/EventBus/IntegrationEventLogEF/IntegrationEventLogEF.csproj", "BuildingBlocks/EventBus/IntegrationEventLogEF/"]
 
 COPY ["Services/Tracking/Tracking.API/Tracking.API.csproj", "Services/Tracking/Tracking.API/"]
 COPY ["Services/Tracking/Tracking.Application/Tracking.Application.csproj", "Services/Tracking/Tracking.Application/"]
