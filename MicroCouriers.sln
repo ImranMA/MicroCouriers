@@ -69,7 +69,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderShipping", "src\Shippi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroCourier.Web", "src\Web\MicroCourier.Web\MicroCourier.Web.csproj", "{04FDED46-05DF-4E1A-873F-2329098D7DB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.Tests", "src\Services\Booking\Booking.Tests\Booking.Tests.csproj", "{AEAED538-4BF6-4D5C-9A1C-59991902C5DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.Tests", "src\Services\Booking\Booking.Tests\Booking.Tests.csproj", "{AEAED538-4BF6-4D5C-9A1C-59991902C5DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Tests", "src\Services\Payment\Payment.Tests\Payment.Tests.csproj", "{43F214F4-B04F-44E5-A68F-D53261DFE3EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -169,6 +171,10 @@ Global
 		{AEAED538-4BF6-4D5C-9A1C-59991902C5DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEAED538-4BF6-4D5C-9A1C-59991902C5DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEAED538-4BF6-4D5C-9A1C-59991902C5DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43F214F4-B04F-44E5-A68F-D53261DFE3EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43F214F4-B04F-44E5-A68F-D53261DFE3EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43F214F4-B04F-44E5-A68F-D53261DFE3EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43F214F4-B04F-44E5-A68F-D53261DFE3EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -207,6 +213,7 @@ Global
 		{3BF67944-A301-46D3-AF24-EE6538AF0C7F} = {FA179B04-0334-4827-81DE-60254E9900ED}
 		{04FDED46-05DF-4E1A-873F-2329098D7DB1} = {4A4A8E44-3B45-4657-A442-F8CA1709CCAB}
 		{AEAED538-4BF6-4D5C-9A1C-59991902C5DF} = {6C03A784-9997-48A4-A4C1-035E4E413F29}
+		{43F214F4-B04F-44E5-A68F-D53261DFE3EB} = {627B4517-E86F-4C5E-8932-48914A73535B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E13E4D21-76D2-45C9-B2EC-29A70284CD9E}

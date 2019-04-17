@@ -1,10 +1,10 @@
-﻿using Booking.Persistence;
+﻿using System.Text;
 using Newtonsoft.Json;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
+using Payment.Persistence;
 
-namespace Booking.Tests.FunctionalTests.Common
+namespace Payment.Tests.FunctionalTests.Common
 {
     public class Utilities
     {
@@ -16,15 +16,14 @@ namespace Booking.Tests.FunctionalTests.Common
         public static async Task<T> GetResponseContent<T>(HttpResponseMessage response)
         {
             var stringResponse = await response.Content.ReadAsStringAsync();
-
             var result = JsonConvert.DeserializeObject<T>(stringResponse);
 
             return result;
         }
 
-        public static void InitializeDbForTests(BookingDbContext context)
+        public static void InitializeDbForTests(PaymentDbContext context)
         {
-           
+          
         }
     }
 }
