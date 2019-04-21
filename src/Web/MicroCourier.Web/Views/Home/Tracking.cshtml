@@ -17,21 +17,16 @@
             <input type="button" onclick="getTrackingDetails();" class="btn" value="Find" />
             <div id="bookingDetails"></div>
             <br />
-
-
             <h5 style="color:Red" id="msgtxt"></h5>
         </div>
     </div>
-
 </body>
 
 
 <script>
 
-
-
     function getTrackingDetails() {
-        debugger
+        
         var trackingid = $("#txtBR").val();
 
         $.ajax({
@@ -53,13 +48,13 @@
 
 
     function TrackingDetails(results) {
-        debugger
+        
         var trackingHistory = results.trackingHistory;
         var arr = $.parseJSON(trackingHistory);
         var resultString = "";
         var Sep = "<br>-------------------------------------------";
         $.each(arr, function (index, value) {
-            debugger
+            
             
             if (this.OrderState.indexOf("Created")>-1) {
                 resultString += "<br>Booking Created - " + this.DateTime + "<br>" + "Origion - " + this.Origion + " Dest -" + this.Destination + "<br> Description :" + this.Description;
@@ -80,12 +75,10 @@
                 resultString += "<br>Order In Transit - " + this.DateTime + "<br> Description :" + this.Description;
             }
 
-
             if (this.OrderState.indexOf("Delivered") > -1) {
                 resultString += Sep;
                 resultString += "<br>Order Delivered - " + this.DateTime + "<br> Signed By: " + this.SignedBy + "<br> Description :" +  "" + this.Description;
-            }
-           // alert(index + ": " + value);
+            }           
         });
 
         $("#bookingDetails").html(resultString);
