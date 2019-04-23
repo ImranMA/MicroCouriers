@@ -176,22 +176,21 @@ namespace Tracking.Persistence.Repositories
         //Create the database if doesn't exists
         public void EnsureDatabase()
         {
-            // init db
-            using (SqlConnection conn = new SqlConnection(_connectionString.Replace("TrackingEventsStore", "master")))
+
+            try
             {
-                conn.Open();
+                // init db
+                using (SqlConnection conn = new SqlConnection(_connectionString.Replace("TrackingEventsStore", "master")))
+                {
+                    conn.Open();
 
-                // create database
-                string sql = "if DB_ID('TrackingEventsStore') IS NULL CREATE DATABASE TrackingEventsStore;";
+                    // create database
+                    string sql = "if DB_ID('TrackingEventsStore') IS NULL CREATE DATABASE TrackingEventsStore;";
 
-                Policy
-                    .Handle<Exception>()
-                    .WaitAndRetry(5, r => TimeSpan.FromSeconds(5), (ex, ts) =>
-                    { Console.WriteLine("Error connecting to DB. Retrying in 5 sec."); })
-                    .Execute(() => conn.Execute(sql));
+                    conn.Execute(sql);
 
-                conn.ChangeDatabase("TrackingEventsStore");
-                sql = @" 
+                    conn.ChangeDatabase("TrackingEventsStore");
+                    sql = @" 
                     if OBJECT_ID('Tracking') IS NULL 
                     CREATE TABLE Tracking (
                         [Id] varchar(50) NOT NULL,
@@ -207,12 +206,14 @@ namespace Tracking.Persistence.Repositories
                         [EventData] text,
                     PRIMARY KEY([Id], [Version]));";
 
-                Policy
-                    .Handle<Exception>()
-                    .WaitAndRetry(5, r => TimeSpan.FromSeconds(5), (ex, ts) =>
-                    { Console.WriteLine("Error connecting to DB. Retrying in 5 sec."); })
-                    .Execute(() => conn.Execute(sql));
+                    conn.Execute(sql);
+                }
             }
+            catch(Exception)
+            {
+
+            }
+           
         }
         
         /// <summary>

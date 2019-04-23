@@ -36,7 +36,7 @@ namespace MicroCourier.Web.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            return "value MCWeb";
         }
 
         // POST: api/payment
