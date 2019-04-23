@@ -1,0 +1,161 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: trackingapi
+  labels:
+        app: trackingapi
+        component: trackingapi
+spec:
+  replicas: 2
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1 
+  template:
+    metadata:
+      labels:
+        app: trackingapi
+    spec:
+      containers:
+      - name: trackingapi
+        image: micrcouriers.azurecr.io/trackingapi:latest     
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always   
+        resources:
+          requests:        
+            cpu: "300m"
+          limits:          
+            cpu: "600m"
+        
+
+
+  
+---
+
+
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: paymentapi
+  labels:
+        app: paymentapi
+        component: paymentapi
+spec:
+  replicas: 1  
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1 
+  template:
+    metadata:
+      labels:
+        app: paymentapi
+    spec:
+      containers:
+      - name: paymentapi
+        image: micrcouriers.azurecr.io/paymentapi:latest     
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always   
+       
+
+  
+
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: bookingapi
+  labels:
+        app: bookingapi
+        component: bookingapi
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1 
+  template:
+    metadata:
+      labels:
+        app: bookingapi
+    spec:
+      containers:
+      - name: bookingapi
+        image: micrcouriers.azurecr.io/bookingapi:latest     
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always   
+        resources:
+          requests:        
+            cpu: "200m"
+          limits:          
+            cpu: "600m"
+        
+
+  
+  
+  
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mcweb
+  labels:
+        app: mcweb
+        component: mcweb
+spec:
+  replicas: 2  
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1 
+  template:
+    metadata:
+      labels:
+        app: mcweb
+    spec:
+      containers:
+      - name: mcweb
+        image: micrcouriers.azurecr.io/mcweb:latest     
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always   
+       
+
+    
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: webgateway
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+  rules:
+  - host: e1519b70bda84a609fd5.australiaeast.aksapp.io
+    http:
+      paths:     
+      - backend:
+          serviceName: mcweb
+          servicePort: 5004
+        path: /
+      
+        
+        
+        
+      

@@ -1,0 +1,62 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trackingapi
+spec:
+  ports:
+  - port: 5002
+    targetPort: 80
+  selector:
+    app: trackingapi
+  type: ClusterIP
+  
+  
+          
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: paymentapi
+spec:
+  ports:
+  - port: 5001
+    targetPort: 80
+  selector:
+    app: paymentapi
+  type: ClusterIP
+  
+  
+  
+  
+  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookingapi
+spec:
+  ports:
+  - port: 5000
+    targetPort: 80
+  selector:
+    app: bookingapi
+  type: ClusterIP
+  
+  
+          
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcweb
+spec:
+  ports:
+  - port: 5004
+    targetPort: 80
+  selector:
+    app: mcweb
+  type: ClusterIP
+  
