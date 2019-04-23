@@ -42,7 +42,7 @@ Tracking API is the meat of this solution. It's using CQRS pattern . Every event
 When user looks for order history we read the history from cache (if cache is available or event is available) else we read from DB and update the cache. 
 
 #### Web App / API Gateway
-Web App is working as gateway and every request to APIs is passed through this. Web app also contains Javscript and views to drive the UI , but Web app is driven by API responses. It also has resiliency logic embeded into it incase if any of the API is down , we don't send response to that API until it's back. 
+Web App is working as gateway and every request to APIs is passed through this. Web app also contains Javscript and views to drive the UI , but Web app is driven by API responses. It also has resiliency logic embeded into it incase if any of the API is down , we don't send request to that API until it's back. 
 
 
 #### Shipping Simulation
@@ -84,7 +84,11 @@ If above setup is configured , the tracking history is maintained into cache to 
 
 If we don't have above setup , then every time we hit the tracking database to get the history which is default behaviour of this application. 
 
-
+#### SQL Login
+Application is using SQL Linux container for development purpose. You can login to SQL management studio using following credentials
+servername : localhost,1433
+Login : sa
+password : 99888ukGh43hnDw89Hol8LN21112
 
 # Technical Stack 
 
