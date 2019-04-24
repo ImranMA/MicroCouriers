@@ -1,6 +1,6 @@
 # MicroCouriers (On Going)
 
-MicroCouriers is fictional courier service used to book and track orders. I am working on the sample app to demonstrate the  Architectural and design patterns. The purpose of this application is to create microservices and deploy the application on Kubernetes with complete build pipeline. This is on going project and i will keep on updating along the way. 
+MicroCouriers is courier service application used to book and track orders. I am working on this application to demonstrate the modern   Architectural and design patterns. This is on going project and i will keep on updating along the way. 
 
 * DDD
 * CQRS/Event Sourcing
@@ -19,16 +19,16 @@ MicroCouriers is fictional courier service used to book and track orders. I am w
 
 MicroCouriers is courier service to book , pay and track orders online. User book items that are supposed to be picked by courier service and delivered at destination. The order will have state that will define its current status. e.g. Bookged, Paymenet process, order picked, order in transit and order delivered. User can check the order status in near realtime to know how far order has progressed.
 
-The solution consists of couple of microservices that work independently and autonomously.I have concentrated more on Back end not UI, so you may find some of the UI code is only for display purpose and has nothing to do with Backend , e.g. Price Estimation. 
+The solution consists of couple of microservices that work independently and autonomously.I have concentrated more on Back-end but not UI, so you may find some of the UI code is only for display purpose and has nothing to do with Backend , e.g. Price Estimation on booking screen.
 
 Application is based on event-driven architecture so all individual apps are consuming and producing events. These events are key for this application. The application model is based on eventual consistency, so if any service(s) is not available the system will eventualy get consistent once down service is up and running. 
 
-Since order is the main item of this whole system so BookingOrderID is the key that is used by all the microservices to track and update order. 
+Since Order is the main item of this whole system so BookingOrderID is the key that is used by all the microservices to track and update order. 
 
 Service bus is used to deliver events and message and is backbone of the system. Azure function is subscribed to azure service bus and update the order history into cache. each event raised is appended to order history and that history is updated into the cahce. So active orders stay in the cache to avoid DB hit. 
 
-###  Application Components
-The application consists of 4 microservices mainly that are interacting using events.
+#  Application Components
+The application consists of 4 microservices mainly that are interacting using events. Since application is using DDD each microservice is build inside bounded context. 
 
 #### Booking API
 Booking API is used to book Order. An order consits of Origin , Destination and Item that has to be picked and delivered. The Price Estimation is random price calculator and is only front-end Function. As User books the order , and event is raised which is consumed by other services (described below) . Booking application is also subscribed to events e.g. Order staus change and Payment processed.
@@ -48,6 +48,11 @@ Web App is working as gateway and every request to APIs is passed through this. 
 #### Shipping Simulation
 Shipping simulation is a desktop application that is used to simulate the order status change. As user pay for the order courier service is required to pick the order from origin and update the status until delivered. The shipping simulation app takes booking order ID and you can update the status of order e.g. Order Picked , which means courier service driver has picked the order and ready to progress futher until finally delivered at destination.
 
+
+#  Application Architecture and Design Patterns
+Top Application architecture is following event-driven microservices. Each individual microservices is implementing clean architecture and focus on domain. Application is using DDD so you may find DDD elements like bounded context , aggregate roots etc. 
+
+
 # How to Run Applcation ? 
 
 ### Prerequisites
@@ -55,6 +60,10 @@ Shipping simulation is a desktop application that is used to simulate the order 
 #### Docker 
 Docker installed and configured on local system. Make sure docker is set to Linux containers.
 
+#### Running Application
+To run the application you need to run rebuildAllDockerImages.ps1 available in MicroCouriers/src/ . This script will build all the images. 
+you can check all the images using "docker images" in command line. After this you need to run StartSolution.ps1 to fire up containers.
+This will start the solution . in browser type http://localhost:5004 to launch the home page
 
 #### Azure Service Bus 
 
@@ -62,19 +71,16 @@ Application is using azure service bus and has topic/subscrptions assossiated wi
 service bus has to be available on azure, so Basic SKU Azure Service bus (deployed and live on azure) is included for testing , however 
 You need to replace with your own later as included service bus can be disabled. 
 
-
 ##### Creating your own service bus with topic/subscrption
 
 You need to create following topic and subscrptions. Once done you need to replace the connection string into services appsetting.json
 
 topic = microcouriers-topic
+
 subscrption(s) = booking,tracking,readprojection   (remove default rules since applications will subscribe automatically)
  
-
-#### Running Application
-To run the application you need to run rebuildAllDockerImages.ps1 available in MicroCouriers/src/ . This script will build all the images. 
-you can check all the images using "docker images" in command line. After this you need to run StartSolution.ps1 to fire up containers.
-This will start the solution . in browser type http://localhost:5004 to launch the home page
+#### Application Insights
+To view performance metrics or issues, you need to replace application insights ID in appsettings for each individual service. 
 
 
 #### Azure Function and Redis (optional)
@@ -86,8 +92,11 @@ If we don't have above setup , then every time we hit the tracking database to g
 
 #### SQL Login
 Application is using SQL Linux container for development purpose. You can login to SQL management studio using following credentials
+
 servername : localhost,1433
+
 Login : sa
+
 password : 99888ukGh43hnDw89Hol8LN21112
 
 # Technical Stack 
@@ -99,11 +108,42 @@ Visual Studio 2017
 Clean Architecture , Event-Driven
 
 #### Design Patterns
-CQRS, DDD, Respotiory , Cache Aside 
+CQRS, DDD, Respotiory , Cache Aside , Event Sourcing
 
 #### Tech Stack / Libraries
 .NET Core 2.2 , Azure Service Bus, Azure Redis Cache, Azure Function (serverless), Application Insights, SQL Server on Linux , Docker , Azure SDK , 
 EntitiyFramework Core , Dapper , XUnit, Moq , Polly (resiliency), Shouldly (unit test), AutoFac , MediatR
+
+# Unit and Load Tests
+Each service includes unit and functional tests. Please not tests does not have complete code coverage.  
+
+JMeter load test files are included in the project. Simply import the load test xml files in JMeter and run the load test. Please not this is not comprehensive load test.
+
+
+# Kubernetes
+
+The solution is tested on Azure Kubernetes. You need to create AKS cluster and http-routing turned on. Deployment steps and yaml files are provided . In deployment yaml replace host (e1519b70bda84a609fd5.australiaeast.aksapp.io ) with your own DNS value. You also need to configure SQL databases hosted and live.  
+
+# Road Map
+
+This is ongoing project and i expect lots of updates and features in the future. Some of the features that i am interested to include are
+
+- SPA Replace web front end with SPA and host it independeny using blob storage. 
+- Replace event-sourcing database with NoSQL DB for high performance
+- Integrate Bot Service for intellegent order booking.
+- Mobile application for tracking and booking. 
+- Real time order status updates using SignalR.
+- Complete CI/CD pipeline
+
+
+# Disclaimer
+The project is only for demo purpose and is not production-ready as it may have bugs or missing features. 
+
+# Contribution
+I am happy to take anyone on board as we progress. If you find any bug simply create issue . If you have any trouble/questions i can be contacted on https://imranarshad.com/contact
+
+
+
 
 
 
