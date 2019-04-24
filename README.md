@@ -108,7 +108,7 @@ Visual Studio 2017
 Clean Architecture , Event-Driven
 
 #### Design Patterns
-CQRS, DDD, Respotiory , Cache Aside , Event Sourcing
+CQRS, Event Sourcing , Materialized view, DDD, Respotiory , Cache Aside 
 
 #### Tech Stack / Libraries
 .NET Core 2.2 , Azure Service Bus, Azure Redis Cache, Azure Function (serverless), Application Insights, SQL Server on Linux , Docker , Azure SDK , 
@@ -135,6 +135,8 @@ This is ongoing project and i expect lots of updates and features in the future.
 - Real time order status updates using SignalR.
 - Complete CI/CD pipeline
 
+# Things to be ignored
+The projects will have IntegrationEventService (BookingIntegrationEventService)derived from IIntegrationEventLogService . This service is not being used at this point and can be ignored. The purpose of this service is to implement "outbox pattern" which means save events in DB before publishing them . If service bus is broken or down  , the events can be saved locally and then published . This way events are not lost.
 
 # Disclaimer
 The project is only for demo purpose and is not production-ready as it may have bugs or missing features. 
