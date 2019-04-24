@@ -23,6 +23,7 @@ using Tracking.Application.Interface;
 using Tracking.Application.TrackingServices;
 using StackExchange.Redis;
 using Microsoft.ApplicationInsights.Extensibility;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Tracking.API
 {
@@ -49,7 +50,12 @@ namespace Tracking.API
 
             services.AddApplicationInsightsTelemetry(Configuration);
 
-            //Add Repos
+            // Register the Swagger generator, defining one or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Payment API", Version = "v1" });
+            });
+
 
 
             //If Cache is available we will read the booking history from Cache
@@ -97,6 +103,15 @@ namespace Tracking.API
 
 
             ConfigureEventBus(app);
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Booking API");
+            });
         }
 
         //Subscribe to event bus
