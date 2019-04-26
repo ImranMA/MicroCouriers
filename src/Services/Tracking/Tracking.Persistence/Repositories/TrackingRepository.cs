@@ -176,18 +176,25 @@ namespace Tracking.Persistence.Repositories
         //Create the database if doesn't exists
         public void EnsureDatabase()
         {
-
             try
             {
                 // init db
                 using (SqlConnection conn = new SqlConnection(_connectionString.Replace("TrackingEventsStore", "master")))
                 {
-                    conn.Open();
+                    Policy
+                       .Handle<Exception>()
+                       .WaitAndRetry(5, r => TimeSpan.FromSeconds(5), (ex, ts) =>
+                       { Console.WriteLine("Error connecting to DB. Retrying in 5 sec."); })
+                       .Execute(() => conn.Open());
 
                     // create database
                     string sql = "if DB_ID('TrackingEventsStore') IS NULL CREATE DATABASE TrackingEventsStore;";
 
-                    conn.Execute(sql);
+                    Policy
+                        .Handle<Exception>()
+                        .WaitAndRetry(5, r => TimeSpan.FromSeconds(5), (ex, ts) =>
+                        { Console.WriteLine("Error connecting to DB. Retrying in 5 sec."); })
+                        .Execute(() => conn.Execute(sql));
 
                     conn.ChangeDatabase("TrackingEventsStore");
                     sql = @" 
@@ -206,7 +213,11 @@ namespace Tracking.Persistence.Repositories
                         [EventData] text,
                     PRIMARY KEY([Id], [Version]));";
 
-                    conn.Execute(sql);
+                  Policy
+                      .Handle<Exception>()
+                      .WaitAndRetry(5, r => TimeSpan.FromSeconds(5), (ex, ts) =>
+                      { Console.WriteLine("Error connecting to DB. Retrying in 5 sec."); })
+                      .Execute(() => conn.Execute(sql));
                 }
             }
             catch(Exception)

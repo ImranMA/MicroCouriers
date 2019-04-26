@@ -4,6 +4,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
 
 namespace Booking.API
 {
@@ -23,7 +24,11 @@ namespace Booking.API
                     var context = scope.ServiceProvider.GetService<BookingDbContext>();
 
                     var concreteContext = (BookingDbContext)context;
-                    concreteContext.Database.Migrate();
+
+                    Policy
+                       .Handle<Exception>()
+                       .WaitAndRetry(5, r => TimeSpan.FromSeconds(10))
+                       .Execute(() => concreteContext.Database.Migrate());
                 }
                 catch (Exception)
                 {

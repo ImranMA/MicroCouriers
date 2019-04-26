@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Payment.Persistence;
+using Polly;
 
 namespace Payment.API
 {
@@ -29,7 +30,14 @@ namespace Payment.API
                     var context = scope.ServiceProvider.GetService<PaymentDbContext>();
 
                     var concreteContext = (PaymentDbContext)context;
-                    concreteContext.Database.Migrate();
+                    //concreteContext.Database.Migrate();
+
+                    Policy
+                       .Handle<Exception>()
+                       .WaitAndRetry(5, r => TimeSpan.FromSeconds(10))
+                       .Execute(() => concreteContext.Database.Migrate());
+
+
                 }
                 catch (Exception)
                 {
