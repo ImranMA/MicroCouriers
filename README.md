@@ -1,6 +1,6 @@
 # MicroCouriers (On Going)
 
-MicroCouriers is courier service application used to book and track orders. I am working on this application to demonstrate the modern   Architectural and design patterns. This is on going project and i will keep on updating along the way. 
+MicroCouriers is courier service application used to book and track orders. I am working on this application to demonstrate the modern   Architectural and design patterns. This is on going project and i will keep on updating along the way. Patterns and principles i have covered are
 
 * DDD
 * CQRS/Event Sourcing
@@ -60,10 +60,23 @@ Top Application architecture is following event-driven microservices. Each indiv
 #### Docker 
 Docker installed and configured on local system. Make sure docker is set to Linux containers.
 
-#### Running Application
+#### Running Application (without debugging)
 To run the application you need to run rebuildAllDockerImages.ps1 available in MicroCouriers/src/ . This script will build all the images. 
 you can check all the images using "docker images" in command line. After this you need to run StartSolution.ps1 to fire up containers.
-This will start the solution . in browser type http://localhost:5004 to launch the home page
+This will start the solution . in browser type http://localhost:5004 to launch the home page.
+
+#### Running Application (debug and explore)
+You can use visual studio or visual code to explore and debug the solution. If you want to run the solution in visual studio , before launching solution(F5) run StartSQLonly.ps1 script which will launch only SQL container. But if you want to use your own sql server instance replace database strings with your own SQL server instance in all API projects. 
+
+#### Database and SQL Login 
+Databases are created automatically when application is launched. You may see retry logic in program.cs of all APIs and reason for this that SQL container may take sometime to start and we want to retry database connectivity.  Application is using SQL Linux container for development purpose. You can login to sql server using SQL management studio with following credentials.
+
+servername : localhost,1433
+
+Login : sa
+
+password : 99888ukGh43hnDw89Hol8LN21112
+
 
 #### Azure Service Bus 
 
@@ -80,8 +93,7 @@ topic = microcouriers-topic
 subscrption(s) = booking,tracking,readprojection   (remove default rules since applications will subscribe automatically)
  
 #### Application Insights
-To view performance metrics or issues, you need to replace application insights ID in appsettings for each individual service. 
-
+To view performance metrics or issues, you need to replace application insights ID (InstrumentationKey) in appsettings for each individual service. 
 
 #### Azure Function and Redis (optional)
 Solution also contains azure function and redis cache. If Azure Function is deployed and redis cache is configured , you need to provide redis cache connection string in Azure Function and Tracking Service. Azure function is triggered by event bus and is listening to all the events that are raised. Using events azure function will create the tracking history which is active for 10 hours . In CQRS pattern the readmodel is created and updated into redis cache. 
@@ -90,14 +102,6 @@ If above setup is configured , the tracking history is maintained into cache to 
 
 If we don't have above setup , then every time we hit the tracking database to get the history which is default behaviour of this application. 
 
-#### SQL Login
-Application is using SQL Linux container for development purpose. You can login to SQL management studio using following credentials
-
-servername : localhost,1433
-
-Login : sa
-
-password : 99888ukGh43hnDw89Hol8LN21112
 
 # Technical Stack 
 
@@ -115,7 +119,7 @@ CQRS, Event Sourcing , Materialized view, DDD, Respotiory , Cache Aside
 EntitiyFramework Core , Dapper , XUnit, Moq , Polly (resiliency), Shouldly (unit test), AutoFac , MediatR
 
 # Unit and Load Tests
-Each service includes unit and functional tests. Please not tests does not have complete code coverage.  
+Each service includes unit and functional tests. Please note tests do not have complete code coverage.  
 
 JMeter load test files are included in the project. Simply import the load test xml files in JMeter and run the load test. Please not this is not comprehensive load test.
 
@@ -128,6 +132,7 @@ The solution is tested on Azure Kubernetes. You need to create AKS cluster and h
 
 This is ongoing project and i expect lots of updates and features in the future. Some of the features that i am interested to include are
 
+- Replace local configurations with Azure Configuration service. 
 - SPA Replace web front end with SPA and host it independeny using blob storage. 
 - Replace event-sourcing database with NoSQL DB for high performance
 - Integrate Bot Service for intellegent order booking.
