@@ -34,10 +34,10 @@ The application consists of 4 microservices mainly that are interacting using ev
 Booking API is used to book Order. An order consits of Origin , Destination and Item that has to be picked and delivered. The Price Estimation is random price calculator and is only front-end Function. As User books the order , and event is raised which is consumed by other services (described below) . Booking application is also subscribed to events e.g. Order staus change and Payment processed.
 
 #### Payment API
-Payment API is used to pay for Order. User is required to pay against the booking ID. Once user pay for Order and event is raised with payment reference that is consumed by Booking service.
+Payment API is used to pay for Order. User is required to pay against the booking ID. Once user pay for Order and event is raised with payment reference that is consumed by Booking service. On Payment UI screen you can use any values to pay and proceed.
 
 #### Tracking API
-Tracking API is the meat of this solution. It's using CQRS pattern . Every event raised in the system is consumed by tracking API. The events are stored in event store. Each event is appended to the existing Order ID trail. So we have track of all the events that are raised in the system. 
+Tracking API is the meat of this solution. It's using CQRS pattern . Every event raised in the system is consumed by tracking API. The events are stored in event store. Each event is appended to the existing Order ID trail. So we have track of all the events that are raised in the system. You need to use booking reference ID to track history. 
 
 When user looks for order history we read the history from cache (if cache is available or event is available) else we read from DB and update the cache. 
 
@@ -61,12 +61,24 @@ Top Application architecture is following event-driven microservices. Each indiv
 Docker installed and configured on local system. Make sure docker is set to Linux containers.
 
 #### Running Application (without debugging)
-To run the application you need to run rebuildAllDockerImages.ps1 available in MicroCouriers/src/ . This script will build all the images. 
-you can check all the images using "docker images" in command line. After this you need to run StartSolution.ps1 to fire up containers.
-This will start the solution . in browser type http://localhost:5004 to launch the home page.
+To run the application you need to run powershell script rebuildAllDockerImages.ps1 available in microCouriers/src/ . This script will build all the images. 
+you can check all the images using "docker images" in command line. After this you need to run powershell script StartSolution.ps1 to fire up containers.
+This will start the solution . in browser type http://localhost:5004 to launch the home page. 
+
+##### Booking UI Screen  
+Provide destination,  origion and atleast one item and click "estimate price" to fill the price field. After this click "Save Booking and Pay"
+
+##### Payment UI Screen  
+you may provide any values on this screen and click pay for payment processing. Keep the booking order ID show on this page.
+
+##### Tracking UI screen
+provide booking order ID (available on payment screen) to track the order.  
 
 #### Running Application (debug and explore)
-You can use visual studio or visual code to explore and debug the solution. If you want to run the solution in visual studio , before launching solution(F5) run StartSQLonly.ps1 script which will launch only SQL container. But if you want to use your own sql server instance replace database strings with your own SQL server instance in all API projects. 
+You can use visual studio or visual code to explore and debug the solution. If you want to run the solution in visual studio , before launching solution(F5) run powershell StartSQLonly.ps1 script which will launch only SQL container. But if you want to use your own sql server instance replace database strings with your own SQL server instance in all API projects. 
+
+# Stopping all containers
+run powershell script StopAllContainers.ps1 to stop all the containers. 
 
 #### Database and SQL Login 
 Databases are created automatically when application is launched. You may see retry logic in program.cs of all APIs and reason for this that SQL container may take sometime to start and we want to retry database connectivity.  Application is using SQL Linux container for development purpose. You can login to sql server using SQL management studio with following credentials.
@@ -151,7 +163,13 @@ I am happy to take anyone on board as we progress. If you find any bug simply cr
 
 
 
+# Credits
 
+I have reused some of the code from following project . Special thanks to project owners/contibutors
+
+https://github.com/dotnet-architecture/eShopOnContainers
+https://github.com/EdwinVW/pitstop
+https://github.com/JasonGT/NorthwindTraders
 
 
 *Since It's an on going project ,  I will keep on updating the description.
