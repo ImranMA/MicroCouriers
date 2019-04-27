@@ -57,14 +57,13 @@ namespace Tracking.Application.IntegrationEvents
                 }
                 catch (Exception e)
                 {
-
                     var ExceptionTelemetry = new ExceptionTelemetry(e);
                     ExceptionTelemetry.Properties.Add("BookingAddIntegrationEvent", eventMsg.BookingId);
                     ExceptionTelemetry.SeverityLevel = SeverityLevel.Critical;
 
                     telemetry.TrackException(ExceptionTelemetry);
                     
-                    throw;
+                    throw;//Make sure event bus abaondon the message
                 }                
             }
         }

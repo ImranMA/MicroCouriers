@@ -8,9 +8,9 @@ namespace Booking.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<BookingOrder> builder)
         {
+            //defining the navigation property for booking order
             var navigation = builder.Metadata.FindNavigation(nameof(BookingOrder.BookingDetails));          
             navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
-
 
             /*builder.HasKey(e => e.BookingOrderId);
 

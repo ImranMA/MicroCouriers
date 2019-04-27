@@ -70,10 +70,6 @@ namespace Tracking.Application.IntegrationEvents
                     await _trackingContext.SaveTrackingAsync(eventMsg.BookingOrderId, trackings.OriginalVersion,
                         trackings.Version, events);
 
-                    //Publish the event here
-                    //Create Integration Event
-                    //var orderStatusChanged = new OrderStatusChangedIntegrationEvent(eventMsg.BookingOrderId , "PaymentProcessed");
-                    //_eventBus.Publish(orderStatusChanged);
                 }
                 catch (Exception e)
                 {

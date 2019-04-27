@@ -36,8 +36,7 @@ namespace Tracking.Application.IntegrationEvents
             if (eventMsg.Id != Guid.Empty)
             {
                 try
-                {
-                    //Track trackings = await _trackingContext.GetTrackingAsync(eventMsg.BookingId);
+                {               
                     Track trackings = await _trackingContext.GetEventVersion(eventMsg.BookingId);
 
                     if (trackings == null)

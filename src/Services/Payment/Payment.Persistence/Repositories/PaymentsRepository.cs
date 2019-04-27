@@ -12,12 +12,13 @@ namespace Payment.Persistence.Repositories
     {
         private readonly PaymentDbContext _context;
 
-
+        //create context
         public PaymentsRepository(PaymentDbContext dbContext)
         {
             _context = dbContext;
         }
 
+        //Add Payment
         public async Task<Payments> AddAsync(Payments payment)
         {
             payment.CreatedDate = DateTime.Now;
@@ -28,12 +29,15 @@ namespace Payment.Persistence.Repositories
             return payment;
         }
 
+        //Find payment by ID
         public async Task<Payments> FindByIdAsync(string paymentId)
         {
             var payment = await _context.Payments.FindAsync(paymentId);
             return payment;
         }
 
+
+        //Update Payment 
         public async Task<Payments> UpdateAsync(Payments payment)
         {
 

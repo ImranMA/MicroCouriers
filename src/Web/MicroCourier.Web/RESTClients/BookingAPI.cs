@@ -17,23 +17,19 @@ namespace MicroCourier.Web.RESTClients
 {
     public class BookingAPI : IBookingAPI
     {
-       
-        private readonly HttpClient _client;
-        //private IBookingAPI _clientBooking;
 
+        private readonly HttpClient _client;
 
         public BookingAPI(IConfiguration config, HttpClient httpclient)
         {
-     
-            
             _client = httpclient;
-            string apiHostAndPort = config.GetSection("APIServiceLocations").GetValue<string>("BookingAPI");                     
-           
-            string baseUri = $"http://{apiHostAndPort}";            
-            _client.BaseAddress = new Uri(baseUri);
+            string apiHostAndPort = config.GetSection("APIServiceLocations").GetValue<string>("BookingAPI");
 
+            string baseUri = $"http://{apiHostAndPort}";
+            _client.BaseAddress = new Uri(baseUri);
         }
 
+        //The method is using partial resiliecy configured in startup.cs
         public async Task<BookingOrderDTO> GetBookingById([AliasAs("id")] string bookingId)
         {
             try
@@ -51,6 +47,7 @@ namespace MicroCourier.Web.RESTClients
             }
         }
 
+        //Booking create command with circuit breaker and retry logic
         public async Task<string> CreatedBooking(CreateBookingCommand command)
         {
             try
@@ -66,7 +63,7 @@ namespace MicroCourier.Web.RESTClients
             catch (Exception ex)
             {
                 throw ex;
-            }           
+            }
         }
 
     }

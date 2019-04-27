@@ -70,7 +70,7 @@
         $("#msgtxt").html("Please wait processing !");
         var command = {
             BookingOrderId: $("#txtBR").val(),
-            Price: $("#txtAmount").val()            
+            Price: $("#txtAmount").val()
         };
 
         $.ajax({
@@ -85,11 +85,11 @@
 
     }
 
-    function PaymentCreated(results) {        
+    function PaymentCreated(results) {
         $("#msgtxt").html("Thank you , your payment is procssed and ref is " + results + ". You will be notified soon. Please keep the booking Ref")
     }
 
-    function PaymentFailed(request, status, error) {        
+    function PaymentFailed(request, status, error) {
         $("#msgtxt").html(request.responseText)
     }
 
@@ -102,7 +102,7 @@
         $("#txtAmount").val(totalPrice);
     }
 
-    function BookingDetailsError(request, status, error) {        
+    function BookingDetailsError(request, status, error) {
     }
 
     var getUrlParameter = function getUrlParameter(sParam) {

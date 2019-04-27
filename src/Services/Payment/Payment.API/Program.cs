@@ -17,9 +17,7 @@ namespace Payment.API
     public class Program
     {
         public static void Main(string[] args)
-        {
-            // CreateWebHostBuilder(args).Build().Run();
-
+        {          
             //Create/Migrate the database
             var host = CreateWebHostBuilder(args).Build();
 
@@ -29,14 +27,13 @@ namespace Payment.API
                 {
                     var context = scope.ServiceProvider.GetService<PaymentDbContext>();
 
-                    var concreteContext = (PaymentDbContext)context;
-                    //concreteContext.Database.Migrate();
+                    var concreteContext = (PaymentDbContext)context;                  
 
+                    //Retry logic for DB connectivity
                     Policy
                        .Handle<Exception>()
                        .WaitAndRetry(5, r => TimeSpan.FromSeconds(10))
                        .Execute(() => concreteContext.Database.Migrate());
-
 
                 }
                 catch (Exception)

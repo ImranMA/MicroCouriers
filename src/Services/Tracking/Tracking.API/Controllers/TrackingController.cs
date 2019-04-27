@@ -22,13 +22,7 @@ namespace Tracking.API.Controllers
             _trackingService = trackingservice;
             this.telemetry = telemetry;
         }
-
-        //// GET: api/Tracking
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+                
 
         // GET: api/Tracking/5
         [HttpGet("{id}")]

@@ -34,14 +34,6 @@ namespace Tracking.Application.IntegrationEvents
 
             if (eventMsg.Id != Guid.Empty)
             {
-                //RequestTelemetry requestTelemetry = new RequestTelemetry { Name = "OrderDelivered - Dequeue" };
-                //requestTelemetry.Context.Operation.Id = Guid.NewGuid().ToString();
-                //requestTelemetry.Context.Operation.ParentId = eventMsg.Id.ToString();
-
-
-                //var operation = telemetry.StartOperation(requestTelemetry);
-
-
                 try
                 {
                     Track trackings = await _trackingContext.GetTrackingAsync(eventMsg.BookingId);

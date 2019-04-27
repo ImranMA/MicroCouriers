@@ -25,38 +25,36 @@
 
 <script>
 
+    //Get tracking details using ID
     function getTrackingDetails() {
-        
+
         var trackingid = $("#txtBR").val();
 
         $.ajax({
             type: "Get",
             url: "/api/tracking/" + trackingid,
-            contentType: "application/json",           
+            contentType: "application/json",
             dataType: "json",
             success: TrackingDetails,
             error: TrackingDetailsError
         });
-
     }
 
-
-
+    //Write back error
     function TrackingDetailsError(request, status, error) {
         $("#bookingDetails").html(request.responseText);
     }
 
-
+    //Create the tracking history
     function TrackingDetails(results) {
-        
+
         var trackingHistory = results.trackingHistory;
         var arr = $.parseJSON(trackingHistory);
         var resultString = "";
         var Sep = "<br>-------------------------------------------";
         $.each(arr, function (index, value) {
-            
-            
-            if (this.OrderState.indexOf("Created")>-1) {
+
+            if (this.OrderState.indexOf("Created") > -1) {
                 resultString += "<br>Booking Created - " + this.DateTime + "<br>" + "Origion - " + this.Origion + " Dest -" + this.Destination + "<br> Description :" + this.Description;
             }
 
@@ -67,7 +65,7 @@
 
             if (this.OrderState.indexOf("OrderPicked") > -1) {
                 resultString += Sep;
-                resultString += "<br>Order Picked - " + this.DateTime +  "<br> Description :" + this.Description;
+                resultString += "<br>Order Picked - " + this.DateTime + "<br> Description :" + this.Description;
             }
 
             if (this.OrderState.indexOf("OrderInTransit") > -1) {
@@ -77,8 +75,8 @@
 
             if (this.OrderState.indexOf("Delivered") > -1) {
                 resultString += Sep;
-                resultString += "<br>Order Delivered - " + this.DateTime + "<br> Signed By: " + this.SignedBy + "<br> Description :" +  "" + this.Description;
-            }           
+                resultString += "<br>Order Delivered - " + this.DateTime + "<br> Signed By: " + this.SignedBy + "<br> Description :" + "" + this.Description;
+            }
         });
 
         $("#bookingDetails").html(resultString);

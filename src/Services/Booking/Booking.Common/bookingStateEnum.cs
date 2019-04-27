@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Booking.Common
 {
-    class bookingStateEnum
+    //We can use this class to maintain booking state event
+    public class bookingStateEnum
     {
     }
 }

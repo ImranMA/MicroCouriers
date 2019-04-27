@@ -12,8 +12,6 @@ namespace Booking.API
     {
         public static void Main(string[] args)
         {
-            // CreateWebHostBuilder(args).Build().Run();
-
             //Migrate/Create the database if it doesn't exists
             var host = CreateWebHostBuilder(args).Build();
 
@@ -25,6 +23,8 @@ namespace Booking.API
 
                     var concreteContext = (BookingDbContext)context;
 
+                    //We are using Linux SQL container and it may take some time to fireup .
+                    //We are retrying the connectivity
                     Policy
                        .Handle<Exception>()
                        .WaitAndRetry(5, r => TimeSpan.FromSeconds(10))

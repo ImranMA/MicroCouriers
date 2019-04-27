@@ -53,6 +53,7 @@ namespace Tracking.Application.IntegrationEvents
 
 
                     events.AddRange(trackings.OrderInTransit(orderInTransit));
+                    trackings.Version = trackings.OriginalVersion + 1;
 
                     await _trackingContext.SaveTrackingAsync(eventMsg.BookingId, trackings.OriginalVersion,
                         trackings.Version, events);

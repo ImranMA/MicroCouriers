@@ -7,7 +7,7 @@ namespace Tracking.Domain.AggregatesModel.TrackingAggregate
 {
     public class Track
     {
-      
+
         /// <summary>
         /// Indication whether the aggregate is replaying events (true) or not (false).
         /// </summary>
@@ -18,23 +18,19 @@ namespace Tracking.Domain.AggregatesModel.TrackingAggregate
         /// </summary>
         public string Booking { get; private set; }
 
-        /// <summary>
-        /// The list of maintenance-jobs for this day. 
-        /// </summary>
-       // public List<MaintenanceJob> Jobs { get; private set; }
 
         /// <summary>
         /// The current version of the aggregate after replaying all events in the event-store.
         /// </summary>
-        public int Version { get;  set; }
+        public int Version { get; set; }
 
         /// <summary>
         /// The original version after handling any commands.
         /// </summary>
-        public int OriginalVersion { get; set; }       
+        public int OriginalVersion { get; set; }
 
         public List<OrderHistory> orderHistory { get; private set; }
-        
+
         public Track()
         {
             OriginalVersion = 0;
@@ -69,12 +65,12 @@ namespace Tracking.Domain.AggregatesModel.TrackingAggregate
         }
 
         public IEnumerable<EventBase> PaymentProcessed(PaymentProcessed e)
-        {            
+        {
             return HandleEvent(e);
         }
 
         public IEnumerable<EventBase> BookingAdd(BookingCreated e)
-        {   
+        {
             return HandleEvent(e);
         }
 
@@ -93,7 +89,7 @@ namespace Tracking.Domain.AggregatesModel.TrackingAggregate
             return HandleEvent(e);
         }
 
-                     
+
         //Hanlders , We are building the booking history here
         private IEnumerable<EventBase> Handle(BookingCreated e)
         {
@@ -105,7 +101,7 @@ namespace Tracking.Domain.AggregatesModel.TrackingAggregate
             bookingCreated.Destination = e.Destination;
             bookingCreated.Description = e.Description;
             bookingCreated.OrderState = typeof(BookingCreated).ToString();
-            
+
             orderHistory.Add(bookingCreated);
 
             return new EventBase[] { e };
@@ -116,7 +112,7 @@ namespace Tracking.Domain.AggregatesModel.TrackingAggregate
             OrderHistory paymentProcessed = new OrderHistory();
 
             paymentProcessed.BookingOrderId = e.BookingId;
-            paymentProcessed.DateTime = e.Date.ToString();         
+            paymentProcessed.DateTime = e.Date.ToString();
             paymentProcessed.Description = e.Description;
             paymentProcessed.OrderState = typeof(PaymentProcessed).ToString();
 

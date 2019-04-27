@@ -84,7 +84,7 @@ namespace Booking.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env,IConfiguration config)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration config)
         {
             if (env.IsDevelopment())
             {
@@ -93,7 +93,7 @@ namespace Booking.API
 
             var tConfig = app.ApplicationServices.GetRequiredService<TelemetryConfiguration>();
             tConfig.InstrumentationKey = config["ApplicationInsights:InstrumentationKey"];// "dbd67a2f-a911-4d69-be31-e7c0b53b248d";
-            
+
             app.UseMvc();
             ConfigureEventBus(app);
 
@@ -114,13 +114,12 @@ namespace Booking.API
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
             eventBus.Subscribe<PaymentProcessedIntegrationEvent, PaymentProcessedIntegrationEventHandler>();
             eventBus.Subscribe<OrderStatusChangedIntegrationEvent, OrderStatusChangedIntegrationEventHandler>();
-           
+
         }
     }
 
     static class CustomExtensionsMethods
     {
-
         public static IServiceCollection AddIntegrationServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -142,7 +141,7 @@ namespace Booking.API
         {
             services.AddDbContext<BookingDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("MicroCouriersDataBase"), x => x.MigrationsAssembly("Booking.Persistence")));
-          
+
             return services;
         }
 
