@@ -69,7 +69,7 @@ This will start the solution . in browser type http://localhost:5004 to launch t
 Provide destination,  origion and atleast one item and click "estimate price" to fill the price field. After this click "Save Booking and Pay"
 
 ##### Payment UI Screen  
-you may provide any values on this screen and click pay for payment processing. Keep the booking order ID show on this page.
+you may provide any values on this screen and click pay for payment processing. Keep the booking order ID shown on this page.
 
 ##### Tracking UI screen
 provide booking order ID (available on payment screen) to track the order.  
@@ -77,7 +77,7 @@ provide booking order ID (available on payment screen) to track the order.
 #### Running Application (debug and explore)
 You can use visual studio or visual code to explore and debug the solution. If you want to run the solution in visual studio , before launching solution(F5) run powershell StartSQLonly.ps1 script which will launch only SQL container. But if you want to use your own sql server instance replace database strings with your own SQL server instance in all API projects. 
 
-# Stopping all containers
+#### Stopping all containers
 run powershell script StopAllContainers.ps1 to stop all the containers. 
 
 #### Database and SQL Login 
@@ -124,7 +124,7 @@ Visual Studio 2017
 Clean Architecture , Event-Driven
 
 #### Design Patterns
-CQRS, Event Sourcing , Materialized view, DDD, Respotiory , Cache Aside 
+CQRS, Event Sourcing , Materialized view, DDD, Respotiory , Cache Aside , Circuit-breaker , retry
 
 #### Tech Stack / Libraries
 .NET Core 2.2 , Azure Service Bus, Azure Redis Cache, Azure Function (serverless), Application Insights, SQL Server on Linux , Docker , Azure SDK , 
