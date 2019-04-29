@@ -16,11 +16,11 @@
             <label for="fname">Destination</label>
             <input type="text" id="txtDestination" name="destination" placeholder="Type destination address..">
 
-            <h4>Order Items</h4> <button onclick="AddItem()">+</button>
+            <h4>Order Items (Add atleast one item)</h4> <button onclick="AddItem()">+</button>
             <br />
             <table id="tblOrderItems"></table>
             <br />           
-            <input type="button" onclick="SaveAll();" class="btn" value="Save Booking And Pay" />
+            <input type="button" onclick="SaveAll();" class="btn btn-primary" value="Save Booking And Pay" />
             <div id="msgTxt" style="color:red"></div>
         </div>
     </div>
@@ -48,7 +48,7 @@
             "<td>Describe : <input class='itemDescription' type='text' placeholder='Package Description and Volume'><td>" +
             "<td>Weight : <select><option>0 - .5 KG</option><option>0.5 - 2KG</option><option>2KG - 5KG</option><option>5KG - 10KG</option><option>>10KG - Please call</option></select><td>" +
             "<td>Service Type: <select class='ItemType'><option value='S'>Standard</option><option value='E'>Express</option></select><td>" +
-            "<td>Approx Price : <input class='txtPrice' id='txtPrice" + count + "' type='text'  ><td>" +
+            "<td>Approx Price : <input placeholder='Click Estimate Price' class='txtPrice' id='txtPrice" + count + "' type='text'  ><td>" +
             "<td><input value='Estimate Price' type='button' class='btn' onclick='CalculatePricing(" + count.toString() + ")' /><td>" +
             "</tr>"
         $("#tblOrderItems").append(items);
