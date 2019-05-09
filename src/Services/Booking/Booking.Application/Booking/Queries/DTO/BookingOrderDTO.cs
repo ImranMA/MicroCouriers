@@ -8,7 +8,7 @@ namespace Booking.Application.Booking.Queries.GetBooking
     public class BookingOrderDTO
     {
         public string BookingOrderId { get; set; }
-        public string CustomerId { get; set; }
+        public string CustomerID { get; set; }
         public string Origin { get; set; }
         public string Destination { get; set; }
 

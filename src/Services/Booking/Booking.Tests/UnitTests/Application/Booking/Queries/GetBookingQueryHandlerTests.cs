@@ -1,5 +1,6 @@
 ﻿using Booking.Application.Booking.Queries.DTO;
 using Booking.Application.Booking.Queries.GetBooking;
+using Booking.Domain.AggregatesModel.BookingAggregate;
 using Booking.Domain.Booking;
 using Booking.Persistence;
 using Booking.Tests.UnitTests.Application.Infrastructure;
@@ -35,7 +36,7 @@ namespace Booking.Tests.UnitTests.Application.Booking.Queries
             //Assert
 
             //Main booking
-            result.ShouldBeOfType<BookingOrderDTO>();
+            result.ShouldBeOfType<BookingOrder>();
             result.BookingOrderId.ShouldBe("1e4199f0-907f-4acc-b886-b12b0323c108");
             result.Origin.ShouldBe("NY");
             result.Destination.ShouldBe("Melbourne");
@@ -43,16 +44,16 @@ namespace Booking.Tests.UnitTests.Application.Booking.Queries
             //booking Details
             result.BookingDetails.Count.ShouldBe(2);
 
-            List<BookingOrderDetailDTO> bookingDetails = new List<BookingOrderDetailDTO>();            
-            bookingDetails.Add(new BookingOrderDetailDTO {  PackageType = "Express" , Description = "Toys", Price = 10});
-            bookingDetails.Add(new BookingOrderDetailDTO { PackageType = "Standard", Description = "Books", Price = 50 });
+            List<BookingOrderDetail> bookingDetails = new List<BookingOrderDetail>();            
+            bookingDetails.Add(new BookingOrderDetail {  PackageType = "Express" , PackageDescription = "Toys", Price = 10});
+            bookingDetails.Add(new BookingOrderDetail { PackageType = "Standard", PackageDescription = "Books", Price = 50 });
 
             var bookingDetailsFromDB = result.BookingDetails.ToList();
             bookingDetailsFromDB[0].Price.ShouldBe(bookingDetails[0].Price);
             bookingDetailsFromDB[1].Price.ShouldBe(bookingDetails[1].Price);
 
-            bookingDetailsFromDB[0].Description.ShouldBe(bookingDetails[0].Description);
-            bookingDetailsFromDB[1].Description.ShouldBe(bookingDetails[1].Description);
+            bookingDetailsFromDB[0].PackageDescription.ShouldBe(bookingDetails[0].PackageDescription);
+            bookingDetailsFromDB[1].PackageDescription.ShouldBe(bookingDetails[1].PackageDescription);
 
             bookingDetailsFromDB[0].PackageType.ShouldBe(bookingDetails[0].PackageType);
             bookingDetailsFromDB[1].PackageType.ShouldBe(bookingDetails[1].PackageType);

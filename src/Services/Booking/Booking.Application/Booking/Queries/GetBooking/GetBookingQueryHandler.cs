@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Booking.Application.Booking.Queries.GetBooking
 {
-    public class GetBookingQueryHandler : IRequestHandler<GetBookingQuery, BookingOrderDTO>
+    public class GetBookingQueryHandler : IRequestHandler<GetBookingQuery, BookingOrder>
     {
         private readonly IBookingRespository _context;
 
@@ -17,43 +17,9 @@ namespace Booking.Application.Booking.Queries.GetBooking
             _context = context;
         }
 
-        public async Task<BookingOrderDTO> Handle(GetBookingQuery request, CancellationToken cancellationToken)
+        public async Task<BookingOrder> Handle(GetBookingQuery request, CancellationToken cancellationToken)
         {
-            BookingOrder bookingObj = await _context.FindByIdAsync(request.BookingId);
-
-            if (bookingObj == null)
-            {
-                return null;
-            }
-
-            //Get the Booking
-            var bookingDTO = new BookingOrderDTO
-            {
-                BookingOrderId = bookingObj.BookingOrderId,
-                CustomerId = bookingObj.CustomerID,
-                Origin = bookingObj.Origin,
-                Destination = bookingObj.Destination                
-            };
-
-            //Get the Booking Details
-            ICollection<BookingOrderDetailDTO> listBoookingDetails = new List<BookingOrderDetailDTO>();
-            foreach (BookingOrderDetail bookdetails in bookingObj.BookingDetails)
-            {
-                var bookingDetailsObj = new BookingOrderDetailDTO
-                {
-                    Price = bookdetails.Price,
-                    Description = bookdetails.PackageDescription,
-                    PackageType = bookdetails.PackageType
-                };
-
-                listBoookingDetails.Add(bookingDetailsObj);
-            }
-
-            //Fill the Main booking with Details
-            bookingDTO.BookingDetails = listBoookingDetails;
-
-            //Return Complete Object
-            return bookingDTO;
+            return await _context.FindByIdAsync(request.BookingId);            
         }
     }
 }

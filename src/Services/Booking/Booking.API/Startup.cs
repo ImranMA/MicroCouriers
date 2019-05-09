@@ -34,6 +34,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.ApplicationInsights.Extensibility;
 using Swashbuckle.AspNetCore.Swagger;
+using AutoMapper;
+using Booking.Domain.AggregatesModel.BookingAggregate;
 
 namespace Booking.API
 {
@@ -101,6 +103,8 @@ namespace Booking.API
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
+            SetupAutoMapper();
+
             // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
@@ -115,6 +119,15 @@ namespace Booking.API
             eventBus.Subscribe<PaymentProcessedIntegrationEvent, PaymentProcessedIntegrationEventHandler>();
             eventBus.Subscribe<OrderStatusChangedIntegrationEvent, OrderStatusChangedIntegrationEventHandler>();
 
+        }
+
+        private void SetupAutoMapper()
+        {
+            // setup automapper
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<BookingOrder, BookingOrderDTO>();               
+            });
         }
     }
 

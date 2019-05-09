@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Booking.Application.Booking.Commands.CreateBooking;
 using Booking.Application.Booking.Commands.UpdateBooking;
 using Booking.Application.Booking.Queries.GetBooking;
+using Booking.Domain.AggregatesModel.BookingAggregate;
 using MediatR;
 using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Http;
@@ -34,14 +36,16 @@ namespace Booking.API.Controllers
         {
             try
             {
-                var resultSet = await Mediator.Send(new GetBookingQuery() { BookingId = Id });
+                BookingOrder resultSet = await Mediator.Send(new GetBookingQuery() { BookingId = Id });
 
                 if (resultSet == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(resultSet);
+                var bookingDTO = Mapper.Map<BookingOrderDTO>(resultSet);
+
+                return Ok(bookingDTO);
 
             }
             catch(Exception ex)
