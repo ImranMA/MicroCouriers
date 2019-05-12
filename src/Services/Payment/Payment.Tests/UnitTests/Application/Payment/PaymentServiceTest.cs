@@ -3,6 +3,7 @@ using Moq;
 using Payment.Application.DTO;
 using Payment.Application.Interface;
 using Payment.Application.PaymentService;
+using Payment.Domain.Entities;
 using Payment.Domain.Interfaces;
 using Payment.Tests.UnitTests.Application.Infrastructure;
 using Shouldly;
@@ -33,7 +34,7 @@ namespace Payment.Tests.UnitTests.Application.Payment
             var fakeEventBus = new Mock<IEventBus>();
             var fakeGateWay = new Mock<IPaymentExternalGateway>();
 
-            PaymentDTO payment = new PaymentDTO();
+            Payments payment = new Payments();
             payment.BookingOrderId = "1e4199f0-907f-4acc-b886-b12b0323c108";
             payment.Price = 100;
             payment.CustomerId = string.Empty;                  

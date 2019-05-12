@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Payment.Application.DTO;
 using Payment.Application.Interface;
+using Payment.Domain.Entities;
 
 namespace Payment.API.Controllers
 {
@@ -46,8 +48,9 @@ namespace Payment.API.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                
-                var paymentId = await _paymentService.AddAsync(paymentDTO);
+
+                var payment = Mapper.Map<Payments>(paymentDTO);
+                var paymentId = await _paymentService.AddAsync(payment);
                
                 //We can replace this with CreatedAtAction as well
                 return StatusCode(StatusCodes.Status201Created, paymentId);

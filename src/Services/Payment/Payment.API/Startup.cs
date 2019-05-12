@@ -29,6 +29,9 @@ using Payment.Persistence;
 using Payment.Persistence.Repositories;
 using Microsoft.ApplicationInsights.Extensibility;
 using Swashbuckle.AspNetCore.Swagger;
+using AutoMapper;
+using Payment.Application.DTO;
+using Payment.Domain.Entities;
 
 namespace Payment.API
 {
@@ -92,6 +95,8 @@ namespace Payment.API
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
+            SetupAutoMapper();
+
             // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
@@ -107,6 +112,15 @@ namespace Payment.API
             //eventBus.Subscribe<BookingAddIntegrationEvent, BookingAddIntegrationEventHandler>();
             //eventBus.Subscribe<CustomerAddIntegrationEvent, CustomerAddIntegrationEventHandler>();
 
+        }
+
+        private void SetupAutoMapper()
+        {
+            // setup automapper
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<PaymentDTO,Payments>();
+            });
         }
     }
 
