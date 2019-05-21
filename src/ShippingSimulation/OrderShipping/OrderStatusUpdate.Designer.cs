@@ -118,7 +118,7 @@ namespace OrderShipping
             // 
             this.lblStatus.Location = new System.Drawing.Point(144, 448);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(112, 29);
+            this.lblStatus.Size = new System.Drawing.Size(280, 66);
             this.lblStatus.TabIndex = 10;
             // 
             // Shipping
