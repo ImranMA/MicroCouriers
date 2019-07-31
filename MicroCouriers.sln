@@ -73,7 +73,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.Tests", "src\Servic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payment.Tests", "src\Services\Payment\Payment.Tests\Payment.Tests.csproj", "{43F214F4-B04F-44E5-A68F-D53261DFE3EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracking.Tests", "src\Services\Tracking\Tracking.Tests\Tracking.Tests.csproj", "{656032FD-68DB-402C-A4B6-1EE68559A21D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tracking.Tests", "src\Services\Tracking\Tracking.Tests\Tracking.Tests.csproj", "{656032FD-68DB-402C-A4B6-1EE68559A21D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shipping", "Shipping", "{B1550541-ACD8-4B42-A1A2-164CF3752D3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipping.API", "src\Services\Shipping\Shipping.API\Shipping.API.csproj", "{E15A3322-21CC-41AC-AEF3-2742F452C1DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -181,6 +185,10 @@ Global
 		{656032FD-68DB-402C-A4B6-1EE68559A21D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{656032FD-68DB-402C-A4B6-1EE68559A21D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{656032FD-68DB-402C-A4B6-1EE68559A21D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E15A3322-21CC-41AC-AEF3-2742F452C1DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E15A3322-21CC-41AC-AEF3-2742F452C1DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E15A3322-21CC-41AC-AEF3-2742F452C1DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E15A3322-21CC-41AC-AEF3-2742F452C1DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -221,6 +229,8 @@ Global
 		{AEAED538-4BF6-4D5C-9A1C-59991902C5DF} = {6C03A784-9997-48A4-A4C1-035E4E413F29}
 		{43F214F4-B04F-44E5-A68F-D53261DFE3EB} = {627B4517-E86F-4C5E-8932-48914A73535B}
 		{656032FD-68DB-402C-A4B6-1EE68559A21D} = {CDD19F22-3AA3-4ED0-8C90-A52D50A4D8EC}
+		{B1550541-ACD8-4B42-A1A2-164CF3752D3C} = {79411553-3052-439E-A4C3-09D3734EC560}
+		{E15A3322-21CC-41AC-AEF3-2742F452C1DF} = {B1550541-ACD8-4B42-A1A2-164CF3752D3C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E13E4D21-76D2-45C9-B2EC-29A70284CD9E}
