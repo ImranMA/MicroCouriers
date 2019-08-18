@@ -25,13 +25,13 @@ using Payment.Application.Interface;
 using Payment.Application.PaymentService;
 using Payment.Domain.Interfaces;
 using Payment.Infrastructure.PaymentProcessing;
-using Payment.Persistence;
-using Payment.Persistence.Repositories;
 using Microsoft.ApplicationInsights.Extensibility;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using Payment.Application.DTO;
 using Payment.Domain.Entities;
+using Payment.Persistence.Repositories;
+using Payment.Persistence;
 
 namespace Payment.API
 {
@@ -87,8 +87,7 @@ namespace Payment.API
             var tConfig = app.ApplicationServices.GetRequiredService<TelemetryConfiguration>();
             tConfig.InstrumentationKey = config["ApplicationInsights:InstrumentationKey"];// "dbd67a2f-a911-4d69-be31-e7c0b53b248d";
 
-
-
+            
             app.UseMvc();
             ConfigureEventBus(app);
 

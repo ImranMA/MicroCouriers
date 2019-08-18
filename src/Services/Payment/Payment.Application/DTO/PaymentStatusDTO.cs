@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Payment.Application.DTO
 {
-    public enum PaymetStatusDTO
+    public enum PaymentStatusDTO
     {
         Pending = 0,
         Completed = 1,

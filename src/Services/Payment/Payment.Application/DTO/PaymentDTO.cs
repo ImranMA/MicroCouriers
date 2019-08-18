@@ -18,6 +18,6 @@ namespace Payment.Application.DTO
         [Required]
         public decimal Price { get; set; }
 
-        public PaymetStatusDTO PaymentStatus { get; set; }
+        public PaymentStatusDTO PaymentStatus { get; set; }
     }
 }
