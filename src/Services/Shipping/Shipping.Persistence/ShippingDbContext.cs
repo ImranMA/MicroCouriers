@@ -12,6 +12,7 @@ namespace Shipping.Persistence
 
         }
 
+
         public DbSet<Shippings> Shippings { get; set; }
 
         public DbSet<ShippingsHistory> ShippingsHistory { get; set; }
