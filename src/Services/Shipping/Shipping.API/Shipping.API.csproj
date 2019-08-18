@@ -7,13 +7,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.2" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.4.0" />
+    <PackageReference Include="AutoMapper" Version="8.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Azure.ServiceBus" Version="3.4.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.2105168" />
+    <PackageReference Include="Polly" Version="7.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBusServiceBus\EventBusServiceBus.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus\EventBus.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\IntegrationEventLogEF\IntegrationEventLogEF.csproj" />
+    <ProjectReference Include="..\Shipping.Application\Shipping.Application.csproj" />
   </ItemGroup>
 
 </Project>

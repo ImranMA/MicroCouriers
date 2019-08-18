@@ -9,6 +9,5 @@ namespace Shipping.Domain.Entities
         public string ShippingsHistoryId { get; set; }
 
         public Shippings Shippings { get; set; }
-
     }
 }

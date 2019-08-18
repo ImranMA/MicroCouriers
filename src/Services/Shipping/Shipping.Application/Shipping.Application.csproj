@@ -4,4 +4,12 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBusServiceBus\EventBusServiceBus.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus\EventBus.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\IntegrationEventLogEF\IntegrationEventLogEF.csproj" />
+    <ProjectReference Include="..\Shipping.Domain\Shipping.Domain.csproj" />
+    <ProjectReference Include="..\Shipping.Persistence\Shipping.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
