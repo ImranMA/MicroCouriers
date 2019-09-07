@@ -30,8 +30,6 @@ namespace Shipping.Persistence.Migrations
 
                     b.Property<string>("CustomerId");
 
-                    b.Property<int>("ShippingStatus");
-
                     b.Property<DateTime?>("UpdatedDate");
 
                     b.HasKey("ShippingsId");
@@ -43,6 +41,8 @@ namespace Shipping.Persistence.Migrations
                 {
                     b.Property<string>("ShippingsHistoryId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ShippingStatus");
 
                     b.Property<string>("ShippingsId");
 

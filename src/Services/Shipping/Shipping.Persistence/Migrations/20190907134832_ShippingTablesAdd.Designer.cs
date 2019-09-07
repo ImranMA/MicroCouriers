@@ -10,8 +10,8 @@ using Shipping.Persistence;
 namespace Shipping.Persistence.Migrations
 {
     [DbContext(typeof(ShippingDbContext))]
-    [Migration("20190818090538_ShippingDBCreation")]
-    partial class ShippingDBCreation
+    [Migration("20190907134832_ShippingTablesAdd")]
+    partial class ShippingTablesAdd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,8 +32,6 @@ namespace Shipping.Persistence.Migrations
 
                     b.Property<string>("CustomerId");
 
-                    b.Property<int>("ShippingStatus");
-
                     b.Property<DateTime?>("UpdatedDate");
 
                     b.HasKey("ShippingsId");
@@ -45,6 +43,8 @@ namespace Shipping.Persistence.Migrations
                 {
                     b.Property<string>("ShippingsHistoryId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ShippingStatus");
 
                     b.Property<string>("ShippingsId");
 

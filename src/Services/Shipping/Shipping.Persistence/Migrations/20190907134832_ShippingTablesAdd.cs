@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Shipping.Persistence.Migrations
 {
-    public partial class ShippingDBCreation : Migration
+    public partial class ShippingTablesAdd : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,6 @@ namespace Shipping.Persistence.Migrations
                     ShippingsId = table.Column<string>(nullable: false),
                     BookingOrderId = table.Column<string>(nullable: true),
                     CustomerId = table.Column<string>(nullable: true),
-                    ShippingStatus = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: true)
                 },
@@ -28,6 +27,7 @@ namespace Shipping.Persistence.Migrations
                 columns: table => new
                 {
                     ShippingsHistoryId = table.Column<string>(nullable: false),
+                    ShippingStatus = table.Column<int>(nullable: false),
                     ShippingsId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

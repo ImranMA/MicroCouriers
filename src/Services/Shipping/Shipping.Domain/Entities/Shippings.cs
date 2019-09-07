@@ -12,8 +12,6 @@ namespace Shipping.Domain.Entities
 
         public string CustomerId { get; set; }
 
-        public ShippingStatus ShippingStatus { get; set; }
-
         public DateTime CreatedDate { get; set; }
 
         public DateTime? UpdatedDate { get; set; }

@@ -8,6 +8,8 @@ namespace Shipping.Domain.Entities
     {
         public string ShippingsHistoryId { get; set; }
 
+        public ShippingStatus ShippingStatus { get; set; }
+
         public Shippings Shippings { get; set; }
     }
 }
