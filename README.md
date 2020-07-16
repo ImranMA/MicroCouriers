@@ -1,4 +1,4 @@
-# MicroCouriers (On Going)
+# MicroCouriers 
 
 MicroCouriers is courier service application used to book and track orders. I am working on this application to demonstrate the modern   Architectural and design patterns. This is on going project and i will keep on updating along the way. Patterns and principles i have covered are
 
