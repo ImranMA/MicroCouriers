@@ -11,4 +11,5 @@ namespace Microsoft.MicroCouriers.BuildingBlocks.IntegrationEventLogEF
         Published = 2,
         PublishedFailed = 3
     }
+
 }
