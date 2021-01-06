@@ -93,8 +93,7 @@ password : 99888ukGh43hnDw89Hol8LN21112
 #### Azure Service Bus 
 
 Application is using azure service bus and has topic/subscrptions assossiated with it. since we can't create local instance of service bus for development and testing and 
-service bus has to be available on azure, so Basic SKU Azure Service bus (deployed and live on azure) is included for testing , however 
-You need to replace with your own later as included service bus can be disabled. 
+service bus has to be available on azure, , You need to replace with your own.
 
 ##### Creating your own service bus with topic/subscrption
 
